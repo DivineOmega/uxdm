@@ -2,8 +2,10 @@
 
 namespace RapidWeb\uxdm\Objects;
 
+use RapidWeb\uxdm\Interfaces\SourceInterface;
 use RapidWeb\uxdm\Objects\Sources\BaseSource;
 use RapidWeb\uxdm\Objects\Destinations\BaseDestination;
+use Exception;
 
 class Migrator
 {
@@ -13,12 +15,12 @@ class Migrator
     private $keyFields = [];
     private $fieldMap = [];
 
-    public function setSource(Source $source) {
+    public function setSource(SourceInterface $source) {
         $this->source = $source;
         return $this;
     }
 
-    public function setDestination(Destination $destination) {
+    public function setDestination(DestinationInterface $destination) {
         $this->destination = $destination;
         return $this;
     }
@@ -40,6 +42,18 @@ class Migrator
 
     public function migrate() {
 
+        if (!$this->source) {
+            throw new Exception('No source specified for migration.');
+        }
+
+        if (!$this->destination) {
+            throw new Exception('No destination specified for migration.');
+        }
+
+        if (!$this->fieldsToMigrate) {
+            $this->fieldsToMigrate = $this->source->getFields();
+        }
+
         $results = [];
 
         for ($page=1; $page < PHP_INT_MAX; $page++) { 
@@ -52,7 +66,7 @@ class Migrator
 
             foreach($dataRows as $key => $dataRow) {
                 $dataRow->prepare($this->fieldsToMigrate, $this->keyFields, $this->fieldMap);
-                $dataRow[$key] = $dataRow;
+                $dataRows[$key] = $dataRow;
             }
 
             $results[] = $this->destination->putDataRows($dataRows);
