@@ -38,7 +38,7 @@ class CSVSource implements SourceInterface
         return $lines;
     }    
 
-    public function getDataRows($page) {
+    public function getDataRows($page = 1) {
 
         $perPage = 10;
 
