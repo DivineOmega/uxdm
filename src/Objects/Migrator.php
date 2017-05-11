@@ -42,7 +42,7 @@ class Migrator
 
         $results = [];
 
-        for ($page=0; $page < PHP_INT_MAX; $page++) { 
+        for ($page=1; $page < PHP_INT_MAX; $page++) { 
 
             $dataRows = $this->source->getDataRows($page);
 
