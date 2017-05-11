@@ -4,6 +4,7 @@ namespace RapidWeb\uxdm\Objects;
 
 class DataItem
 {
-    private $fieldName;
-    private $value;
+    public $fieldName;
+    public $value;
+    public $keyField = false;
 }

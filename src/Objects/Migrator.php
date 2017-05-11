@@ -40,5 +40,25 @@ class Migrator
 
     public function migrate() {
 
+        $results = [];
+
+        for ($page=0; $page < PHP_INT_MAX; $page++) { 
+
+            $dataRows = $this->source->getDataRows($page);
+
+            if (!$dataRows) {
+                break;
+            }
+
+            foreach($dataRows as $key => $dataRow) {
+                $dataRow->prepare($this->fieldsToMigrate, $this->keyFields, $this->fieldMap);
+                $dataRow[$key] = $dataRow;
+            }
+
+            $results[] = $this->destination->putDataRows($dataRows);
+        }
+
+        return $results;
+
     }
 }
