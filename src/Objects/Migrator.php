@@ -3,8 +3,8 @@
 namespace RapidWeb\uxdm\Objects;
 
 use RapidWeb\uxdm\Interfaces\SourceInterface;
+use RapidWeb\uxdm\Interfaces\DestinationInterface;
 use RapidWeb\uxdm\Objects\Sources\BaseSource;
-use RapidWeb\uxdm\Objects\Destinations\BaseDestination;
 use Exception;
 
 class Migrator
