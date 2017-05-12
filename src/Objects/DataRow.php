@@ -12,6 +12,10 @@ class DataRow
         $this->dataItems[] = $dataItem;
     }
 
+    public function getDataItems() {
+        return $this->dataItems;
+    }
+
     public function prepare(array $fieldsToMigrate, array $keyFields, array $fieldMap)
     {
         $this->removeUnnecessaryFields($fieldsToMigrate);
