@@ -1,4 +1,4 @@
-id,email,name,created_at,updated_at
-1,jordan.hall@rapidweb.biz,"Jordan Hall","0000-00-00 00:00:00","0000-00-00 00:00:00"
-2,tim.lees@rapidweb.biz,"Tim Lees","0000-00-00 00:00:00","0000-00-00 00:00:00"
-8,test@test.com,test,"2013-10-24 16:03:58","2013-10-24 16:03:58"
+email,name
+jordan.hall@rapidweb.biz,"Jordan Hall"
+tim.lees@rapidweb.biz,"Tim Lees"
+test@test.com,test

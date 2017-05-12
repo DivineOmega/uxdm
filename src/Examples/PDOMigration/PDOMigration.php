@@ -13,4 +13,5 @@ $csvDestination = new CSVDestination(__DIR__.'/destination.csv');
 $migrator = new Migrator;
 $migrator->setSource($pdoSource)
          ->setDestination($csvDestination)
+         ->setFieldsToMigrate(['email', 'name'])
          ->migrate();

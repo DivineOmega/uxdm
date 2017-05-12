@@ -26,13 +26,15 @@ class PDOSource implements SourceInterface
         return $tableFields;
     }
 
-    public function getDataRows($page = 1) {
+    public function getDataRows($page = 1, $fieldsToRetrieve = []) {
 
         $perPage = 10;
 
         $offset = (($page-1) * $perPage);
+
+        $fieldsSQL = implode(', ', $fieldsToRetrieve);
         
-        $sql = 'select * from '.$this->tableName.' limit '.$offset.', '.$perPage;
+        $sql = 'select '.$fieldsSQL.' from '.$this->tableName.' limit '.$offset.', '.$perPage;
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 

@@ -16,19 +16,10 @@ class DataRow
         return $this->dataItems;
     }
 
-    public function prepare(array $fieldsToMigrate, array $keyFields, array $fieldMap)
+    public function prepare(array $keyFields, array $fieldMap)
     {
-        $this->removeUnnecessaryFields($fieldsToMigrate);
         $this->setKeyFields($keyFields);
         $this->mapFields($fieldMap);
-    }
-
-    private function removeUnnecessaryFields(array $fieldsToMigrate) {
-        foreach($this->dataItems as $key => $dataItem) {
-            if (!in_array($dataItem->fieldName, $fieldsToMigrate)) {
-                unset($this->dataItems[$key]);
-            }
-        }
     }
 
     private function setKeyFields(array $keyFields) {

@@ -58,14 +58,14 @@ class Migrator
 
         for ($page=1; $page < PHP_INT_MAX; $page++) { 
 
-            $dataRows = $this->source->getDataRows($page);
+            $dataRows = $this->source->getDataRows($page, $this->fieldsToMigrate);
 
             if (!$dataRows) {
                 break;
             }
 
             foreach($dataRows as $key => $dataRow) {
-                $dataRow->prepare($this->fieldsToMigrate, $this->keyFields, $this->fieldMap);
+                $dataRow->prepare($this->keyFields, $this->fieldMap);
                 $dataRows[$key] = $dataRow;
             }
 

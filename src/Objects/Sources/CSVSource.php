@@ -38,7 +38,7 @@ class CSVSource implements SourceInterface
         return $lines;
     }    
 
-    public function getDataRows($page = 1) {
+    public function getDataRows($page = 1, $fieldsToRetrieve = []) {
 
         $perPage = 10;
 
@@ -52,10 +52,13 @@ class CSVSource implements SourceInterface
             $dataRow = new DataRow;
             
             foreach($line as $key => $value) {
-                $dataItem = new DataItem;
-                $dataItem->fieldName = $this->fields[$key];
-                $dataItem->value = $value;
-                $dataRow->addDataItem($dataItem);
+
+                if (in_array($this->fields[$key], $fieldsToRetrieve)) {
+                    $dataItem = new DataItem;
+                    $dataItem->fieldName = $this->fields[$key];
+                    $dataItem->value = $value;
+                    $dataRow->addDataItem($dataItem);
+                }
             }
 
             $dataRows[] = $dataRow;
