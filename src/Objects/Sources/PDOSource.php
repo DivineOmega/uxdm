@@ -6,6 +6,7 @@ use RapidWeb\uxdm\Interfaces\SourceInterface;
 use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
 use PDO;
+use Exception;
 
 class PDOSource implements SourceInterface
 {
@@ -14,6 +15,7 @@ class PDOSource implements SourceInterface
     private $fields = [];
 
     public function __construct(PDO $pdo, $tableName) {
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo = $pdo;
         $this->tableName = $tableName;
         $this->fields = $this->getTableFields();

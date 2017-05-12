@@ -16,6 +16,19 @@ class DataRow
         return $this->dataItems;
     }
 
+    public function getKeyDataItems() {
+
+        $keyDataItems = [];
+
+        foreach($this->dataItems as $dataItem) {
+            if ($dataItem->keyField) {
+                $keyDataItems[] = $dataItem;
+            }
+        }
+
+        return $keyDataItems;
+    }
+
     public function prepare(array $keyFields, array $fieldMap)
     {
         $this->setKeyFields($keyFields);
