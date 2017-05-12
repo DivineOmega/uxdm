@@ -14,6 +14,7 @@ class Migrator
     private $fieldsToMigrate = [];
     private $keyFields = [];
     private $fieldMap = [];
+    private $dataItemManipulator;
 
     public function setSource(SourceInterface $source) {
         $this->source = $source;
@@ -37,6 +38,11 @@ class Migrator
 
     public function setFieldMap(array $fieldMap) {
         $this->fieldMap = $fieldMap;
+        return $this;
+    }
+
+    public function setDataItemManipulator(callable $dataItemManipulator) {
+        $this->dataItemManipulator = $dataItemManipulator;
         return $this;
     }
 
@@ -65,7 +71,7 @@ class Migrator
             }
 
             foreach($dataRows as $key => $dataRow) {
-                $dataRow->prepare($this->keyFields, $this->fieldMap);
+                $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator);
                 $dataRows[$key] = $dataRow;
             }
 

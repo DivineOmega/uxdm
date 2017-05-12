@@ -29,10 +29,11 @@ class DataRow
         return $keyDataItems;
     }
 
-    public function prepare(array $keyFields, array $fieldMap)
+    public function prepare(array $keyFields, array $fieldMap, callable $dataItemManipulator)
     {
         $this->setKeyFields($keyFields);
         $this->mapFields($fieldMap);
+        $this->callDataItemManipulator($dataItemManipulator);
     }
 
     private function setKeyFields(array $keyFields) {
@@ -51,6 +52,15 @@ class DataRow
                 $dataItem->fieldName = $newFieldName;
                 $dataItems[$key] = $dataItem;
             }
+        }
+    }
+
+    private function callDataItemManipulator(callable $dataItemManipulator) {
+        if (!$dataItemManipulator) {
+            return;
+        }
+        foreach($this->dataItems as $key => $dataItem) {
+            $dataItemManipulator($dataItem);
         }
     }
 }

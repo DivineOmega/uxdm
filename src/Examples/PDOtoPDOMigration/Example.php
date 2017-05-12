@@ -17,4 +17,9 @@ $migrator->setSource($pdoSource)
          ->setDestination($pdoDestination)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
+         ->setDataItemManipulator(function($dataItem) {
+            if ($dataItem->fieldName=='name') {
+                $dataItem->value = strtoupper($dataItem->value);
+            }
+         })
          ->migrate();
