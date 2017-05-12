@@ -15,6 +15,7 @@ class Migrator
     private $keyFields = [];
     private $fieldMap = [];
     private $dataItemManipulator;
+    private $skipIfTrueCheck;
 
     public function setSource(SourceInterface $source) {
         $this->source = $source;
@@ -46,6 +47,11 @@ class Migrator
         return $this;
     }
 
+    public function setSkipIfTrueCheck(callable $skipIfTrueCheck) {
+        $this->skipIfTrueCheck = $skipIfTrueCheck;
+        return $this;
+    }
+
     public function migrate() {
 
         if (!$this->source) {
@@ -73,6 +79,13 @@ class Migrator
             foreach($dataRows as $key => $dataRow) {
                 $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator);
                 $dataRows[$key] = $dataRow;
+            }
+
+            $skipIfTrueCheck = $this->skipIfTrueCheck;
+            foreach($dataRows as $key => $dataRow) {
+                if ($skipIfTrueCheck && $skipIfTrueCheck($dataRow)) {
+                    unset($dataRows[$key]);
+                }
             }
 
             $results[] = $this->destination->putDataRows($dataRows);

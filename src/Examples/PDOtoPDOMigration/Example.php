@@ -20,4 +20,12 @@ $migrator->setSource($pdoSource)
                 $dataItem->value = strtoupper($dataItem->value);
             }
          })
+         ->setSkipIfTrueCheck(function($dataRow) {
+             $dataItems = $dataRow->getDataItems();
+             foreach($dataItems as $dataItem) {
+                 if ($dataItem->fieldName=='name' && $dataItem->value=='TEST') {
+                     return true;
+                 }
+             }
+         })
          ->migrate();
