@@ -23,10 +23,10 @@ class PDODestination implements DestinationInterface
         $sql = 'select count(*) as c from '.$this->tableName.' where ';
 
         foreach($keyDataItems as $keyDataItem) {
-            $sql .= $keyDataItem->fieldName.' = ? ,';
+            $sql .= $keyDataItem->fieldName.' = ? and ';
         }
 
-        $sql = substr($sql, 0, -1);
+        $sql = substr($sql, 0, -4);
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -88,10 +88,10 @@ class PDODestination implements DestinationInterface
         $keyDataItems = $dataRow->getKeyDataItems();
 
         foreach($keyDataItems as $keyDataItem) {
-            $sql .= $keyDataItem->fieldName.' = ? , ';
+            $sql .= $keyDataItem->fieldName.' = ? and ';
         }
 
-        $sql = substr($sql, 0, -2);
+        $sql = substr($sql, 0, -4);
 
         $stmt = $this->pdo->prepare($sql);
 
