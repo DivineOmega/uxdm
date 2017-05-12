@@ -5,17 +5,23 @@ namespace RapidWeb\uxdm\Objects\Destinations;
 use RapidWeb\uxdm\Interfaces\DestinationInterface;
 use RapidWeb\uxdm\Objects\DataRow;
 use PDO;
+use PDOException;
 use Exception;
 
 class PDODestination implements DestinationInterface
 {
     private $pdo;
     private $tableName;
+    private $ignoreIntegrityConstraintViolations;
 
     public function __construct(PDO $pdo, $tableName) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo = $pdo;
         $this->tableName = $tableName;
+    }
+
+    public function ignoreIntegrityConstraintViolations($active = true) {
+        $this->ignoreIntegrityConstraintViolations = $active;
     }
 
     private function rowAlreadyExists(array $keyDataItems) {
@@ -131,11 +137,25 @@ class PDODestination implements DestinationInterface
         }
 
         foreach ($dataRowsToInsert as $dataRow) {
-            $this->insertDataRow($dataRow);
+            try {
+                $this->insertDataRow($dataRow);
+            } catch (PDOException $e) {
+                if ($this->ignoreIntegrityConstraintViolations && $e->getCode()==23000) {
+                    continue;
+                }
+                throw $e;
+            }
         }
 
         foreach ($dataRowsToUpdate as $dataRow) {
-            $this->updateDataRow($dataRow);
+            try {
+                $this->updateDataRow($dataRow);
+            } catch (PDOException $e) {
+                if ($this->ignoreIntegrityConstraintViolations && $e->getCode()==23000) {
+                    continue;
+                }
+                throw $e;
+            }
         }
 
     }
