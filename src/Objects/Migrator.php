@@ -14,10 +14,12 @@ class Migrator
     private $fieldsToMigrate = [];
     private $keyFields = [];
     private $fieldMap = [];
+    private $dataRowManipulator;
     private $dataItemManipulator;
     private $skipIfTrueCheck;
 
     public function __construct() {
+        $this->dataRowManipulator = function($dataRow) {};
         $this->dataItemManipulator = function($dataItem) {};
         $this->skipIfTrueCheck = function($dataRow) {};
     }
@@ -52,6 +54,11 @@ class Migrator
         return $this;
     }
 
+    public function setDataRowManipulator(callable $dataRowManipulator) {
+        $this->dataRowManipulator = $dataRowManipulator;
+        return $this;
+    }
+
     public function setSkipIfTrueCheck(callable $skipIfTrueCheck) {
         $this->skipIfTrueCheck = $skipIfTrueCheck;
         return $this;
@@ -83,12 +90,16 @@ class Migrator
 
             foreach($dataRows as $key => $dataRow) {
                 $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator);
-                $dataRows[$key] = $dataRow;
+            }
+
+            $dataRowManipulator = $this->dataRowManipulator;
+            foreach($dataRows as $dataRow) {
+                $dataRowManipulator($dataRow);
             }
 
             $skipIfTrueCheck = $this->skipIfTrueCheck;
             foreach($dataRows as $key => $dataRow) {
-                if ($skipIfTrueCheck && $skipIfTrueCheck($dataRow)) {
+                if ($skipIfTrueCheck($dataRow)) {
                     unset($dataRows[$key]);
                 }
             }

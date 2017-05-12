@@ -46,10 +46,7 @@ class PDOSource implements SourceInterface
             $dataRow = new DataRow;
             
             foreach($row as $key => $value) {
-                $dataItem = new DataItem;
-                $dataItem->fieldName = $key;
-                $dataItem->value = $value;
-                $dataRow->addDataItem($dataItem);
+                $dataRow->addDataItem(new DataItem($key, $value));
             }
 
             $dataRows[] = $dataRow;

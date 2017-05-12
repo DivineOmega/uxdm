@@ -56,9 +56,6 @@ class DataRow
     }
 
     private function callDataItemManipulator(callable $dataItemManipulator) {
-        if (!$dataItemManipulator) {
-            return;
-        }
         foreach($this->dataItems as $key => $dataItem) {
             $dataItemManipulator($dataItem);
         }
