@@ -17,6 +17,11 @@ class Migrator
     private $dataItemManipulator;
     private $skipIfTrueCheck;
 
+    public function __construct() {
+        $this->dataItemManipulator = function($dataItem) {};
+        $this->skipIfTrueCheck = function($dataRow) {};
+    }
+
     public function setSource(SourceInterface $source) {
         $this->source = $source;
         return $this;
