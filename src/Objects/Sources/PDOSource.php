@@ -41,13 +41,13 @@ class PDOSource implements SourceInterface
 
         $selectString = 'SELECT ';
 
-        if (!stripos($overrideSQL, $selectString)!==false) {
+        if (stripos($overrideSQL, $selectString)===false) {
             throw new Exception('PDO Source Override SQL must contain \''.$selectString.'\' to select source data.');
         }
 
         $limitString = 'LIMIT ? , ?';
 
-        if (!stripos($overrideSQL, $limitString)!==false) {
+        if (stripos($overrideSQL, $limitString)===false) {
             throw new Exception('PDO Source Override SQL must contain \''.$limitString.'\' to allow for pagination of source data.');
         }
 
