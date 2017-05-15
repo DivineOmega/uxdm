@@ -58,8 +58,12 @@ class PDOSource implements SourceInterface
         $this->fields = $this->getTableFields();
     }
 
-    private function getSQL() {
+    private function getSQL($fieldsToRetrieve) {
+
+        $fieldsSQL = implode(', ', $fieldsToRetrieve);
+
         $sql = 'select '.$fieldsSQL.' from '.$this->tableName.' limit ? , ?';
+
         if ($this->overrideSQL) {
             $sql = $this->overrideSQL;
         }
@@ -72,9 +76,7 @@ class PDOSource implements SourceInterface
 
         $offset = (($page-1) * $perPage);
 
-        $fieldsSQL = implode(', ', $fieldsToRetrieve);
-        
-        $sql = $this->getSQL();
+        $sql = $this->getSQL($fieldsToRetrieve);
         
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $offset);
