@@ -12,6 +12,15 @@ class DataRow
         $this->dataItems[] = $dataItem;
     }
 
+    public function removeDataItem(DataItem $dataItemToDelete) {
+        foreach($this>dataItems as $key => $dataItem) {
+            if ($dataItem == $dataItemToDelete) {
+                unset($this->dataItems[$key]);
+                break;
+            }
+        }
+    }
+
     public function getDataItems() {
         return $this->dataItems;
     }
