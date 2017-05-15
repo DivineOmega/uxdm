@@ -6,6 +6,7 @@ use RapidWeb\uxdm\Interfaces\SourceInterface;
 use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
 use PDO;
+use PDOStatement;
 use Exception;
 
 class PDOSource implements SourceInterface
@@ -23,14 +24,10 @@ class PDOSource implements SourceInterface
     }
 
     private function getTableFields() {
-        $sql = $this->getSQL();
-
-        $offset = 0;
-        $perPage = 1;
+        $sql = $this->getSQL(['*']);
         
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(1, $offset);
-        $stmt->bindValue(2, $perPage);
+        $this->bindLimitParameters($stmt, 0, 1);
 
         $stmt->execute();
 
@@ -70,6 +67,11 @@ class PDOSource implements SourceInterface
         return $sql;
     }
 
+    private function bindLimitParameters(PDOStatement $stmt, $offset, $perPage) {
+        $stmt->bindValue(1, $offset, PDO::PARAM_INT);
+        $stmt->bindValue(2, $perPage, PDO::PARAM_INT);
+    }
+
     public function getDataRows($page = 1, $fieldsToRetrieve = []) {
 
         $perPage = 10;
@@ -79,8 +81,7 @@ class PDOSource implements SourceInterface
         $sql = $this->getSQL($fieldsToRetrieve);
         
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(1, $offset);
-        $stmt->bindValue(2, $perPage);
+        $this->bindLimitParameters($stmt, $offset, $perPage);
 
         $stmt->execute();
 
