@@ -13,6 +13,7 @@ class PDOSource implements SourceInterface
     private $pdo;
     private $tableName;
     private $fields = [];
+    private $overrideSQL;
 
     public function __construct(PDO $pdo, $tableName) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -22,10 +23,31 @@ class PDOSource implements SourceInterface
     }
 
     private function getTableFields() {
-        $stmt = $this->pdo->prepare('DESCRIBE '.$this->tableName);
+        $sql = $this->getSQL();
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(1, $offset);
+        $stmt->bindValue(2, $perPage);
+
         $stmt->execute();
-        $tableFields = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $tableFields = array_keys($row);
         return $tableFields;
+    }
+
+    public function setOverrideSQL($overrideSQL) {
+        $this->overrideSQL = $overrideSQL;
+        $this->fields = $this->getTableFields();
+    }
+
+    private function getSQL() {
+        $sql = 'select '.$fieldsSQL.' from '.$this->tableName.' limit ? , ?';
+        if ($this->overrideSQL) {
+            $sql = $this->overrideSQL;
+        }
+        return $sql;
     }
 
     public function getDataRows($page = 1, $fieldsToRetrieve = []) {
@@ -36,8 +58,12 @@ class PDOSource implements SourceInterface
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
         
-        $sql = 'select '.$fieldsSQL.' from '.$this->tableName.' limit '.$offset.', '.$perPage;
+        $sql = $this->getSQL();
+        
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(1, $offset);
+        $stmt->bindValue(2, $perPage);
+
         $stmt->execute();
 
         $dataRows = [];
