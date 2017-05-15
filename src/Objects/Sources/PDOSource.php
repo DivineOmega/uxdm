@@ -38,6 +38,13 @@ class PDOSource implements SourceInterface
     }
 
     public function setOverrideSQL($overrideSQL) {
+
+        $limitString = 'LIMIT ? , ?';
+
+        if (!stripos($overrideSQL, $limitString)!==false) {
+            throw new Exception('PDO Source Override SQL must contain \''.$limitString.'\' to allow for pagination of source data.');
+        }
+
         $this->overrideSQL = $overrideSQL;
         $this->fields = $this->getTableFields();
     }
