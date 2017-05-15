@@ -13,7 +13,7 @@ class DataRow
     }
 
     public function removeDataItem(DataItem $dataItemToDelete) {
-        foreach($this>dataItems as $key => $dataItem) {
+        foreach($this->dataItems as $key => $dataItem) {
             if ($dataItem == $dataItemToDelete) {
                 unset($this->dataItems[$key]);
                 break;
