@@ -24,6 +24,9 @@ class PDOSource implements SourceInterface
 
     private function getTableFields() {
         $sql = $this->getSQL();
+
+        $offset = 0;
+        $perPage = 1;
         
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(1, $offset);
