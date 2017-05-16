@@ -5,6 +5,7 @@ namespace RapidWeb\uxdm\Objects\Sources;
 use RapidWeb\uxdm\Interfaces\SourceInterface;
 use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\Sources\PDO\Join;
 use PDO;
 use PDOStatement;
 use Exception;
@@ -15,6 +16,7 @@ class PDOSource implements SourceInterface
     private $tableName;
     private $fields = [];
     private $overrideSQL;
+    private $joins = [];
 
     public function __construct(PDO $pdo, $tableName) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -35,6 +37,10 @@ class PDOSource implements SourceInterface
 
         $tableFields = array_keys($row);
         return $tableFields;
+    }
+
+    public function addJoin(Join $join) {
+        $this->joins = $join;
     }
 
     public function setOverrideSQL($overrideSQL) {
@@ -59,7 +65,13 @@ class PDOSource implements SourceInterface
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
-        $sql = 'select '.$fieldsSQL.' from '.$this->tableName.' limit ? , ?';
+        $sql = 'select '.$fieldsSQL.' from '.$this->tableName;
+
+        foreach($this->joins as $join) {
+            $sql .= $join->getSQL();
+        }
+
+        $sql .= ' limit ? , ?';
 
         if ($this->overrideSQL) {
             $sql = $this->overrideSQL;
