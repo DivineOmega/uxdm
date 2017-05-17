@@ -41,7 +41,7 @@ class PDOSource implements SourceInterface
 
     public function addJoin(Join $join) {
         $this->joins[] = $join;
-        $this->getTableFields();
+        $this->fields = $this->getTableFields();
     }
 
     public function setOverrideSQL($overrideSQL) {
