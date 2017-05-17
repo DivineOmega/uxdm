@@ -5,6 +5,7 @@ namespace RapidWeb\uxdm\Objects;
 use RapidWeb\uxdm\Interfaces\SourceInterface;
 use RapidWeb\uxdm\Interfaces\DestinationInterface;
 use RapidWeb\uxdm\Objects\Sources\BaseSource;
+use RapidWeb\uxdm\Objects\DataRow;
 use Exception;
 
 class Migrator
@@ -117,17 +118,19 @@ class Migrator
                     continue;
                 }
 
-                $dataRowsCopy = $dataRows;
+                $destinationDataRows = [];
 
-                foreach($dataRowsCopy as $dataRow) {
+                foreach($dataRows as $dataRow) {
+                    $destinationDataRow = new DataRow();
                     foreach($dataRow->getDataItems() as $dataItem) {
-                        if (!in_array($dataItem->fieldName, $destinationContainer->fields)) {
-                            $dataRow->removeDataItem($dataItem);
+                        if (in_array($dataItem->fieldName, $destinationContainer->fields)) {
+                            $destinationDataRow->addDataItem($dataItem);
                         }
                     }
+                    $destinationDataRows[] = $destinationDataRow;
                 }
 
-                $results[] = $destinationContainer->destination->putDataRows($dataRowsCopy);
+                $results[] = $destinationContainer->destination->putDataRows($destinationDataRows);
             }
         }
 
