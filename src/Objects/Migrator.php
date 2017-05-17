@@ -10,7 +10,7 @@ use Exception;
 class Migrator
 {
     private $source;
-    private $destination;
+    private $destinationContainers = [];
     private $fieldsToMigrate = [];
     private $keyFields = [];
     private $fieldMap = [];
@@ -29,8 +29,14 @@ class Migrator
         return $this;
     }
 
-    public function setDestination(DestinationInterface $destination) {
-        $this->destination = $destination;
+    public function setDestination(DestinationInterface $destination, array $fields = []) {
+        $this->destinationContainers = [];
+        $this->addDestination($destination, $fields);
+        return $this;
+    }
+
+    public function addDestination(DestinationInterface $destination, array $fields = []) {
+        $this->destinationContainers[] = new DestinationContainer($destination, $fields);
         return $this;
     }
 
@@ -70,8 +76,8 @@ class Migrator
             throw new Exception('No source specified for migration.');
         }
 
-        if (!$this->destination) {
-            throw new Exception('No destination specified for migration.');
+        if (!$this->destinationContainers) {
+            throw new Exception('No destination containers specified for migration.');
         }
 
         if (!$this->fieldsToMigrate) {
@@ -104,7 +110,25 @@ class Migrator
                 }
             }
 
-            $results[] = $this->destination->putDataRows($dataRows);
+            foreach ($this->destinationContainers as $destinationContainer) {
+
+                if (!$destinationContainer->fields) {
+                    $results[] = $destinationContainer->destination->putDataRows($dataRows);
+                    continue;
+                }
+
+                $dataRowsCopy = $dataRows;
+
+                foreach($dataRowsCopy as $dataRow) {
+                    foreach($dataRow->getDataItems() as $dataItem) {
+                        if (!in_array($dataItem->fieldName, $destinationContainer->fields)) {
+                            $dataRow->removeDataItem($dataItem);
+                        }
+                    }
+                }
+
+                $results[] = $destinationContainer->destination->putDataRows($dataRowsCopy);
+            }
         }
 
         return $results;
