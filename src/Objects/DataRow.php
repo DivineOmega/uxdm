@@ -25,6 +25,17 @@ class DataRow
         return $this->dataItems;
     }
 
+    public function getDataItemByFieldName($fieldName) {
+
+        foreach($this->dataItems as $dataItem)
+        {
+            if($dataItem->fieldName == $fieldName){
+        
+                return $dataItem;
+            }
+        }
+    }
+
     public function getKeyDataItems() {
 
         $keyDataItems = [];
