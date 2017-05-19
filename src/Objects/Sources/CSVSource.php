@@ -54,7 +54,7 @@ class CSVSource implements SourceInterface
             foreach($line as $key => $value) {
 
                 if (in_array($this->fields[$key], $fieldsToRetrieve)) {
-                    $dataRow->addDataItem(new DataItem($this->fields[$key], $key));
+                    $dataRow->addDataItem(new DataItem($this->fields[$key], $value));
                 }
             }
 
