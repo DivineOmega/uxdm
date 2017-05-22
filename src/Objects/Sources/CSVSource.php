@@ -13,7 +13,9 @@ class CSVSource implements SourceInterface
 
     public function __construct($file) {
         $this->file = $file;
-        $this->fields = reset($this->getCSVLines(0, 1));
+        
+        $firstCSVLine = $this->getCSVLines(0, 1);
+        $this->fields = reset($firstCSVLine);
     }
 
     private function getCSVLines($offset, $amount) {
