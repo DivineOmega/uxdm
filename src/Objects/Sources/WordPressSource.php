@@ -23,20 +23,35 @@ class WordPressSource implements SourceInterface
     }
 
     private function getPostFields() {
-        $sql = $this->getSQL(['*']);
+        $sql = $this->getPostSQL(['*']);
         
         $stmt = $this->pdo->prepare($sql);
         $this->bindLimitParameters($stmt, 0, 1);
-
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $postFields = array_keys($row);
-        return $postFields;
+
+        foreach($postFields as $key => $postField) {
+            $postFields[$key] = 'post.'.$postField;
+        }
+
+        $sql = $this->getPostMetaSQL($row['ID']);
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        $postMetaFields = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $postMetaFields[] = 'post_meta.'.$row['meta_key'];
+        }
+
+        return array_merge($postFields, $postMetaFields);
     }
 
-    private function getSQL($fieldsToRetrieve) {
+    private function getPostSQL($fieldsToRetrieve) {
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
@@ -44,6 +59,23 @@ class WordPressSource implements SourceInterface
         $sql .= ' limit ? , ?';
 
         return $sql;
+    }
+
+    private function getPostMetaSQL($postID, array $fieldsToRetrieve = null) {
+
+        $sql = 'select meta_key, meta_value from wp_postmeta where ';
+
+        $sql .= 'post_id = '.$postID;
+
+        if ($fieldsToRetrieve) {
+            $sql .= ' and ( ';
+            foreach($fieldsToRetrieve as $fieldToRetrieve) {
+                ' meta_key = \''.$fieldsToRetrieve.'\' or ';
+            }
+            $sql = substr($sql, 0, -3);
+            $sql .= ' ) ';
+        }
+
     }
 
     private function bindLimitParameters(PDOStatement $stmt, $offset, $perPage) {
@@ -70,7 +102,18 @@ class WordPressSource implements SourceInterface
             $dataRow = new DataRow;
             
             foreach($row as $key => $value) {
-                $dataRow->addDataItem(new DataItem($key, $value));
+                $dataRow->addDataItem(new DataItem('post.'.$key, $value));
+            }
+
+            $sql = $this->getPostMetaSQL($row['ID'], $fieldsToRetrieve);
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+
+            $postMetaFields = [];
+
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $dataRow->addDataItem(new DataItem('post_meta.'.$row['meta_key'], $row['meta_value']));
             }
 
             $dataRows[] = $dataRow;
