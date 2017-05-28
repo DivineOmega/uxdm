@@ -23,7 +23,7 @@ class WordPressSource implements SourceInterface
     }
 
     private function getPostFields() {
-        $sql = 'select * from wp_posts where post_type = '.$this->postType.' limit ? , ?';
+        $sql = $this->getSQL(['*']);
         
         $stmt = $this->pdo->prepare($sql);
         $this->bindLimitParameters($stmt, 0, 1);
@@ -40,17 +40,9 @@ class WordPressSource implements SourceInterface
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
-        $sql = 'select '.$fieldsSQL.' from '.$this->tableName;
-
-        foreach($this->joins as $join) {
-            $sql .= $join->getSQL();
-        }
-
+        $sql = 'select '.$this->fieldsSQL.' from wp_posts where post_type = '.$this->postType;
         $sql .= ' limit ? , ?';
 
-        if ($this->overrideSQL) {
-            $sql = $this->overrideSQL;
-        }
         return $sql;
     }
 
