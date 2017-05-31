@@ -9,21 +9,20 @@ use PDO;
 use PDOStatement;
 use Exception;
 
-class WordPressSource implements SourceInterface
+class WordPressUserSource implements SourceInterface
 {
     private $pdo;
     private $fields = [];
-    private $postType;
+    private $userType;
 
-    public function __construct(PDO $pdo, $postType = 'post') {
+    public function __construct(PDO $pdo) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo = $pdo;
-        $this->postType = $postType;
-        $this->fields = $this->getPostFields();
+        $this->fields = $this->getUserFields();
     }
 
-    private function getPostFields() {
-        $sql = $this->getPostSQL(['*']);
+    private function getUserFields() {
+        $sql = $this->getUserSQL(['*']);
         
         $stmt = $this->pdo->prepare($sql);
         $this->bindLimitParameters($stmt, 0, 1);
@@ -31,41 +30,41 @@ class WordPressSource implements SourceInterface
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $postFields = array_keys($row);
+        $userFields = array_keys($row);
 
-        foreach($postFields as $key => $postField) {
-            $postFields[$key] = 'post.'.$postField;
+        foreach($userFields as $key => $userField) {
+            $userFields[$key] = 'user.'.$userField;
         }
 
-        $sql = $this->getPostMetaSQL($row['ID']);
+        $sql = $this->getUserMetaSQL($row['ID']);
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
-        $postMetaFields = [];
+        $userMetaFields = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $postMetaFields[] = 'post_meta.'.$row['meta_key'];
+            $userMetaFields[] = 'user_meta.'.$row['meta_key'];
         }
 
-        return array_merge($postFields, $postMetaFields);
+        return array_merge($userFields, $userMetaFields);
     }
 
-    private function getPostSQL($fieldsToRetrieve) {
+    private function getUserSQL($fieldsToRetrieve) {
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
-        $sql = 'select '.$this->fieldsSQL.' from wp_posts where post_type = '.$this->postType;
+        $sql = 'select '.$this->fieldsSQL.' from wp_users ';
         $sql .= ' limit ? , ?';
 
         return $sql;
     }
 
-    private function getPostMetaSQL($postID, array $fieldsToRetrieve = null) {
+    private function getUserMetaSQL($userID, array $fieldsToRetrieve = null) {
 
-        $sql = 'select meta_key, meta_value from wp_postmeta where ';
+        $sql = 'select meta_key, meta_value from wp_usermeta where ';
 
-        $sql .= 'post_id = '.$postID;
+        $sql .= 'user_id = '.$userID;
 
         if ($fieldsToRetrieve) {
             $sql .= ' and ( ';
@@ -102,18 +101,18 @@ class WordPressSource implements SourceInterface
             $dataRow = new DataRow;
             
             foreach($row as $key => $value) {
-                $dataRow->addDataItem(new DataItem('post.'.$key, $value));
+                $dataRow->addDataItem(new DataItem('user.'.$key, $value));
             }
 
-            $sql = $this->getPostMetaSQL($row['ID'], $fieldsToRetrieve);
+            $sql = $this->getUserMetaSQL($row['ID'], $fieldsToRetrieve);
 
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute();
 
-            $postMetaFields = [];
+            $userMetaFields = [];
 
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $dataRow->addDataItem(new DataItem('post_meta.'.$row['meta_key'], $row['meta_value']));
+                $dataRow->addDataItem(new DataItem('user_meta.'.$row['meta_key'], $row['meta_value']));
             }
 
             $dataRows[] = $dataRow;
