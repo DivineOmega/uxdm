@@ -9,11 +9,10 @@ use RapidWeb\uxdm\Objects\Migrator;
 $xmlSource = new XMLSource(__DIR__.'/source.xml', '/ns:urlset/ns:url');
 $xmlSource->addXMLNamespace('ns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
-var_dump($xmlSource->getFields());
-
 $csvDestination = new CSVDestination(__DIR__.'/destination.csv');
 
 $migrator = new Migrator;
 $migrator->setSource($xmlSource)
          ->setDestination($csvDestination)
+         ->setFieldsToMigrate(['loc'])
          ->migrate();
