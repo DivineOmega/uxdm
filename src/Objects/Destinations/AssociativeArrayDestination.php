@@ -8,7 +8,7 @@ class AssociativeArrayDestination implements DestinationInterface
 {
     private $array;
 
-    public function __construct(&$array) {
+    public function __construct(array &$array) {
         $this->array = $array;
     }
 
