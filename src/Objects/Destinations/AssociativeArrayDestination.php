@@ -21,7 +21,7 @@ class AssociativeArrayDestination implements DestinationInterface
             $row = [];
 
             foreach($dataItems as $dataItem) {
-                $row[$dataItem->field] = $dataItem->value;
+                $row[$dataItem->fieldName] = $dataItem->value;
             }
             
             $this->array[] = $row;
