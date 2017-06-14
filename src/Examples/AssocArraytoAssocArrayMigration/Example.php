@@ -18,6 +18,11 @@ $assocArrayDestination = new AssociativeArrayDestination($destinationArray);
 $migrator = new Migrator;
 $migrator->setSource($assocArraySource)
          ->setDestination($assocArrayDestination)
+         ->setDataItemManipulator(function($dataItem){
+             if ($dataItem->fieldName == 'height') {
+                 $dataItem->value = round($dataItem->value, 1);
+             }
+         })
          ->migrate();
 
 var_dump($destinationArray);
