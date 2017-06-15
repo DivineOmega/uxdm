@@ -51,9 +51,16 @@ class DataRow
 
     public function prepare(array $keyFields, array $fieldMap, callable $dataItemManipulator)
     {
+        $this->validate();
         $this->setKeyFields($keyFields);
         $this->mapFields($fieldMap);
         $this->callDataItemManipulator($dataItemManipulator);
+    }
+
+    private function validate() {
+        if (!$this->dataItems) {
+            throw new Exception('Data row contains no data items. The specified source may be producing an invalid data row.');
+        }
     }
 
     private function setKeyFields(array $keyFields) {
