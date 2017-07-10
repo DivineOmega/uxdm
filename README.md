@@ -4,7 +4,7 @@
 
 Universal Extensible Data Migrator (UXDM) is a PHP package designed to help developers migrate data from one system/format to another.
 
-# Migrations
+## Migrations
 
 Each UXDM migration requires a source object and at least one destination object. These determine how data is read or written. The UXDM package comes with a variety of source and destination objects, including the following.
 
@@ -18,9 +18,9 @@ Source and destination objects can be used in any combination. Data can be migra
 
 You can also use similar source and destination objects in the same migration. For example, a common use of UXDM is to use a PDO source and PDO destination to transfer data from one database to another. 
 
-# Examples
+## Examples
 
-## Basic database to database migration
+### Basic database to database migration
 
 An example of a simple database to database UXDM migration is shown below.
 
