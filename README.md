@@ -77,6 +77,8 @@ This migration will move user data between two databases. However, it will also 
 
 ### Modifying data rows during migration
 
+#### Adding data items
+
 This examples shows how UXDM can modify each row of data while the migration is taking place.
 
 ```php
@@ -92,3 +94,23 @@ $migrator->setSource($pdoSource)
 ```
 
 This migration will add a random number into a field called `random_number` for each row of data. This will then be migrated to the destination database along with the other fields.
+
+#### Removing data items
+
+This example demonstrates has data items can be removed from a data row. You may wish to do this if you want to use its value, but not actually migrate it to the destination.
+
+```php
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name'])
+         ->setKeyFields(['id'])
+         ->setDataRowManipulator(function($dataRow) {
+            $emailDataItem = $dataRow->getDataItemByFieldName('email');
+            $dataRow->addDataItem(new DataItem('email_hash', md5($emailDataItem->value)));
+            $dataRow->removeDataItem($emailDataItem);
+         })
+         ->migrate();
+```
+
+This migration gets the data from the `email` field in the source, creates a new `email_hash` data item which contains an md5 of the email address, and then removes the original `email` data item. This new `email_hash` will then be migrated to the destination database along with the other fields, excluding the removed `email` field.
