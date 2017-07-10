@@ -36,4 +36,4 @@ $migrator->setSource($pdoSource)
          ->setKeyFields(['id'])
 ```
 
-This migration will move the `id`, `email` and `name` fields from the the `users` table in the `old-test` database, to the `new_users` table in the `new_users`, replacing any existing records with the same `id` (the key field).
+This migration will move the `id`, `email` and `name` fields from the the `users` table in the `old-test` database, to the `new_users` table in the `new-test` database, replacing any existing records with the same `id` (the key field).
