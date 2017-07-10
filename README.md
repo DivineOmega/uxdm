@@ -34,6 +34,7 @@ $migrator->setSource($pdoSource)
          ->setDestination($pdoDestination)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
+         ->migrate();
 ```
 
 This migration will move the `id`, `email` and `name` fields from the the `users` table in the `old-test` database, to the `new_users` table in the `new-test` database, replacing any existing records with the same `id` (the key field).
@@ -49,6 +50,7 @@ $migrator->setSource($pdoSource)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
          ->setFieldMap(['name' => 'full_name'])
+         ->migrate();
 ```
 
 This migration will move data from the source `name` field into the destination `full_name` field, while still moving the `id` and `email` fields normally.
@@ -68,6 +70,7 @@ $migrator->setSource($pdoSource)
                 $dataItem->value = strtoupper($dataItem->value);
             }
          })
+         ->migrate();
 ```
 
 This migration will move user data between two databases. However, it will also convert the value in the `name` field to uppercase.
@@ -85,6 +88,7 @@ $migrator->setSource($pdoSource)
          ->setDataRowManipulator(function($dataRow) {
             $dataRow->addDataItem(new DataItem('random_number', rand(1,1000)));
          })
+         ->migrate();
 ```
 
 This migration will add a random number into a field called `random_number` for each row of data. This will then be migrated to the destination database along with the other fields.
