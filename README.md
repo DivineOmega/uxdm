@@ -55,25 +55,6 @@ This migration will move data from the source `name` field into the destination 
 
 ### Modifying data items during migration
 
-The following example shows how you can use UXDM to modify data during the migration process.
-
-```php
-$migrator = new Migrator;
-$migrator->setSource($pdoSource)
-         ->setDestination($pdoDestination)
-         ->setFieldsToMigrate(['id', 'email', 'name'])
-         ->setKeyFields(['id'])
-         ->setDataItemManipulator(function($dataItem) {
-            if ($dataItem->fieldName=='name') {
-                $dataItem->value = strtoupper($dataItem->value);
-            }
-         })
-```
-
-This migration will move user data between two databases. However, it will also convert the value in the `name` field to uppercase.
-
-### Modifying data items during migration
-
 The following example shows how you can use UXDM to modify items of data during the migration process.
 
 ```php
