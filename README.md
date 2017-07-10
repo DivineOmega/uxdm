@@ -20,7 +20,7 @@ You can also use similar source and destination objects in the same migration. F
 
 ## Examples
 
-### Basic database to database migration
+### Database to database migration
 
 An example of a basic database to database UXDM migration is shown below.
 
@@ -37,3 +37,73 @@ $migrator->setSource($pdoSource)
 ```
 
 This migration will move the `id`, `email` and `name` fields from the the `users` table in the `old-test` database, to the `new_users` table in the `new-test` database, replacing any existing records with the same `id` (the key field).
+
+### Mapping field names from source to destination
+
+This examples shows how UXDM can map field names from source to destination.
+
+```php
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name'])
+         ->setKeyFields(['id'])
+         ->setFieldMap(['name' => 'full_name'])
+```
+
+This migration will move data from the source `name` field into the destination `full_name` field, while still moving the `id` and `email` fields normally.
+
+### Modifying data items during migration
+
+The following example shows how you can use UXDM to modify data during the migration process.
+
+```php
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name'])
+         ->setKeyFields(['id'])
+         ->setDataItemManipulator(function($dataItem) {
+            if ($dataItem->fieldName=='name') {
+                $dataItem->value = strtoupper($dataItem->value);
+            }
+         })
+```
+
+This migration will move user data between two databases. However, it will also convert the value in the `name` field to uppercase.
+
+### Modifying data items during migration
+
+The following example shows how you can use UXDM to modify items of data during the migration process.
+
+```php
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name'])
+         ->setKeyFields(['id'])
+         ->setDataItemManipulator(function($dataItem) {
+            if ($dataItem->fieldName=='name') {
+                $dataItem->value = strtoupper($dataItem->value);
+            }
+         })
+```
+
+This migration will move user data between two databases. However, it will also convert the value in the `name` field to uppercase.
+
+### Modifying data rows during migration
+
+This examples shows how UXDM can modify each row of data while the migration is taking place.
+
+```php
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name'])
+         ->setKeyFields(['id'])
+         ->setDataRowManipulator(function($dataRow) {
+            $dataRow->addDataItem(new DataItem('random_number', rand(1,1000)));
+         })
+```
+
+This migration will add a random number into a field called `random_number` for each row of data. This will then be migrated to the destination database along with the other fields.
