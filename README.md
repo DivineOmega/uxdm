@@ -22,7 +22,7 @@ You can also use similar source and destination objects in the same migration. F
 
 ### Basic database to database migration
 
-An example of a simple database to database UXDM migration is shown below.
+An example of a basic database to database UXDM migration is shown below.
 
 ```php
 $pdoSource = new PDOSource(new PDO('mysql:dbname=old-test;host=127.0.0.1', 'root', 'password123'), 'users');
