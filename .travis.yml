@@ -8,6 +8,6 @@ php:
 install:
   - composer update
 script:
-- ./vendor/bin/phpunit --coverage-clover ./tests/Logs/clover.xml
+ - ./vendor/bin/phpunit --coverage-clover ./tests/Logs/clover.xml
 after_script:
-- php vendor/bin/coveralls -v
+ - php vendor/bin/coveralls -v
