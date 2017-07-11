@@ -13,6 +13,16 @@ final class XMLSourceTest extends TestCase
         return $xmlSource;
     }
 
+    public function testCreationOfXMLSourceWithIncorrectXPath()
+    {
+        $this->expectException(Exception::class);
+
+        $xmlSource = new XMLSource(__DIR__.'/Data/source.xml', '/ns:urlsAt/ns:url');
+        $xmlSource->addXMLNamespace('ns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+
+        $xmlSource->getFields();
+    }
+
     public function testGetFields()
     {
         $source = $this->createXMLSource();
