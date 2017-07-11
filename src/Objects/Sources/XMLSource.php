@@ -80,10 +80,6 @@ class XMLSource implements SourceInterface
 
             }
 
-            if($count >= $offset + $perPage) {
-                break;
-            }
-
             $count++;
         }
 
