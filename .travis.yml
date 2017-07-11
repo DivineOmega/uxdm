@@ -7,3 +7,7 @@ php:
   - 'hhvm'
 install:
   - composer update
+script:
+- ./vendor/bin/phpunit --coverage-clover ./tests/Logs/clover.xml
+after_script:
+- php vendor/bin/coveralls -v
