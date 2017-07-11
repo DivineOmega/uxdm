@@ -94,7 +94,7 @@ class XMLSource implements SourceInterface
     public function getFields() {
 
         if (!$this->fields) {
-            $this->fields = $this->getXMLFields();
+            $this->fields = array_values($this->getXMLFields());
         }
 
         return $this->fields;
