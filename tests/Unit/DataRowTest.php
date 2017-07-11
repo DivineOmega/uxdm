@@ -147,4 +147,18 @@ final class DataRowTest extends TestCase
         $this->assertEquals(strrev($oldValue), $dataItemRetrieved->value);
     }
 
+    public function testValidationOfEmptyDataRow() {
+
+        $this->expectException(Exception::class);
+
+        $dataRow = new DataRow();
+        
+        $keyFields = [];
+        $fieldMap = [];
+        $dataItemManipulator = function () {};
+
+        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace RapidWeb\uxdm\Objects;
 
 use RapidWeb\uxdm\Objects\DataItem;
+use Exception;
 
 class DataRow
 {
