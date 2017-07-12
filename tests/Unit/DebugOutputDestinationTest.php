@@ -34,13 +34,17 @@ final class DebugOutputDestinationTest extends TestCase
         $destination = new DebugOutputDestination();
         ob_start();
         $destination->putDataRows($dataRows);
-        $output = ob_get_clean();
+        $output = $this->stripFirstLine(ob_get_clean());
 
         ob_start();
         var_dump($dataRows);
-        $expectedOutput = ob_get_clean();
+        $expectedOutput = $this->stripFirstLine(ob_get_clean());
 
         $this->assertEquals($expectedOutput, $output);        
     }
+
+    private function stripFirstLine($text){        
+        return substr($text, strpos($text, "\n")+1);
+        }
 
 }
