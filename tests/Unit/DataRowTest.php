@@ -85,6 +85,18 @@ final class DataRowTest extends TestCase
         $this->assertEquals($dataItemRetrieved, $dataItem);
     }
 
+    public function testGetDataItemByFieldNameFailure()
+    {
+        $dataItem = $this->createDataItem();
+
+        $dataRow = new DataRow();
+        $dataRow->addDataItem($dataItem);
+
+        $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName.'_invalid');
+
+        $this->assertEquals($dataItemRetrieved, null);
+    }
+
     public function testKeyFieldsPreparation()
     {
         $dataItem = $this->createDataItem();
