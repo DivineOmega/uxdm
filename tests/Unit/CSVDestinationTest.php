@@ -27,6 +27,20 @@ final class CSVDestinationTest extends TestCase
         return $dataRows;
     }
 
+    private function getExpectedFileContent(array $dataRows) 
+    {
+        $expectedFileContent = 'name,value'.PHP_EOL;
+        
+        foreach($dataRows as $dataRow) {
+            $expectedFileContent .= $dataRow->getDataItemByFieldName('name')->value;
+            $expectedFileContent .= ',';
+            $expectedFileContent .= $dataRow->getDataItemByFieldName('value')->value;
+            $expectedFileContent .= PHP_EOL;
+        }
+
+        return $expectedFileContent;
+    }
+
     public function testPutDataRows()
     {
         $dataRows = $this->createDataRows();
@@ -38,16 +52,7 @@ final class CSVDestinationTest extends TestCase
 
         $fileContent = file_get_contents($file);
 
-        $expectedFileContent = 'name,value'.PHP_EOL;
-        
-        foreach($dataRows as $dataRow) {
-            $expectedFileContent .= $dataRow->getDataItemByFieldName('name')->value;
-            $expectedFileContent .= ',';
-            $expectedFileContent .= $dataRow->getDataItemByFieldName('value')->value;
-            $expectedFileContent .= PHP_EOL;
-        }
-
-        $this->assertEquals($expectedFileContent, $fileContent);        
+        $this->assertEquals($this->getExpectedFileContent($dataRows), $fileContent);        
     }
 
 }
