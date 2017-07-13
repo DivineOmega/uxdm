@@ -3,7 +3,6 @@
 use PHPUnit\Framework\TestCase;
 
 use RapidWeb\uxdm\Objects\Sources\PDOSource;
-use PDO;
 
 final class PDOSourceTest extends TestCase
 {
