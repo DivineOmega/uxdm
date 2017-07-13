@@ -32,16 +32,54 @@ final class PDODestinationTest extends TestCase
         $dataRows = [];
 
         $dataRow = new DataRow;
-        $dataRow->addDataItem(new DataItem('name', $faker->word));
+        $dataRow->addDataItem(new DataItem('name', $faker->word, true));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
 
         $dataRow = new DataRow;
-        $dataRow->addDataItem(new DataItem('name', $faker->word));
+        $dataRow->addDataItem(new DataItem('name', $faker->word, true));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
 
         return $dataRows;
+    }
+
+    private function alterDataRows(array $dataRows)
+    {
+        $faker = Faker\Factory::create();
+
+        foreach($dataRows as $dataRow) {
+            $dataItem = $dataRow->getDataItemByFieldName('value');
+            $dataItem->value = $faker->randomNumber;
+        }
+
+        return $dataRows;
+    }
+
+    private function getActualArray()
+    {
+        $sql = 'SELECT * FROM pdo_destination_test';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $rows;
+    }
+
+    private function getExpectedArray(array $dataRows)
+    {
+        $expectedArray = [];
+
+        foreach($dataRows as $dataRow) {
+            $expectedArrayRow = [];
+            foreach($dataRow->getDataItems() as $dataItem) {
+                $expectedArrayRow[$dataItem->fieldName] = $dataItem->value;
+            }
+            $expectedArray[] = $expectedArrayRow;
+        }
+
+        return $expectedArray;
     }
 
     public function testPutDataRows()
@@ -52,22 +90,14 @@ final class PDODestinationTest extends TestCase
 
         $destination->putDataRows($dataRows);
 
-        $sql = 'SELECT * FROM pdo_destination_test';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        $this->assertEquals($this->getExpectedArray($dataRows), $this->getActualArray());
 
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $dataRows = $this->alterDataRows($dataRows);
 
-        $expectedArray = [];
-        foreach($dataRows as $dataRow) {
-            $expectedArrayRow = [];
-            foreach($dataRow->getDataItems() as $dataItem) {
-                $expectedArrayRow[$dataItem->fieldName] = $dataItem->value;
-            }
-            $expectedArray[] = $expectedArrayRow;
-        }
+        $destination->putDataRows($dataRows);
 
-        $this->assertEquals($expectedArray, $rows);        
+        $this->assertEquals($this->getExpectedArray($dataRows), $this->getActualArray());
+        
     }
 
 }
