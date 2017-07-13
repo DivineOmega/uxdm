@@ -56,15 +56,23 @@ class PDODestination implements DestinationInterface
 
     private function insertDataRow(DataRow $dataRow) {
 
-        $sql = 'insert into '.$this->tableName.' set ';
-
         $dataItems = $dataRow->getDataItems();
 
-        foreach($dataItems as $dataItem) {
-            $sql .= $dataItem->fieldName.' = ? , ';
-        }
+        $sql = 'insert into '.$this->tableName.' (';
 
+        foreach($dataItems as $dataItem) {
+            $sql .= $dataItem->fieldName.' , ';
+        }
         $sql = substr($sql, 0, -2);
+
+        $sql .= ') values (';
+
+        foreach($dataItems as $dataItem) {
+            $sql .= '? , ';
+        }
+        $sql = substr($sql, 0, -2);
+
+        $sql .= ')';
 
         $stmt = $this->pdo->prepare($sql);
 
