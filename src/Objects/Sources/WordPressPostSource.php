@@ -55,7 +55,7 @@ class WordPressPostSource implements SourceInterface
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
-        $sql = 'select '.$this->fieldsSQL.' from wp_posts where post_type = '.$this->postType;
+        $sql = 'select '.$fieldsSQL.' from wp_posts where post_type = \''.$this->postType.'\'';
         $sql .= ' limit ? , ?';
 
         return $sql;
