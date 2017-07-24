@@ -34,7 +34,7 @@ class WordPressPostSource implements SourceInterface
         $postFields = array_keys($row);
 
         foreach($postFields as $key => $postField) {
-            $postFields[$key] = 'post.'.$postField;
+            $postFields[$key] = 'wp_post.'.$postField;
         }
 
         $sql = $this->getPostMetaSQL($row['ID']);
@@ -45,7 +45,7 @@ class WordPressPostSource implements SourceInterface
         $postMetaFields = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $postMetaFields[] = 'post_meta.'.$row['meta_key'];
+            $postMetaFields[] = 'wp_post_meta.'.$row['meta_key'];
         }
 
         return array_merge($postFields, $postMetaFields);
