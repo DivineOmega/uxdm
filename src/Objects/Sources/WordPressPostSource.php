@@ -90,7 +90,7 @@ class WordPressPostSource implements SourceInterface
 
         $offset = (($page-1) * $perPage);
 
-        $sql = $this->getSQL($fieldsToRetrieve);
+        $sql = $this->getPostSQL($fieldsToRetrieve);
         
         $stmt = $this->pdo->prepare($sql);
         $this->bindLimitParameters($stmt, $offset, $perPage);
