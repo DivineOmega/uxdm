@@ -76,6 +76,7 @@ class WordPressPostSource implements SourceInterface
             $sql .= ' ) ';
         }
 
+        return $sql;
     }
 
     private function bindLimitParameters(PDOStatement $stmt, $offset, $perPage) {
