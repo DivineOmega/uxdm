@@ -13,6 +13,7 @@ Each UXDM migration requires a source object and at least one destination object
 * CSV (Comma Seperated Values) Source & Destination
 * Associative Array Source & Destination
 * XML Source
+* WordPress Post Source
 * Debug Output Destination
 
 Source and destination objects can be used in any combination. Data can be migrated from a CSV and inserted into a database, just as easily as data can be migrated from a database to a CSV.
