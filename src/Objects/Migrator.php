@@ -7,7 +7,7 @@ use RapidWeb\uxdm\Interfaces\DestinationInterface;
 use RapidWeb\uxdm\Objects\Sources\BaseSource;
 use RapidWeb\uxdm\Objects\DataRow;
 use Exception;
-use Psr\SimpleCache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 class Migrator
 {
@@ -75,7 +75,7 @@ class Migrator
         return $this;
     }
 
-    public function setSourceCache(CacheInterface $sourceCachePool, $sourceCacheKey, $sourceCacheExpiresAfter = 60*60*24) {
+    public function setSourceCache(CacheItemPoolInterface $sourceCachePool, $sourceCacheKey, $sourceCacheExpiresAfter = 60*60*24) {
         $this->sourceCachePool = $sourceCachePool;
         $this->sourceCacheKey = $sourceCacheKey;
         $this->sourceCacheExpiresAfter = $sourceCacheExpiresAfter;

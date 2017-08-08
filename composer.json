@@ -20,7 +20,7 @@
     },
     "license": "LGPL3",
     "require": {
-        "psr/simple-cache": "^1.0",
-        "cache/cache": "^1.0"
+        "psr/cache": "^1.0",
+        "cache/cache": "^1.0"        
     }
 }
