@@ -17,6 +17,7 @@ class PDOSource implements SourceInterface
     private $fields = [];
     private $overrideSQL;
     private $joins = [];
+    private $perPage = 10;
 
     public function __construct(PDO $pdo, $tableName) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -62,6 +63,10 @@ class PDOSource implements SourceInterface
         $this->fields = $this->getTableFields();
     }
 
+    public function setPerPage($perPage = 10) {
+        $this->perPage = $perPage;
+    }
+
     private function getSQL($fieldsToRetrieve) {
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
@@ -80,21 +85,19 @@ class PDOSource implements SourceInterface
         return $sql;
     }
 
-    private function bindLimitParameters(PDOStatement $stmt, $offset, $perPage) {
+    private function bindLimitParameters(PDOStatement $stmt, $offset) {
         $stmt->bindValue(1, $offset, PDO::PARAM_INT);
-        $stmt->bindValue(2, $perPage, PDO::PARAM_INT);
+        $stmt->bindValue(2, $this->perPage, PDO::PARAM_INT);
     }
 
     public function getDataRows($page = 1, $fieldsToRetrieve = []) {
 
-        $perPage = 10;
-
-        $offset = (($page-1) * $perPage);
+        $offset = (($page-1) * $this->perPage);
 
         $sql = $this->getSQL($fieldsToRetrieve);
         
         $stmt = $this->pdo->prepare($sql);
-        $this->bindLimitParameters($stmt, $offset, $perPage);
+        $this->bindLimitParameters($stmt, $offset);
 
         $stmt->execute();
 
