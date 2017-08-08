@@ -7,6 +7,7 @@ use RapidWeb\uxdm\Interfaces\DestinationInterface;
 use RapidWeb\uxdm\Objects\Sources\BaseSource;
 use RapidWeb\uxdm\Objects\DataRow;
 use Exception;
+use Psr\SimpleCache\CacheInterface;
 
 class Migrator
 {
@@ -18,6 +19,9 @@ class Migrator
     private $dataRowManipulator;
     private $dataItemManipulator;
     private $skipIfTrueCheck;
+    private $sourceCachePool;
+    private $sourceCacheKey;
+    private $sourceCacheExpiresAfter;
 
     public function __construct() {
         $this->dataRowManipulator = function($dataRow) {};
@@ -71,6 +75,34 @@ class Migrator
         return $this;
     }
 
+    public function setSourceCache(CacheInterface $sourceCachePool, $sourceCacheKey, $sourceCacheExpiresAfter = 60*60*24) {
+        $this->sourceCachePool = $sourceCachePool;
+        $this->sourceCacheKey = $sourceCacheKey;
+        $this->sourceCacheExpiresAfter = $sourceCacheExpiresAfter;
+        return $this;
+    }
+
+    private function getSourceDataRows($page) {
+
+        if (!$this->sourceCachePool || !$this->sourceCacheKey) {
+            return $this->source->getDataRows($page, $this->fieldsToMigrate);
+        }
+
+        $cacheItem = $this->sourceCachePool->getItem(sha1($this->sourceCacheKey.$page));
+        $dataRows = $cacheItem->get();
+
+        if ($cacheItem->isHit()) {
+            return $cacheItem->get();
+        }
+
+        $dataRows = $this->source->getDataRows($page, $this->fieldsToMigrate);
+        $cacheItem->set($dataRows);
+        $cacheItem->expiresAfter($this->sourceCacheExpiresAfter);
+        $this->sourceCachePool->save($cacheItem);
+
+        return $dataRows;
+    }
+
     public function migrate() {
 
         if (!$this->source) {
@@ -89,8 +121,8 @@ class Migrator
 
         for ($page=1; $page < PHP_INT_MAX; $page++) { 
 
-            $dataRows = $this->source->getDataRows($page, $this->fieldsToMigrate);
-
+            $dataRows = $this->getSourceDataRows($page);
+            
             if (!$dataRows) {
                 break;
             }
