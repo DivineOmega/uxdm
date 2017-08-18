@@ -24,7 +24,7 @@ final class MigratorTest extends TestCase
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
-        $sql = 'CREATE TABLE IF NOT EXISTS migrator_test (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, md5_name TEXT)';
+        $sql = 'CREATE TABLE IF NOT EXISTS migrator_test (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, md5_name TEXT, email_address TEXT)';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
@@ -48,7 +48,8 @@ final class MigratorTest extends TestCase
         $expected[0] = [
             'id' => 2,
             'name' => 'BEAR',
-            'md5_name' => 'e699d5afb08b7a16fb4e9c707353fe48'
+            'md5_name' => 'e699d5afb08b7a16fb4e9c707353fe48',
+            'email_address' => 'bear@example.com'
         ];
         return $expected;
     }
@@ -59,8 +60,9 @@ final class MigratorTest extends TestCase
 
         $migrator->setSource($this->getPDOSource())
                  ->setDestination($this->getPDODestination())
-                 ->setFieldsToMigrate(['id', 'name'])
+                 ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
+                 ->setFieldMap(['email' => 'email_address'])
                  ->setDataItemManipulator(function($dataItem) {
                     if ($dataItem->fieldName=='name') {
                         $dataItem->value = strtoupper($dataItem->value);
