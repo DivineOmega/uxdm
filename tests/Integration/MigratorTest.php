@@ -6,6 +6,7 @@ use RapidWeb\uxdm\Objects\Migrator;
 use RapidWeb\uxdm\Objects\DataItem;
 use RapidWeb\uxdm\Objects\Sources\PDOSource;
 use RapidWeb\uxdm\Objects\Destinations\PDODestination;
+use Cache\Adapter\PHPArray\ArrayCachePool;
 
 final class MigratorTest extends TestCase
 {
@@ -190,6 +191,36 @@ final class MigratorTest extends TestCase
 
         $this->assertEquals($this->getExpectedArray(), $this->getActualArray());
         $this->assertEquals($this->getExpectedArray2(), $this->getActualArray2());
+    }
+
+    public function testMigratorWithCache()
+    {
+        $cache = new ArrayCachePool();
+
+        $migrator = new Migrator;
+
+        $migrator->setSource($this->getPDOSource())
+                 ->setSourceCache($cache, 'testCache', 60*60*24)
+                 ->setDestination($this->getPDODestination())
+                 ->setFieldsToMigrate(['id', 'name', 'email'])
+                 ->setKeyFields(['id'])
+                 ->setFieldMap(['email' => 'email_address'])
+                 ->setDataItemManipulator(function($dataItem) {
+                    if ($dataItem->fieldName=='name') {
+                        $dataItem->value = strtoupper($dataItem->value);
+                    }
+                 })
+                 ->setDataRowManipulator(function($dataRow) {
+                    $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
+                 })
+                 ->setSkipIfTrueCheck(function($dataRow) {
+                    if ($dataRow->getDataItemByFieldName('name')->value=='TIM') {
+                        return true;
+                    }
+                 })
+                 ->migrate();
+
+        $this->assertEquals($this->getExpectedArray(), $this->getActualArray());
     }
 
 }

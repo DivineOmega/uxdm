@@ -20,6 +20,7 @@
     },
     "license": "LGPL3",
     "require": {
-        "psr/cache": "^1.0" 
+        "psr/cache": "^1.0",
+        "cache/array-adapter": "^1.0" 
     }
 }
