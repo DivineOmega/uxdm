@@ -5,6 +5,16 @@
 
 Universal Extensible Data Migrator (UXDM) is a PHP package designed to help developers migrate data from one system/format to another.
 
+## Installation
+
+UXDM can be easily installed using Composer. Just run the following command from the root of your project.
+
+```
+composer require rapidwebltd/uxdm
+```
+
+If you have never used the Composer dependency manager before, head to the [Composer website](https://getcomposer.org/) for more information on how to get started.
+
 ## Migrations
 
 Each UXDM migration requires a source object and at least one destination object. These determine where and how data is read and written. The UXDM package comes with a variety of source and destination objects, including the following.
