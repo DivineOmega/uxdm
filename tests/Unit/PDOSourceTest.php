@@ -117,4 +117,40 @@ final class PDOSourceTest extends TestCase
         $this->assertEquals('tim@example.com', $dataItems[1]->value);
     }
 
+    public function testGetDataRowsPagination()
+    {
+        $source = $this->createPDOSource();
+        $source->setPerPage(1);
+
+        $dataRows = $source->getDataRows(1, ['name', 'email']);
+
+        $this->assertCount(1, $dataRows);
+
+        $dataItems = $dataRows[0]->getDataItems();
+
+        $this->assertCount(2, $dataItems);
+
+        $this->assertEquals('name', $dataItems[0]->fieldName);
+        $this->assertEquals('Tim', $dataItems[0]->value);
+
+        $this->assertEquals('email', $dataItems[1]->fieldName);
+        $this->assertEquals('tim@example.com', $dataItems[1]->value);
+
+        $dataRows = $source->getDataRows(2, ['name', 'email']);
+        
+        $this->assertCount(1, $dataRows);
+
+        $dataItems = $dataRows[0]->getDataItems();
+
+        $this->assertEquals('name', $dataItems[0]->fieldName);
+        $this->assertEquals('Bear', $dataItems[0]->value);
+
+        $this->assertEquals('email', $dataItems[1]->fieldName);
+        $this->assertEquals('bear@example.com', $dataItems[1]->value);
+
+        $dataRows = $source->getDataRows(3, ['name', 'email']);
+
+        $this->assertCount(0, $dataRows);
+    }
+
 }
