@@ -7,6 +7,8 @@ use RapidWeb\uxdm\Objects\DataItem;
 use RapidWeb\uxdm\Objects\Sources\PDOSource;
 use RapidWeb\uxdm\Objects\Destinations\PDODestination;
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
+use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
 
 final class MigratorTest extends TestCase
 {
@@ -121,7 +123,7 @@ final class MigratorTest extends TestCase
 
     public function testMigratorWithNoSource()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(NoSourceException::class);
 
         $migrator = new Migrator;
         $migrator->migrate();
@@ -130,7 +132,7 @@ final class MigratorTest extends TestCase
 
     public function testMigratorWithNoDestination()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(NoDestinationException::class);
 
         $migrator = new Migrator;
         $migrator->setSource($this->getPDOSource())

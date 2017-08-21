@@ -8,6 +8,8 @@ use RapidWeb\uxdm\Objects\Sources\BaseSource;
 use RapidWeb\uxdm\Objects\DataRow;
 use Exception;
 use Psr\Cache\CacheItemPoolInterface;
+use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
+use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
 
 class Migrator
 {
@@ -106,11 +108,11 @@ class Migrator
     public function migrate() {
 
         if (!$this->source) {
-            throw new Exception('No source specified for migration.');
+            throw new NoSourceException('No source specified for migration.');
         }
 
         if (!$this->destinationContainers) {
-            throw new Exception('No destination containers specified for migration.');
+            throw new NoDestinationException('No destination containers specified for migration.');
         }
 
         if (!$this->fieldsToMigrate) {
