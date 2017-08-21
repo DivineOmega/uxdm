@@ -5,6 +5,7 @@ use Faker\Factory;
 
 use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
 
 final class DataRowTest extends TestCase
 {
@@ -161,7 +162,7 @@ final class DataRowTest extends TestCase
 
     public function testValidationOfEmptyDataRow() {
 
-        $this->expectException(Exception::class);
+        $this->expectException(NoDataItemsInDataRowException::class);
 
         $dataRow = new DataRow();
         

@@ -3,7 +3,7 @@
 namespace RapidWeb\uxdm\Objects;
 
 use RapidWeb\uxdm\Objects\DataItem;
-use Exception;
+use RapidWeb\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
 
 class DataRow
 {
@@ -60,7 +60,7 @@ class DataRow
 
     private function validate() {
         if (!$this->dataItems) {
-            throw new Exception('Data row contains no data items. The specified source may be producing an invalid data row.');
+            throw new NoDataItemsInDataRowException('Data row contains no data items. The specified source may be producing an invalid data row.');
         }
     }
 
