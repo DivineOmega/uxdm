@@ -13,7 +13,6 @@ class WordPressUserSource implements SourceInterface
 {
     private $pdo;
     private $fields = [];
-    private $userType;
 
     public function __construct(PDO $pdo) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -33,7 +32,7 @@ class WordPressUserSource implements SourceInterface
         $userFields = array_keys($row);
 
         foreach($userFields as $key => $userField) {
-            $userFields[$key] = 'user.'.$userField;
+            $userFields[$key] = 'wp_users.'.$userField;
         }
 
         $sql = $this->getUserMetaSQL($row['ID']);
@@ -44,7 +43,7 @@ class WordPressUserSource implements SourceInterface
         $userMetaFields = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $userMetaFields[] = 'user_meta.'.$row['meta_key'];
+            $userMetaFields[] = 'wp_usermeta.'.$row['meta_key'];
         }
 
         return array_merge($userFields, $userMetaFields);
@@ -52,9 +51,15 @@ class WordPressUserSource implements SourceInterface
 
     private function getUserSQL($fieldsToRetrieve) {
 
+        foreach($fieldsToRetrieve as $key => $fieldToRetrieve) {
+            if (strpos($fieldToRetrieve, 'wp_users.')!==0 && $fieldToRetrieve!=='*') {
+                unset($fieldsToRetrieve[$key]);
+            }
+        }
+
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
-        $sql = 'select '.$this->fieldsSQL.' from wp_users ';
+        $sql = 'select '.$fieldsSQL.' from wp_users';
         $sql .= ' limit ? , ?';
 
         return $sql;
@@ -67,14 +72,23 @@ class WordPressUserSource implements SourceInterface
         $sql .= 'user_id = '.$userID;
 
         if ($fieldsToRetrieve) {
+            
+            foreach($fieldsToRetrieve as $key => $fieldToRetrieve) {
+                if (strpos($fieldToRetrieve, 'wp_usermeta.')!==0) {
+                    unset($fieldsToRetrieve[$key]);
+                }
+                $fieldsToRetrieve[$key] = str_replace('wp_usermeta.', '', $fieldToRetrieve);
+            }
+
             $sql .= ' and ( ';
             foreach($fieldsToRetrieve as $fieldToRetrieve) {
-                ' meta_key = \''.$fieldsToRetrieve.'\' or ';
+                $sql .= ' meta_key = \''.$fieldToRetrieve.'\' or ';
             }
             $sql = substr($sql, 0, -3);
             $sql .= ' ) ';
         }
 
+        return $sql;
     }
 
     private function bindLimitParameters(PDOStatement $stmt, $offset, $perPage) {
@@ -88,31 +102,31 @@ class WordPressUserSource implements SourceInterface
 
         $offset = (($page-1) * $perPage);
 
-        $sql = $this->getSQL($fieldsToRetrieve);
-        
-        $stmt = $this->pdo->prepare($sql);
-        $this->bindLimitParameters($stmt, $offset, $perPage);
+        $usersSql = $this->getUserSQL($fieldsToRetrieve);
 
-        $stmt->execute();
+        $usersStmt = $this->pdo->prepare($usersSql);
+        $this->bindLimitParameters($usersStmt, $offset, $perPage);
+
+        $usersStmt->execute();
 
         $dataRows = [];
 
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while($usersRow = $usersStmt->fetch(PDO::FETCH_ASSOC)) {
             $dataRow = new DataRow;
             
-            foreach($row as $key => $value) {
+            foreach($usersRow as $key => $value) {
                 $dataRow->addDataItem(new DataItem('user.'.$key, $value));
             }
 
-            $sql = $this->getUserMetaSQL($row['ID'], $fieldsToRetrieve);
-
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
-
-            $userMetaFields = [];
-
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $dataRow->addDataItem(new DataItem('user_meta.'.$row['meta_key'], $row['meta_value']));
+            if (isset($usersRow['ID'])) {
+                $userMetaSql = $this->getUserMetaSQL($usersRow['ID'], $fieldsToRetrieve);
+                
+                $userMetaStmt = $this->pdo->prepare($userMetaSql);
+                $userMetaStmt->execute();
+    
+                while($userMetaRow = $userMetaStmt->fetch(PDO::FETCH_ASSOC)) {
+                    $dataRow->addDataItem(new DataItem('user_meta.'.$userMetaRow['meta_key'], $userMetaRow['meta_value']));
+                }
             }
 
             $dataRows[] = $dataRow;
