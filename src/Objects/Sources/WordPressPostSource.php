@@ -120,13 +120,15 @@ class WordPressPostSource implements SourceInterface
                 $dataRow->addDataItem(new DataItem('post.'.$key, $value));
             }
 
-            $postMetaSql = $this->getPostMetaSQL($postsRow['ID'], $fieldsToRetrieve);
-
-            $postMetaStmt = $this->pdo->prepare($postMetaSql);
-            $postMetaStmt->execute();
-
-            while($postMetaRow = $postMetaStmt->fetch(PDO::FETCH_ASSOC)) {
-                $dataRow->addDataItem(new DataItem('post_meta.'.$postMetaRow['meta_key'], $postMetaRow['meta_value']));
+            if (isset($postsRow['ID'])) {
+                $postMetaSql = $this->getPostMetaSQL($postsRow['ID'], $fieldsToRetrieve);
+                
+                $postMetaStmt = $this->pdo->prepare($postMetaSql);
+                $postMetaStmt->execute();
+    
+                while($postMetaRow = $postMetaStmt->fetch(PDO::FETCH_ASSOC)) {
+                    $dataRow->addDataItem(new DataItem('post_meta.'.$postMetaRow['meta_key'], $postMetaRow['meta_value']));
+                }
             }
 
             $dataRows[] = $dataRow;
