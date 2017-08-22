@@ -115,7 +115,7 @@ class WordPressUserSource implements SourceInterface
             $dataRow = new DataRow;
             
             foreach($usersRow as $key => $value) {
-                $dataRow->addDataItem(new DataItem('user.'.$key, $value));
+                $dataRow->addDataItem(new DataItem('wp_users.'.$key, $value));
             }
 
             if (isset($usersRow['ID'])) {
@@ -125,7 +125,7 @@ class WordPressUserSource implements SourceInterface
                 $userMetaStmt->execute();
     
                 while($userMetaRow = $userMetaStmt->fetch(PDO::FETCH_ASSOC)) {
-                    $dataRow->addDataItem(new DataItem('user_meta.'.$userMetaRow['meta_key'], $userMetaRow['meta_value']));
+                    $dataRow->addDataItem(new DataItem('wp_usermeta.'.$userMetaRow['meta_key'], $userMetaRow['meta_value']));
                 }
             }
 

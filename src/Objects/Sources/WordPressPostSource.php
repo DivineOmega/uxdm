@@ -117,7 +117,7 @@ class WordPressPostSource implements SourceInterface
             $dataRow = new DataRow;
             
             foreach($postsRow as $key => $value) {
-                $dataRow->addDataItem(new DataItem('post.'.$key, $value));
+                $dataRow->addDataItem(new DataItem('wp_posts.'.$key, $value));
             }
 
             if (isset($postsRow['ID'])) {
@@ -127,7 +127,7 @@ class WordPressPostSource implements SourceInterface
                 $postMetaStmt->execute();
     
                 while($postMetaRow = $postMetaStmt->fetch(PDO::FETCH_ASSOC)) {
-                    $dataRow->addDataItem(new DataItem('post_meta.'.$postMetaRow['meta_key'], $postMetaRow['meta_value']));
+                    $dataRow->addDataItem(new DataItem('wp_postmeta.'.$postMetaRow['meta_key'], $postMetaRow['meta_value']));
                 }
             }
 

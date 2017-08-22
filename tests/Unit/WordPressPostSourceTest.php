@@ -59,35 +59,35 @@ final class WordPressPostSourceTest extends TestCase
 
         $this->assertCount(5, $dataItems);
 
-        $this->assertEquals('post.ID', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_posts.ID', $dataItems[0]->fieldName);
         $this->assertEquals('1', $dataItems[0]->value);
 
-        $this->assertEquals('post.post_title', $dataItems[1]->fieldName);
+        $this->assertEquals('wp_posts.post_title', $dataItems[1]->fieldName);
         $this->assertEquals('Test title 1', $dataItems[1]->value);
 
-        $this->assertEquals('post.post_content', $dataItems[2]->fieldName);
+        $this->assertEquals('wp_posts.post_content', $dataItems[2]->fieldName);
         $this->assertEquals('Test content 1', $dataItems[2]->value);
 
-        $this->assertEquals('post_meta.test_key_1', $dataItems[3]->fieldName);
+        $this->assertEquals('wp_postmeta.test_key_1', $dataItems[3]->fieldName);
         $this->assertEquals('test_value_1', $dataItems[3]->value);
 
-        $this->assertEquals('post_meta.test_key_2', $dataItems[4]->fieldName);
+        $this->assertEquals('wp_postmeta.test_key_2', $dataItems[4]->fieldName);
         $this->assertEquals('test_value_2', $dataItems[4]->value);
 
         $dataItems = $dataRows[1]->getDataItems();
 
         $this->assertCount(4, $dataItems);
 
-        $this->assertEquals('post.ID', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_posts.ID', $dataItems[0]->fieldName);
         $this->assertEquals('2', $dataItems[0]->value);
 
-        $this->assertEquals('post.post_title', $dataItems[1]->fieldName);
+        $this->assertEquals('wp_posts.post_title', $dataItems[1]->fieldName);
         $this->assertEquals('Test title 2', $dataItems[1]->value);
 
-        $this->assertEquals('post.post_content', $dataItems[2]->fieldName);
+        $this->assertEquals('wp_posts.post_content', $dataItems[2]->fieldName);
         $this->assertEquals('Test content 2', $dataItems[2]->value);
 
-        $this->assertEquals('post_meta.test_key_1', $dataItems[3]->fieldName);
+        $this->assertEquals('wp_postmeta.test_key_1', $dataItems[3]->fieldName);
         $this->assertEquals('test_value_3', $dataItems[3]->value);
 
         $dataRows = $source->getDataRows(2, $fields);
@@ -109,14 +109,14 @@ final class WordPressPostSourceTest extends TestCase
 
         $this->assertCount(1, $dataItems);
 
-        $this->assertEquals('post.post_title', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_posts.post_title', $dataItems[0]->fieldName);
         $this->assertEquals('Test title 1', $dataItems[0]->value);
 
         $dataItems = $dataRows[1]->getDataItems();
 
         $this->assertCount(1, $dataItems);
 
-        $this->assertEquals('post.post_title', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_posts.post_title', $dataItems[0]->fieldName);
         $this->assertEquals('Test title 2', $dataItems[0]->value);
 
         $dataRows = $source->getDataRows(2, $fields);

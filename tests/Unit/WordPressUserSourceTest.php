@@ -47,35 +47,35 @@ final class WordPressUserSourceTest extends TestCase
 
         $this->assertCount(5, $dataItems);
 
-        $this->assertEquals('user.ID', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_users.ID', $dataItems[0]->fieldName);
         $this->assertEquals('1', $dataItems[0]->value);
 
-        $this->assertEquals('user.user_login', $dataItems[1]->fieldName);
+        $this->assertEquals('wp_users.user_login', $dataItems[1]->fieldName);
         $this->assertEquals('jordan', $dataItems[1]->value);
 
-        $this->assertEquals('user.user_email', $dataItems[2]->fieldName);
+        $this->assertEquals('wp_users.user_email', $dataItems[2]->fieldName);
         $this->assertEquals('jordan@example.com', $dataItems[2]->value);
 
-        $this->assertEquals('user_meta.test_key_1', $dataItems[3]->fieldName);
+        $this->assertEquals('wp_usermeta.test_key_1', $dataItems[3]->fieldName);
         $this->assertEquals('test_value_1', $dataItems[3]->value);
 
-        $this->assertEquals('user_meta.test_key_2', $dataItems[4]->fieldName);
+        $this->assertEquals('wp_usermeta.test_key_2', $dataItems[4]->fieldName);
         $this->assertEquals('test_value_2', $dataItems[4]->value);
 
         $dataItems = $dataRows[1]->getDataItems();
 
         $this->assertCount(4, $dataItems);
 
-        $this->assertEquals('user.ID', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_users.ID', $dataItems[0]->fieldName);
         $this->assertEquals('2', $dataItems[0]->value);
 
-        $this->assertEquals('user.user_login', $dataItems[1]->fieldName);
+        $this->assertEquals('wp_users.user_login', $dataItems[1]->fieldName);
         $this->assertEquals('bob', $dataItems[1]->value);
 
-        $this->assertEquals('user.user_email', $dataItems[2]->fieldName);
+        $this->assertEquals('wp_users.user_email', $dataItems[2]->fieldName);
         $this->assertEquals('bob@example.com', $dataItems[2]->value);
 
-        $this->assertEquals('user_meta.test_key_1', $dataItems[3]->fieldName);
+        $this->assertEquals('wp_usermeta.test_key_1', $dataItems[3]->fieldName);
         $this->assertEquals('test_value_3', $dataItems[3]->value);
 
         $dataRows = $source->getDataRows(2, $fields);
@@ -97,14 +97,14 @@ final class WordPressUserSourceTest extends TestCase
 
         $this->assertCount(1, $dataItems);
 
-        $this->assertEquals('user.user_email', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_users.user_email', $dataItems[0]->fieldName);
         $this->assertEquals('jordan@example.com', $dataItems[0]->value);
 
         $dataItems = $dataRows[1]->getDataItems();
 
         $this->assertCount(1, $dataItems);
 
-        $this->assertEquals('user.user_email', $dataItems[0]->fieldName);
+        $this->assertEquals('wp_users.user_email', $dataItems[0]->fieldName);
         $this->assertEquals('bob@example.com', $dataItems[0]->value);
 
         $dataRows = $source->getDataRows(2, $fields);
