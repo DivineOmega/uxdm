@@ -9,6 +9,7 @@ use RapidWeb\uxdm\Objects\Destinations\PDODestination;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
 use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
+use RapidWeb\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 
 final class MigratorTest extends TestCase
 {
@@ -136,6 +137,32 @@ final class MigratorTest extends TestCase
 
         $migrator = new Migrator;
         $migrator->setSource($this->getPDOSource())
+                 ->migrate();
+
+    }
+
+    public function testMigratorWithKeyFieldThatIsNotPresentInFieldsToMigrate()
+    {
+        $this->expectException(MissingFieldToMigrateException::class);
+
+        $migrator = new Migrator;
+        $migrator->setSource($this->getPDOSource())
+                 ->setDestination($this->getPDODestination())
+                 ->setFieldsToMigrate(['email'])
+                 ->setKeyFields(['id'])
+                 ->migrate();
+
+    }
+
+    public function testMigratorWithMigrateMapSourceFieldThatIsNotPresentInFieldsToMigrate()
+    {
+        $this->expectException(MissingFieldToMigrateException::class);
+
+        $migrator = new Migrator;
+        $migrator->setSource($this->getPDOSource())
+                 ->setDestination($this->getPDODestination())
+                 ->setFieldsToMigrate(['id'])
+                 ->setFieldMap(['email' => 'email_address'])
                  ->migrate();
 
     }

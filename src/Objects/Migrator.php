@@ -10,6 +10,7 @@ use Exception;
 use Psr\Cache\CacheItemPoolInterface;
 use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
 use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
+use RapidWeb\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 
 class Migrator
 {
@@ -117,6 +118,18 @@ class Migrator
 
         if (!$this->fieldsToMigrate) {
             $this->fieldsToMigrate = $this->source->getFields();
+        }
+
+        foreach(array_keys($this->fieldMap) as $sourceField) {
+            if (!in_array($sourceField, $this->fieldsToMigrate)) {
+                throw new MissingFieldToMigrateException('The source field `'.$sourceField.'` is present in the field map but not present in the fields to migrate.');
+            }
+        }
+
+        foreach($this->keyFields as $keyField) {
+            if (!in_array($keyField, $this->fieldsToMigrate)) {
+                throw new MissingFieldToMigrateException('The field `'.$keyField.'` is present in the key fields list but not present in the fields to migrate.');
+            }
         }
 
         $results = [];
