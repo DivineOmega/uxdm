@@ -92,7 +92,6 @@ class Migrator
         }
 
         $cacheItem = $this->sourceCachePool->getItem(sha1($this->sourceCacheKey.$page));
-        $dataRows = $cacheItem->get();
 
         if ($cacheItem->isHit()) {
             return $cacheItem->get();
