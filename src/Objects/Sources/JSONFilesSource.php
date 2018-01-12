@@ -13,6 +13,18 @@ class JSONFilesSource implements SourceInterface
 
     public function __construct(array $files = []) {
         $this->files = $files;
+
+        $this->fields = [];
+
+        foreach($files as $file) {
+            $array = json_decode(file_get_contents($file), true);
+            $dottedArray = array_dot($array);
+
+            $this->fields = array_merge($this->fields, array_keys($dottedArray));
+        }
+
+        $this->fields = array_unique($this->fields);
+
     }
 
     public function getDataRows($page = 1, $fieldsToRetrieve = []) {
