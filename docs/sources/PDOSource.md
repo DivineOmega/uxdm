@@ -1,14 +1,14 @@
 # PDO Source
 
 The UXDM PDO source allows you to source data from one or more database tables. It supports
- any database type that you can create a [PHP Database Object](https://secure.php.net/manual/en/book.pdo.php) for.
+any database type that you can create a [PHP Database Object](https://secure.php.net/manual/en/book.pdo.php) for.
 
- ## Creating
+## Creating
 
- To create a new PDO source, you must provide it with a PDO object and the name of the table
- you wish to source data from. 
- 
- The following example creates a new PDO object for a `test` database on the localhost with username `root` and password `password123`. It then creates a PDO source object, using the newly created PDO object and the table name `users` to source data from.
+To create a new PDO source, you must provide it with a PDO object and the name of the table
+you wish to source data from. 
+
+The following example creates a new PDO object for a `test` database on the localhost with username `root` and password `password123`. It then creates a PDO source object, using the newly created PDO object and the table name `users` to source data from.
 
 ```php
 $pdo = new PDO('mysql:dbname=test;host=127.0.0.1', 'root', 'password123');
