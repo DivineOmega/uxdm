@@ -6,7 +6,7 @@ systems.
 
 ## Creating
 
-To create a new XML source, you must provide it with the file path of XML file, and the xPath query indicating where to
+To create a new XML source, you must provide it with the file path of XML file, and the XPath query indicating where to
 find the data in the file.
 
 Consider the following example file.
@@ -25,13 +25,13 @@ Consider the following example file.
 </books>
 ```
 
-The code below creates an XML source object, using this XML file in the same directory, and an xPath query that specifies
+The code below creates an XML source object, using this XML file in the same directory, and an XPath query that specifies
 that the `book` sections should be retrieved.
 
 ```php
 $xmlFile = __DIR__.'/books.xml';
-$xpathQuery = '/books/book';
-$xmlSource = new XMLSource($xmlFile, $xpathQuery);
+$xPathQuery = '/books/book';
+$xmlSource = new XMLSource($xmlFile, $xPathQuery);
 ```
 
 ## Assigning to migrator
@@ -74,7 +74,7 @@ For example, consider the following snippet from an XML sitemap.
 ```
 
 This sitemap defines a namespace of `http://www.sitemaps.org/schemas/sitemap/0.9`. This can be added as `ns` using
-the XML source's `addXMLNamespace` method, as shown below. Note also that the xPath query is also modified to
+the XML source's `addXMLNamespace` method, as shown below. Note that the XPath query is also modified to
 include the namespace.
 
 ```php
