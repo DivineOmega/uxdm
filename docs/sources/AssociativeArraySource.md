@@ -1,6 +1,7 @@
 # Associative Array Source
 
 The UXDM associative array source allows you to source data from a simple multidimensional associative array.
+It can be useful if you have already retrieved the required data and can parse it into an array.
 
 ## Creating
 
