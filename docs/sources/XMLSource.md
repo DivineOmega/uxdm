@@ -25,8 +25,8 @@ Consider the following example file.
 </books>
 ```
 
-The code below creates an XML source object, using this XML file in the same directory, an xPath query that specifies
-that the `book` sections should be retrieved, and specifications of the required namespaces.
+The code below creates an XML source object, using this XML file in the same directory, and an xPath query that specifies
+that the `book` sections should be retrieved.
 
 ```php
 $xmlFile = __DIR__.'/books.xml';
