@@ -1,6 +1,6 @@
 # XML Source
 
-The UXDM XML source allows you to source data from a comma seperated file (XML). Since many systems contain export
+The UXDM XML source allows you to source data from an XML file. Since many systems contain export
 tools that can output data in XML format, this source can be very useful for indirectly sourcing data from external 
 systems.
 
