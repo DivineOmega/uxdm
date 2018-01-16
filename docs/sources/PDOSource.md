@@ -21,7 +21,7 @@ To use the PDO source as part of a UXDM migration, you must assign it to the mig
 
 ```php
 $migrator = new Migrator;
-$migrator->setSource($pdoSource)
+$migrator->setSource($pdoSource);
 ```
 
 ## Overriding SQL
@@ -30,8 +30,8 @@ By default the PDO source will generate its own SQL statements to access table d
 if you wish, you can override this SQL to access the data differently.
 
 ```php
-$sql = 'SELECT * FROM users LIMIT ? , ?'
-$pdoSource->setOverrideSQL($sql):
+$sql = 'SELECT * FROM users LIMIT ? , ?';
+$pdoSource->setOverrideSQL($sql);
 ```
 
 Please note: You must include `SELECT` and `LIMIT ? , ?` in the override SQL.

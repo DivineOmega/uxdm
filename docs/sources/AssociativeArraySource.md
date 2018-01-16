@@ -1,7 +1,7 @@
 # Associative Array Source
 
 The UXDM associative array source allows you to source data from a simple multidimensional associative array.
-It can be useful if you have already retrieved the required data and can parse it into an array.
+It can be useful if you have already retrieved the required data by other means.
 
 ## Creating
 
@@ -14,7 +14,7 @@ $crew = [
     ['name' => 'Picard', 'role' => 'captain'],
     ['name' => 'Data', 'role' => 'second-officer'],
     ['name' => 'Riker', 'role' => 'first-officer']
-] 
+];
 ```
 
 The following example creates a associative array source object, using the associative array defined above.
@@ -29,5 +29,5 @@ To use the associative array source as part of a UXDM migration, you must assign
 
 ```php
 $migrator = new Migrator;
-$migrator->setSource($associativeArraySource)
+$migrator->setSource($associativeArraySource);
 ```
