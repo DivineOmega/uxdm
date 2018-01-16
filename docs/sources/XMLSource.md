@@ -6,8 +6,8 @@ systems.
 
 ## Creating
 
-To create a new XML source, you must provide it with the file path of XML file, the xPath query indicating where to
-find the data in the file, and any namespaces that are required.
+To create a new XML source, you must provide it with the file path of XML file, and the xPath query indicating where to
+find the data in the file.
 
 Consider the following example file.
 
