@@ -38,7 +38,7 @@ Consider the following files.
 
 Deep fields and arrays are represented using dot notation, such as `access_level.number` and `colours.0`.
 
-The following example creates a JSON files source object, using an array of file paths created from the PHP `glob` function.
+The following example creates a JSON files source object, using an array of file paths created by the PHP `glob` function.
 
 ```php
 $filePaths = glob(__DIR__.'/users/*.json');
