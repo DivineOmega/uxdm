@@ -1,4 +1,4 @@
-# JSON files Source
+# JSON Files Source
 
 The UXDM JSON files source allows you to source data from multiple JSON files - each one representing a single record containing multiple fields.
 
@@ -8,7 +8,7 @@ To create a new JSON files source, you must provide it with an array of file pat
 
 Consider the following files.
 
-users/james.json
+**users/james.json**
 ```json
 {
     "name": "James Matthews",
@@ -22,7 +22,7 @@ users/james.json
 }
 ```
 
-users/jenny.json
+**users/jenny.json**
 ```json
 {
     "name": "Jenny Williams",
@@ -36,7 +36,7 @@ users/jenny.json
 }
 ```
 
-Deep fields are represented using dot notation, such as `access_level.number` and `colours.0`.
+Deep fields and arrays are represented using dot notation, such as `access_level.number` and `colours.0`.
 
 The following example creates a JSON files source object, using an array of file paths created from the PHP `glob` function.
 
