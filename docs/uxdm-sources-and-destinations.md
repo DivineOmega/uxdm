@@ -9,6 +9,7 @@ For general documentation and usage examples, see the main [README](../README.md
 * [PDO Source](sources/PDOSource.md)
 * [CSV Source](sources/CSVSource.md)
 * [XML Source](sources/XMLSource.md)
+* [JSON Files Source](sources/JSONFilesSource.md)
 * [Associative Array Source](sources/AssociativeArraySource.md)
 
 ## Destinations
