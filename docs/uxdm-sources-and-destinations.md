@@ -11,5 +11,7 @@ For general documentation and usage examples, see the main [README](../README.md
 * [XML Source](sources/XMLSource.md)
 * [JSON Files Source](sources/JSONFilesSource.md)
 * [Associative Array Source](sources/AssociativeArraySource.md)
+* [WordPress Post Source](sources/WordPressPostSource.md)
+* [WordPress User Source](sources/WordPressUserSource.md)
 
 ## Destinations
