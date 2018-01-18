@@ -2,5 +2,5 @@ composer.lock
 vendor/
 tests/Logs/
 tests/Unit/Data/destination.*
-tests/Unit/Data/JSONFilesDestination/*
+tests/Unit/Data/JSONFilesDestination/*.json
 src/Examples/**/cache/**
