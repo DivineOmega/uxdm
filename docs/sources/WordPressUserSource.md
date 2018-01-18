@@ -1,6 +1,6 @@
 # WordPress User Source
 
-The UXDM WordPress user source allows you to source user data and post meta data from a WordPress database.
+The UXDM WordPress user source allows you to source user data and user meta data from a WordPress database.
 
 ## Creating
 
