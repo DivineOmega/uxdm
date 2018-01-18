@@ -22,6 +22,7 @@
     "require": {
         "psr/cache": "^1.0",
         "cache/array-adapter": "^1.0",
-        "illuminate/support": "^5.1" 
+        "illuminate/support": "^5.1",
+        "rapidwebltd/array_undot": "^1.0" 
     }
 }
