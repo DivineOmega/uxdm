@@ -18,3 +18,4 @@ For general documentation and usage examples, see the main [README](../README.md
 
 * [PDO Destination](destinations/PDODestination.md)
 * [CSV Destination](destinations/CSVDestination.md)
+* [JSON Files Destination](destinations/JSONFilesDestination.md)
