@@ -15,3 +15,5 @@ For general documentation and usage examples, see the main [README](../README.md
 * [WordPress User Source](sources/WordPressUserSource.md)
 
 ## Destinations
+
+* [CSV Destination](destinations/CSVDestination.md)
