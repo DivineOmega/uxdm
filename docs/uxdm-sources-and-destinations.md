@@ -16,4 +16,5 @@ For general documentation and usage examples, see the main [README](../README.md
 
 ## Destinations
 
+* [PDO Destination](destinations/PDODestination.md)
 * [CSV Destination](destinations/CSVDestination.md)
