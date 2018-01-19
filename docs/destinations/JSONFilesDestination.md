@@ -5,7 +5,7 @@ The UXDM JSON files destination allows you to export data to multiple JSON files
 ## Creating
 
 To create a new JSON files destination, you must provide it with the file path of the directory you wish the JSON files to be created in. 
-The JSON files will be named `1.json`, `2.json`, `3.json`, etc. Any existing JSON files in the specified directory that match this format will 
+The JSON files will be named `1.json`, `2.json`, `3.json`, and so on. Any existing JSON files in the specified directory that match this format will 
 be overwritten.
 
 The following example creates a JSON files destination object, using a subdirectory called `users` in the same directory.
