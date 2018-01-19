@@ -1,4 +1,4 @@
-# JSON Files destination
+# JSON Files Destination
 
 The UXDM JSON files destination allows you to export data to multiple JSON files - each one representing a single record containing multiple fields.
 
