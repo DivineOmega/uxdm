@@ -55,7 +55,10 @@ class DataRow
         $this->validate();
         $this->setKeyFields($keyFields);
         $this->mapFields($fieldMap);
-        $this->callDataItemManipulator($dataItemManipulator);
+
+        if ($dataItemManipulator !== null) {
+            $this->callDataItemManipulator($dataItemManipulator);
+        }
     }
 
     private function validate()

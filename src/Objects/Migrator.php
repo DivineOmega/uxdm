@@ -16,22 +16,12 @@ class Migrator
     private $fieldsToMigrate = [];
     private $keyFields = [];
     private $fieldMap = [];
-    private $dataRowManipulator;
-    private $dataItemManipulator;
-    private $skipIfTrueCheck;
+    private $dataRowManipulator = null;
+    private $dataItemManipulator = null;
+    private $skipIfTrueCheck = null;
     private $sourceCachePool;
     private $sourceCacheKey;
     private $sourceCacheExpiresAfter;
-
-    public function __construct()
-    {
-        $this->dataRowManipulator = function ($dataRow) {
-        };
-        $this->dataItemManipulator = function ($dataItem) {
-        };
-        $this->skipIfTrueCheck = function ($dataRow) {
-        };
-    }
 
     public function setSource(SourceInterface $source)
     {
@@ -165,15 +155,19 @@ class Migrator
                 $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator);
             }
 
-            $dataRowManipulator = $this->dataRowManipulator;
-            foreach ($dataRows as $dataRow) {
-                $dataRowManipulator($dataRow);
+            if ($this->dataRowManipulator !== null) {
+                $dataRowManipulator = $this->dataRowManipulator;
+                foreach ($dataRows as $dataRow) {
+                    $dataRowManipulator($dataRow);
+                }
             }
 
-            $skipIfTrueCheck = $this->skipIfTrueCheck;
-            foreach ($dataRows as $key => $dataRow) {
-                if ($skipIfTrueCheck($dataRow)) {
-                    unset($dataRows[$key]);
+            if ($this->skipIfTrueCheck !== null) {
+                $skipIfTrueCheck = $this->skipIfTrueCheck;
+                foreach ($dataRows as $key => $dataRow) {
+                    if ($skipIfTrueCheck($dataRow)) {
+                        unset($dataRows[$key]);
+                    }
                 }
             }
 
