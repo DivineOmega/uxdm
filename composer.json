@@ -18,7 +18,7 @@
             "RapidWeb\\uxdm\\": "src/"
         }
     },
-    "license": "LGPL3",
+    "license": "LGPL-3.0-only",
     "require": {
         "psr/cache": "^1.0",
         "cache/array-adapter": "^1.0",
