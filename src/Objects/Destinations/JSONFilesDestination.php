@@ -9,19 +9,19 @@ class JSONFilesDestination implements DestinationInterface
     private $directory;
     private $fileNum = 1;
 
-    public function __construct($directory) {
+    public function __construct($directory)
+    {
         $this->directory = realpath($directory);
     }
 
-    public function putDataRows(array $dataRows) {
-
-        foreach($dataRows as $dataRow) {
-
+    public function putDataRows(array $dataRows)
+    {
+        foreach ($dataRows as $dataRow) {
             $dataItems = $dataRow->getDataItems();
 
             $row = [];
 
-            foreach($dataItems as $dataItem) {
+            foreach ($dataItems as $dataItem) {
                 $row[$dataItem->fieldName] = $dataItem->value;
             }
 

@@ -1,9 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
-use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\Destinations\JSONFilesDestination;
 
 final class JSONFilesDestinationTest extends TestCase
@@ -14,7 +13,7 @@ final class JSONFilesDestinationTest extends TestCase
 
         $dataRows = [];
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRow->addDataItem(new DataItem('nested.word', $faker->word));
@@ -26,7 +25,7 @@ final class JSONFilesDestinationTest extends TestCase
         $dataRow->addDataItem(new DataItem('nested.array.2', $faker->word));
         $dataRows[] = $dataRow;
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRow->addDataItem(new DataItem('nested.word', $faker->word));
@@ -41,7 +40,7 @@ final class JSONFilesDestinationTest extends TestCase
         return $dataRows;
     }
 
-    private function getExpectedFileContent(DataRow $dataRow) 
+    private function getExpectedFileContent(DataRow $dataRow)
     {
         $expectedFileContent = '{
     "name": "'.$dataRow->getDataItemByFieldName('name')->value.'",
@@ -60,7 +59,7 @@ final class JSONFilesDestinationTest extends TestCase
         "'.$dataRow->getDataItemByFieldName('array.2')->value.'"
     ]
 }';
-        
+
         return $expectedFileContent;
     }
 
@@ -74,5 +73,4 @@ final class JSONFilesDestinationTest extends TestCase
         $this->assertEquals($this->getExpectedFileContent($dataRows[0]), file_get_contents(__DIR__.'/Data/JSONFilesDestination/1.json'));
         $this->assertEquals($this->getExpectedFileContent($dataRows[1]), file_get_contents(__DIR__.'/Data/JSONFilesDestination/2.json'));
     }
-
 }

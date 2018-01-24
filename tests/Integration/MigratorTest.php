@@ -1,15 +1,14 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-
-use RapidWeb\uxdm\Objects\Migrator;
-use RapidWeb\uxdm\Objects\DataItem;
-use RapidWeb\uxdm\Objects\Sources\PDOSource;
-use RapidWeb\uxdm\Objects\Destinations\PDODestination;
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
-use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
+use PHPUnit\Framework\TestCase;
+use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\Destinations\PDODestination;
 use RapidWeb\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
+use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
+use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
+use RapidWeb\uxdm\Objects\Migrator;
+use RapidWeb\uxdm\Objects\Sources\PDOSource;
 
 final class MigratorTest extends TestCase
 {
@@ -66,11 +65,12 @@ final class MigratorTest extends TestCase
     {
         $expected = [];
         $expected[0] = [
-            'id' => 2,
-            'name' => 'BEAR',
-            'md5_name' => 'e699d5afb08b7a16fb4e9c707353fe48',
-            'email_address' => 'bear@example.com'
+            'id'            => 2,
+            'name'          => 'BEAR',
+            'md5_name'      => 'e699d5afb08b7a16fb4e9c707353fe48',
+            'email_address' => 'bear@example.com',
         ];
+
         return $expected;
     }
 
@@ -89,33 +89,34 @@ final class MigratorTest extends TestCase
     {
         $expected = [];
         $expected[0] = [
-            'id' => 2,
-            'name' => 'BEAR'
+            'id'   => 2,
+            'name' => 'BEAR',
         ];
+
         return $expected;
     }
 
     public function testMigrator()
     {
-        $migrator = new Migrator;
+        $migrator = new Migrator();
 
         $migrator->setSource($this->getPDOSource())
                  ->setDestination($this->getPDODestination())
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function($dataItem) {
-                    if ($dataItem->fieldName=='name') {
-                        $dataItem->value = strtoupper($dataItem->value);
-                    }
+                 ->setDataItemManipulator(function ($dataItem) {
+                     if ($dataItem->fieldName == 'name') {
+                         $dataItem->value = strtoupper($dataItem->value);
+                     }
                  })
-                 ->setDataRowManipulator(function($dataRow) {
-                    $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
+                 ->setDataRowManipulator(function ($dataRow) {
+                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
-                 ->setSkipIfTrueCheck(function($dataRow) {
-                    if ($dataRow->getDataItemByFieldName('name')->value=='TIM') {
-                        return true;
-                    }
+                 ->setSkipIfTrueCheck(function ($dataRow) {
+                     if ($dataRow->getDataItemByFieldName('name')->value == 'TIM') {
+                         return true;
+                     }
                  })
                  ->migrate();
 
@@ -126,67 +127,63 @@ final class MigratorTest extends TestCase
     {
         $this->expectException(NoSourceException::class);
 
-        $migrator = new Migrator;
+        $migrator = new Migrator();
         $migrator->migrate();
-
     }
 
     public function testMigratorWithNoDestination()
     {
         $this->expectException(NoDestinationException::class);
 
-        $migrator = new Migrator;
+        $migrator = new Migrator();
         $migrator->setSource($this->getPDOSource())
                  ->migrate();
-
     }
 
     public function testMigratorWithKeyFieldThatIsNotPresentInFieldsToMigrate()
     {
         $this->expectException(MissingFieldToMigrateException::class);
 
-        $migrator = new Migrator;
+        $migrator = new Migrator();
         $migrator->setSource($this->getPDOSource())
                  ->setDestination($this->getPDODestination())
                  ->setFieldsToMigrate(['email'])
                  ->setKeyFields(['id'])
                  ->migrate();
-
     }
 
     public function testMigratorWithMigrateMapSourceFieldThatIsNotPresentInFieldsToMigrate()
     {
         $this->expectException(MissingFieldToMigrateException::class);
 
-        $migrator = new Migrator;
+        $migrator = new Migrator();
         $migrator->setSource($this->getPDOSource())
                  ->setDestination($this->getPDODestination())
                  ->setFieldsToMigrate(['id'])
                  ->setFieldMap(['email' => 'email_address'])
                  ->migrate();
-
     }
 
     public function testMigratorWithNoFieldsToMigrate()
     {
-        $migrator = new Migrator;
+        $migrator = new Migrator();
 
         $migrator->setSource($this->getPDOSource())
                  ->setDestination($this->getPDODestination())
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function($dataItem) {
-                    if ($dataItem->fieldName=='name') {
-                        $dataItem->value = strtoupper($dataItem->value);
-                    }
+                 ->setDataItemManipulator(function ($dataItem) {
+                     if ($dataItem->fieldName == 'name') {
+                         $dataItem->value = strtoupper($dataItem->value);
+                     }
                  })
-                 ->setDataRowManipulator(function($dataRow) {
-                    $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
+                 ->setDataRowManipulator(function ($dataRow) {
+                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
-                 ->setSkipIfTrueCheck(function($dataRow) {
-                    if ($dataRow->getDataItemByFieldName('name')->value=='TIM') {
-                        return true;
-                    }
+                 ->setSkipIfTrueCheck(function ($dataRow) {
+                     if ($dataRow->getDataItemByFieldName('name')->value == 'TIM') {
+                         return true;
+                     }
                  })
                  ->migrate();
 
@@ -195,7 +192,7 @@ final class MigratorTest extends TestCase
 
     public function testMigratorWithMultipleDestinations()
     {
-        $migrator = new Migrator;
+        $migrator = new Migrator();
 
         $migrator->setSource($this->getPDOSource())
                  ->addDestination($this->getPDODestination())
@@ -203,18 +200,18 @@ final class MigratorTest extends TestCase
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function($dataItem) {
-                    if ($dataItem->fieldName=='name') {
-                        $dataItem->value = strtoupper($dataItem->value);
-                    }
+                 ->setDataItemManipulator(function ($dataItem) {
+                     if ($dataItem->fieldName == 'name') {
+                         $dataItem->value = strtoupper($dataItem->value);
+                     }
                  })
-                 ->setDataRowManipulator(function($dataRow) {
-                    $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
+                 ->setDataRowManipulator(function ($dataRow) {
+                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
-                 ->setSkipIfTrueCheck(function($dataRow) {
-                    if ($dataRow->getDataItemByFieldName('name')->value=='TIM') {
-                        return true;
-                    }
+                 ->setSkipIfTrueCheck(function ($dataRow) {
+                     if ($dataRow->getDataItemByFieldName('name')->value == 'TIM') {
+                         return true;
+                     }
                  })
                  ->migrate();
 
@@ -226,54 +223,52 @@ final class MigratorTest extends TestCase
     {
         $cache = new ArrayCachePool();
 
-        $migrator = new Migrator;
+        $migrator = new Migrator();
 
         $migrator->setSource($this->getPDOSource())
-                 ->setSourceCache($cache, 'testCache', 60*60*24)
+                 ->setSourceCache($cache, 'testCache', 60 * 60 * 24)
                  ->setDestination($this->getPDODestination())
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function($dataItem) {
-                    if ($dataItem->fieldName=='name') {
-                        $dataItem->value = strtoupper($dataItem->value);
-                    }
+                 ->setDataItemManipulator(function ($dataItem) {
+                     if ($dataItem->fieldName == 'name') {
+                         $dataItem->value = strtoupper($dataItem->value);
+                     }
                  })
-                 ->setDataRowManipulator(function($dataRow) {
-                    $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
+                 ->setDataRowManipulator(function ($dataRow) {
+                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
-                 ->setSkipIfTrueCheck(function($dataRow) {
-                    if ($dataRow->getDataItemByFieldName('name')->value=='TIM') {
-                        return true;
-                    }
+                 ->setSkipIfTrueCheck(function ($dataRow) {
+                     if ($dataRow->getDataItemByFieldName('name')->value == 'TIM') {
+                         return true;
+                     }
                  })
                  ->migrate();
 
         $this->assertEquals($this->getExpectedArray(), $this->getActualArray());
 
         $migrator->setSource($this->getPDOSource())
-                 ->setSourceCache($cache, 'testCache', 60*60*24)
+                 ->setSourceCache($cache, 'testCache', 60 * 60 * 24)
                  ->setDestination($this->getPDODestination())
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function($dataItem) {
-                    if ($dataItem->fieldName=='name') {
-                        $dataItem->value = strtoupper($dataItem->value);
-                    }
+                 ->setDataItemManipulator(function ($dataItem) {
+                     if ($dataItem->fieldName == 'name') {
+                         $dataItem->value = strtoupper($dataItem->value);
+                     }
                  })
-                 ->setDataRowManipulator(function($dataRow) {
-                    $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
+                 ->setDataRowManipulator(function ($dataRow) {
+                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
-                 ->setSkipIfTrueCheck(function($dataRow) {
-                    if ($dataRow->getDataItemByFieldName('name')->value=='TIM') {
-                        return true;
-                    }
+                 ->setSkipIfTrueCheck(function ($dataRow) {
+                     if ($dataRow->getDataItemByFieldName('name')->value == 'TIM') {
+                         return true;
+                     }
                  })
                  ->migrate();
 
         $this->assertEquals($this->getExpectedArray(), $this->getActualArray());
-
     }
-
 }

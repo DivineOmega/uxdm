@@ -3,15 +3,16 @@
 namespace RapidWeb\uxdm\Objects\Sources;
 
 use RapidWeb\uxdm\Interfaces\SourceInterface;
-use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\DataRow;
 
 class AssociativeArraySource implements SourceInterface
 {
     private $array;
     private $fields = [];
 
-    public function __construct(array &$array) {
+    public function __construct(array &$array)
+    {
         $this->array = &$array;
 
         if (isset($array[0]) && is_array($array[0])) {
@@ -19,35 +20,33 @@ class AssociativeArraySource implements SourceInterface
         }
     }
 
-    public function getDataRows($page = 1, $fieldsToRetrieve = []) {
-
+    public function getDataRows($page = 1, $fieldsToRetrieve = [])
+    {
         $perPage = 10;
 
-        $offset = 0 + (($page-1) * $perPage);
+        $offset = 0 + (($page - 1) * $perPage);
 
         $arrayRows = array_slice($this->array, $offset, $perPage);
 
         $dataRows = [];
-        
-        foreach($arrayRows as $arrayRow) {
 
-            $dataRow = new DataRow;
+        foreach ($arrayRows as $arrayRow) {
+            $dataRow = new DataRow();
 
-            foreach($arrayRow as $key => $value) {
-                
+            foreach ($arrayRow as $key => $value) {
                 if (in_array($key, $fieldsToRetrieve)) {
                     $dataRow->addDataItem(new DataItem($key, $value));
                 }
-
             }
-            
+
             $dataRows[] = $dataRow;
         }
 
         return $dataRows;
     }
 
-    public function getFields() {
+    public function getFields()
+    {
         return $this->fields;
     }
 }

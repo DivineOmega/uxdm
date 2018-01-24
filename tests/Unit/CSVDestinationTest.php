@@ -1,9 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
-use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\Destinations\CSVDestination;
 
 final class CSVDestinationTest extends TestCase
@@ -14,12 +13,12 @@ final class CSVDestinationTest extends TestCase
 
         $dataRows = [];
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
@@ -27,11 +26,11 @@ final class CSVDestinationTest extends TestCase
         return $dataRows;
     }
 
-    private function getExpectedFileContent(array $dataRows) 
+    private function getExpectedFileContent(array $dataRows)
     {
         $expectedFileContent = 'name,value'.PHP_EOL;
-        
-        foreach($dataRows as $dataRow) {
+
+        foreach ($dataRows as $dataRow) {
             $expectedFileContent .= $dataRow->getDataItemByFieldName('name')->value;
             $expectedFileContent .= ',';
             $expectedFileContent .= $dataRow->getDataItemByFieldName('value')->value;
@@ -52,7 +51,6 @@ final class CSVDestinationTest extends TestCase
 
         $fileContent = file_get_contents($file);
 
-        $this->assertEquals($this->getExpectedFileContent($dataRows), $fileContent);        
+        $this->assertEquals($this->getExpectedFileContent($dataRows), $fileContent);
     }
-
 }

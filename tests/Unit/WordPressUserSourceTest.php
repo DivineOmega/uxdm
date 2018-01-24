@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
 use RapidWeb\uxdm\Objects\Sources\WordPressUserSource;
 
 final class WordPressUserSourceTest extends TestCase
@@ -16,16 +15,16 @@ final class WordPressUserSourceTest extends TestCase
         $source = $this->createSource();
 
         $expectedFields = [
-            0 => 'wp_users.ID',
-            1 => 'wp_users.user_login',
-            2 => 'wp_users.user_pass',
-            3 => 'wp_users.user_nicename',
-            4 => 'wp_users.user_email',
-            5 => 'wp_users.user_url',
-            6 => 'wp_users.user_registered',
-            7 => 'wp_users.user_activation_key',
-            8 => 'wp_users.user_status',
-            9 => 'wp_users.display_name',
+            0  => 'wp_users.ID',
+            1  => 'wp_users.user_login',
+            2  => 'wp_users.user_pass',
+            3  => 'wp_users.user_nicename',
+            4  => 'wp_users.user_email',
+            5  => 'wp_users.user_url',
+            6  => 'wp_users.user_registered',
+            7  => 'wp_users.user_activation_key',
+            8  => 'wp_users.user_status',
+            9  => 'wp_users.display_name',
             10 => 'wp_usermeta.test_key_1',
             11 => 'wp_usermeta.test_key_2',
         ];
@@ -111,5 +110,4 @@ final class WordPressUserSourceTest extends TestCase
 
         $this->assertCount(0, $dataRows);
     }
-
 }

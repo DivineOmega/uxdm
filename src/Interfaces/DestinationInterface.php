@@ -2,7 +2,7 @@
 
 namespace RapidWeb\uxdm\Interfaces;
 
-interface DestinationInterface 
+interface DestinationInterface
 {
     public function putDataRows(array $dataRows);
 }

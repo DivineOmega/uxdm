@@ -1,8 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Faker\Factory;
-
 use RapidWeb\uxdm\Objects\DataItem;
 
 final class DataItemTest extends TestCase
@@ -34,5 +32,4 @@ final class DataItemTest extends TestCase
         $this->assertEquals($dataItem->value, $value);
         $this->assertTrue($dataItem->keyField);
     }
-
 }

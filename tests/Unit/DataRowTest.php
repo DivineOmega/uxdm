@@ -1,10 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Faker\Factory;
-
-use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
 
 final class DataRowTest extends TestCase
@@ -107,7 +105,8 @@ final class DataRowTest extends TestCase
 
         $keyFields = [$dataItem->fieldName];
         $fieldMap = [];
-        $dataItemManipulator = function () {};
+        $dataItemManipulator = function () {
+        };
 
         $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
 
@@ -128,7 +127,8 @@ final class DataRowTest extends TestCase
 
         $keyFields = [];
         $fieldMap = [$dataItem->fieldName => $newFieldName];
-        $dataItemManipulator = function () {};
+        $dataItemManipulator = function () {
+        };
 
         $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
 
@@ -150,7 +150,7 @@ final class DataRowTest extends TestCase
         $dataItemManipulator = function ($dataItemToManipulate) use ($dataItem) {
             if ($dataItemToManipulate->fieldName == $dataItem->fieldName) {
                 $dataItemToManipulate->value = strrev($dataItemToManipulate->value);
-            }            
+            }
         };
 
         $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
@@ -160,18 +160,17 @@ final class DataRowTest extends TestCase
         $this->assertEquals(strrev($oldValue), $dataItemRetrieved->value);
     }
 
-    public function testValidationOfEmptyDataRow() {
-
+    public function testValidationOfEmptyDataRow()
+    {
         $this->expectException(NoDataItemsInDataRowException::class);
 
         $dataRow = new DataRow();
-        
+
         $keyFields = [];
         $fieldMap = [];
-        $dataItemManipulator = function () {};
+        $dataItemManipulator = function () {
+        };
 
         $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
-
     }
-
 }

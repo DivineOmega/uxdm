@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
 use RapidWeb\uxdm\Objects\Sources\WordPressPostSource;
 
 final class WordPressPostSourceTest extends TestCase
@@ -16,16 +15,16 @@ final class WordPressPostSourceTest extends TestCase
         $source = $this->createSource();
 
         $expectedFields = [
-            0 => 'wp_posts.ID',
-            1 => 'wp_posts.post_author',
-            2 => 'wp_posts.post_date',
-            3 => 'wp_posts.post_date_gmt',
-            4 => 'wp_posts.post_content',
-            5 => 'wp_posts.post_title',
-            6 => 'wp_posts.post_excerpt',
-            7 => 'wp_posts.post_status',
-            8 => 'wp_posts.comment_status',
-            9 => 'wp_posts.ping_status',
+            0  => 'wp_posts.ID',
+            1  => 'wp_posts.post_author',
+            2  => 'wp_posts.post_date',
+            3  => 'wp_posts.post_date_gmt',
+            4  => 'wp_posts.post_content',
+            5  => 'wp_posts.post_title',
+            6  => 'wp_posts.post_excerpt',
+            7  => 'wp_posts.post_status',
+            8  => 'wp_posts.comment_status',
+            9  => 'wp_posts.ping_status',
             10 => 'wp_posts.post_name',
             11 => 'wp_posts.to_ping',
             12 => 'wp_posts.pinged',
@@ -39,7 +38,7 @@ final class WordPressPostSourceTest extends TestCase
             20 => 'wp_posts.post_mime_type',
             21 => 'wp_posts.comment_count',
             22 => 'wp_postmeta.test_key_1',
-            23 => 'wp_postmeta.test_key_2'
+            23 => 'wp_postmeta.test_key_2',
         ];
 
         $this->assertEquals($expectedFields, $source->getFields());
@@ -123,5 +122,4 @@ final class WordPressPostSourceTest extends TestCase
 
         $this->assertCount(0, $dataRows);
     }
-
 }

@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
 use RapidWeb\uxdm\Objects\Sources\CSVSource;
 
 final class CSVSourceTest extends TestCase
@@ -77,5 +76,4 @@ final class CSVSourceTest extends TestCase
 
         $this->assertCount(0, $dataRows);
     }
-
 }

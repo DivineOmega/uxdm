@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
 use RapidWeb\uxdm\Objects\Sources\XMLSource;
 
 final class XMLSourceTest extends TestCase
@@ -10,6 +9,7 @@ final class XMLSourceTest extends TestCase
     {
         $xmlSource = new XMLSource(__DIR__.'/Data/source.xml', '/ns:urlset/ns:url');
         $xmlSource->addXMLNamespace('ns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+
         return $xmlSource;
     }
 
@@ -89,5 +89,4 @@ final class XMLSourceTest extends TestCase
 
         $this->assertCount(0, $dataRows);
     }
-
 }
