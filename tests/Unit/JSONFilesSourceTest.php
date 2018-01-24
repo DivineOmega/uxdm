@@ -16,13 +16,13 @@ final class JSONFilesSourceTest extends TestCase
     {
         $source = $this->createSource();
 
-        $expectedFields = ['datePlaced', 'customer', 'billingAddress', 'deliveryAddress', 'items.0.product.id', 
-            'items.0.product.data.slug', 'items.0.product.data.name', 'items.0.product.data.description', 
-            'items.0.product.data.imageUrls', 'items.0.product.data.prices.0.value', 
-            'items.0.product.data.prices.0.currency', 'items.0.product.data.prices.1.value', 
-            'items.0.product.data.prices.1.currency', 'items.0.product.data.categoryIds.0', 
-            'items.0.product.data.draft', 'items.0.product.data.deletedAt', 'items.0.quantity', 'items.0.unitCost', 
-            'items.0.total', 'currency', 'subtotal', 'deliveryOption', 'total'];
+        $expectedFields = ['datePlaced', 'customer', 'billingAddress', 'deliveryAddress', 'items.0.product.id',
+            'items.0.product.data.slug', 'items.0.product.data.name', 'items.0.product.data.description',
+            'items.0.product.data.imageUrls', 'items.0.product.data.prices.0.value',
+            'items.0.product.data.prices.0.currency', 'items.0.product.data.prices.1.value',
+            'items.0.product.data.prices.1.currency', 'items.0.product.data.categoryIds.0',
+            'items.0.product.data.draft', 'items.0.product.data.deletedAt', 'items.0.quantity', 'items.0.unitCost',
+            'items.0.total', 'currency', 'subtotal', 'deliveryOption', 'total', ];
 
         $this->assertEquals($expectedFields, $source->getFields());
     }
@@ -113,5 +113,4 @@ final class JSONFilesSourceTest extends TestCase
 
         $this->assertCount(0, $dataRows);
     }
-
 }

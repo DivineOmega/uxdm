@@ -2,19 +2,20 @@
 
 namespace RapidWeb\uxdm\Objects;
 
-use RapidWeb\uxdm\Objects\DataItem;
 use RapidWeb\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
 
 class DataRow
 {
     private $dataItems = [];
 
-    public function addDataItem(DataItem $dataItem) {
+    public function addDataItem(DataItem $dataItem)
+    {
         $this->dataItems[] = $dataItem;
     }
 
-    public function removeDataItem(DataItem $dataItemToDelete) {
-        foreach($this->dataItems as $key => $dataItem) {
+    public function removeDataItem(DataItem $dataItemToDelete)
+    {
+        foreach ($this->dataItems as $key => $dataItem) {
             if ($dataItem == $dataItemToDelete) {
                 unset($this->dataItems[$key]);
                 break;
@@ -22,26 +23,25 @@ class DataRow
         }
     }
 
-    public function getDataItems() {
+    public function getDataItems()
+    {
         return $this->dataItems;
     }
 
-    public function getDataItemByFieldName($fieldName) {
-
-        foreach($this->dataItems as $dataItem)
-        {
-            if($dataItem->fieldName == $fieldName){
-        
+    public function getDataItemByFieldName($fieldName)
+    {
+        foreach ($this->dataItems as $dataItem) {
+            if ($dataItem->fieldName == $fieldName) {
                 return $dataItem;
             }
         }
     }
 
-    public function getKeyDataItems() {
-
+    public function getKeyDataItems()
+    {
         $keyDataItems = [];
 
-        foreach($this->dataItems as $dataItem) {
+        foreach ($this->dataItems as $dataItem) {
             if ($dataItem->keyField) {
                 $keyDataItems[] = $dataItem;
             }
@@ -58,14 +58,16 @@ class DataRow
         $this->callDataItemManipulator($dataItemManipulator);
     }
 
-    private function validate() {
+    private function validate()
+    {
         if (!$this->dataItems) {
             throw new NoDataItemsInDataRowException('Data row contains no data items. The specified source may be producing an invalid data row.');
         }
     }
 
-    private function setKeyFields(array $keyFields) {
-        foreach($this->dataItems as $key => $dataItem) {
+    private function setKeyFields(array $keyFields)
+    {
+        foreach ($this->dataItems as $key => $dataItem) {
             if (in_array($dataItem->fieldName, $keyFields)) {
                 $dataItem->keyField = true;
                 $dataItems[$key] = $dataItem;
@@ -73,8 +75,9 @@ class DataRow
         }
     }
 
-    private function mapFields(array $fieldMap) {
-        foreach($this->dataItems as $key => $dataItem) {
+    private function mapFields(array $fieldMap)
+    {
+        foreach ($this->dataItems as $key => $dataItem) {
             if (array_key_exists($dataItem->fieldName, $fieldMap)) {
                 $newFieldName = $fieldMap[$dataItem->fieldName];
                 $dataItem->fieldName = $newFieldName;
@@ -83,8 +86,9 @@ class DataRow
         }
     }
 
-    private function callDataItemManipulator(callable $dataItemManipulator) {
-        foreach($this->dataItems as $key => $dataItem) {
+    private function callDataItemManipulator(callable $dataItemManipulator)
+    {
+        foreach ($this->dataItems as $key => $dataItem) {
             $dataItemManipulator($dataItem);
         }
     }

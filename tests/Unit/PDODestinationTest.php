@@ -1,9 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
-use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\Destinations\PDODestination;
 
 final class PDODestinationTest extends TestCase
@@ -31,12 +30,12 @@ final class PDODestinationTest extends TestCase
 
         $dataRows = [];
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word, true));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word, true));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
@@ -48,7 +47,7 @@ final class PDODestinationTest extends TestCase
     {
         $faker = Faker\Factory::create();
 
-        foreach($dataRows as $dataRow) {
+        foreach ($dataRows as $dataRow) {
             $dataItem = $dataRow->getDataItemByFieldName('value');
             $dataItem->value = $faker->randomNumber;
         }
@@ -71,9 +70,9 @@ final class PDODestinationTest extends TestCase
     {
         $expectedArray = [];
 
-        foreach($dataRows as $dataRow) {
+        foreach ($dataRows as $dataRow) {
             $expectedArrayRow = [];
-            foreach($dataRow->getDataItems() as $dataItem) {
+            foreach ($dataRow->getDataItems() as $dataItem) {
                 $expectedArrayRow[$dataItem->fieldName] = $dataItem->value;
             }
             $expectedArray[] = $expectedArrayRow;
@@ -97,7 +96,5 @@ final class PDODestinationTest extends TestCase
         $destination->putDataRows($dataRows);
 
         $this->assertEquals($this->getExpectedArray($dataRows), $this->getActualArray());
-        
     }
-
 }

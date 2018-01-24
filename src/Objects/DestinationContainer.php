@@ -9,9 +9,9 @@ class DestinationContainer
     public $destination;
     public $fields = [];
 
-    public function __construct(DestinationInterface $destination, array $fields) {
+    public function __construct(DestinationInterface $destination, array $fields)
+    {
         $this->destination = $destination;
         $this->fields = $fields;
     }
-
 }

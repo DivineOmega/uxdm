@@ -1,9 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
-use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\Destinations\NullDestination;
 
 final class NullDestinationTest extends TestCase
@@ -14,12 +13,12 @@ final class NullDestinationTest extends TestCase
 
         $dataRows = [];
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
@@ -38,7 +37,6 @@ final class NullDestinationTest extends TestCase
 
         $expectedOutput = '';
 
-        $this->assertEquals($expectedOutput, $output);        
+        $this->assertEquals($expectedOutput, $output);
     }
-
 }

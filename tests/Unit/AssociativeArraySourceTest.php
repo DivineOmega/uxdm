@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
 use RapidWeb\uxdm\Objects\Sources\AssociativeArraySource;
 
 final class AssociativeArraySourceTest extends TestCase
@@ -10,7 +9,7 @@ final class AssociativeArraySourceTest extends TestCase
     {
         $associativeArray = [
             ['name' => 'Thing', 'weight' => 2, 'value' => 900],
-            ['name' => 'Bear', 'weight' => 5000, 'value' => 0]
+            ['name' => 'Bear', 'weight' => 5000, 'value' => 0],
         ];
 
         return new AssociativeArraySource($associativeArray);
@@ -82,5 +81,4 @@ final class AssociativeArraySourceTest extends TestCase
 
         $this->assertCount(0, $dataRows);
     }
-
 }

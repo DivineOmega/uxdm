@@ -1,12 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
 use RapidWeb\uxdm\Objects\Sources\PDO\Join;
 
 final class PDOJoinTest extends TestCase
 {
-
     public function testGetJoinSQL()
     {
         $table = 'table1';
@@ -18,7 +16,5 @@ final class PDOJoinTest extends TestCase
         $expectedSQL = ' INNER JOIN '.$table.' ON '.$key.' = '.$foreignKey;
 
         $this->assertEquals($expectedSQL, $join->getSQL());
-        
     }
-
 }

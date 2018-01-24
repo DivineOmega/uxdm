@@ -1,9 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-
-use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\DataItem;
+use RapidWeb\uxdm\Objects\DataRow;
 use RapidWeb\uxdm\Objects\Destinations\DebugOutputDestination;
 
 final class DebugOutputDestinationTest extends TestCase
@@ -14,12 +13,12 @@ final class DebugOutputDestinationTest extends TestCase
 
         $dataRows = [];
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
 
-        $dataRow = new DataRow;
+        $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('name', $faker->word));
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
@@ -40,11 +39,11 @@ final class DebugOutputDestinationTest extends TestCase
         var_dump($dataRows);
         $expectedOutput = $this->stripFirstLine(ob_get_clean());
 
-        $this->assertEquals($expectedOutput, $output);        
+        $this->assertEquals($expectedOutput, $output);
     }
 
-    private function stripFirstLine($text){        
-        return substr($text, strpos($text, "\n")+1);
-        }
-
+    private function stripFirstLine($text)
+    {
+        return substr($text, strpos($text, "\n") + 1);
+    }
 }

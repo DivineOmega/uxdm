@@ -2,11 +2,10 @@
 
 namespace RapidWeb\uxdm\Objects\Destinations;
 
-use RapidWeb\uxdm\Interfaces\DestinationInterface;
-use RapidWeb\uxdm\Objects\DataRow;
 use PDO;
 use PDOException;
-use Exception;
+use RapidWeb\uxdm\Interfaces\DestinationInterface;
+use RapidWeb\uxdm\Objects\DataRow;
 
 class PDODestination implements DestinationInterface
 {
@@ -14,21 +13,23 @@ class PDODestination implements DestinationInterface
     private $tableName;
     private $ignoreIntegrityConstraintViolations;
 
-    public function __construct(PDO $pdo, $tableName) {
+    public function __construct(PDO $pdo, $tableName)
+    {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo = $pdo;
         $this->tableName = $tableName;
     }
 
-    public function ignoreIntegrityConstraintViolations($active = true) {
+    public function ignoreIntegrityConstraintViolations($active = true)
+    {
         $this->ignoreIntegrityConstraintViolations = $active;
     }
 
-    private function rowAlreadyExists(array $keyDataItems) {
-
+    private function rowAlreadyExists(array $keyDataItems)
+    {
         $sql = 'select count(*) as c from '.$this->tableName.' where ';
 
-        foreach($keyDataItems as $keyDataItem) {
+        foreach ($keyDataItems as $keyDataItem) {
             $sql .= $keyDataItem->fieldName.' = ? and ';
         }
 
@@ -37,7 +38,7 @@ class PDODestination implements DestinationInterface
         $stmt = $this->pdo->prepare($sql);
 
         $paramNum = 1;
-        foreach($keyDataItems as $keyDataItem) {
+        foreach ($keyDataItems as $keyDataItem) {
             $stmt->bindValue($paramNum, $keyDataItem->value);
             $paramNum++;
         }
@@ -51,23 +52,22 @@ class PDODestination implements DestinationInterface
         } else {
             return false;
         }
-
     }
 
-    private function insertDataRow(DataRow $dataRow) {
-
+    private function insertDataRow(DataRow $dataRow)
+    {
         $dataItems = $dataRow->getDataItems();
 
         $sql = 'insert into '.$this->tableName.' (';
 
-        foreach($dataItems as $dataItem) {
+        foreach ($dataItems as $dataItem) {
             $sql .= $dataItem->fieldName.' , ';
         }
         $sql = substr($sql, 0, -2);
 
         $sql .= ') values (';
 
-        foreach($dataItems as $dataItem) {
+        foreach ($dataItems as $dataItem) {
             $sql .= '? , ';
         }
         $sql = substr($sql, 0, -2);
@@ -77,7 +77,7 @@ class PDODestination implements DestinationInterface
         $stmt = $this->pdo->prepare($sql);
 
         $paramNum = 1;
-        foreach($dataItems as $dataItem) {
+        foreach ($dataItems as $dataItem) {
             $stmt->bindValue($paramNum, $dataItem->value);
             $paramNum++;
         }
@@ -85,13 +85,13 @@ class PDODestination implements DestinationInterface
         $stmt->execute();
     }
 
-    private function updateDataRow(DataRow $dataRow) {
-
+    private function updateDataRow(DataRow $dataRow)
+    {
         $sql = 'update '.$this->tableName.' set ';
 
         $dataItems = $dataRow->getDataItems();
 
-        foreach($dataItems as $dataItem) {
+        foreach ($dataItems as $dataItem) {
             $sql .= $dataItem->fieldName.' = ? , ';
         }
 
@@ -101,7 +101,7 @@ class PDODestination implements DestinationInterface
 
         $keyDataItems = $dataRow->getKeyDataItems();
 
-        foreach($keyDataItems as $keyDataItem) {
+        foreach ($keyDataItems as $keyDataItem) {
             $sql .= $keyDataItem->fieldName.' = ? and ';
         }
 
@@ -110,11 +110,11 @@ class PDODestination implements DestinationInterface
         $stmt = $this->pdo->prepare($sql);
 
         $paramNum = 1;
-        foreach($dataItems as $dataItem) {
+        foreach ($dataItems as $dataItem) {
             $stmt->bindValue($paramNum, $dataItem->value);
             $paramNum++;
         }
-        foreach($keyDataItems as $keyDataItem) {
+        foreach ($keyDataItems as $keyDataItem) {
             $stmt->bindValue($paramNum, $keyDataItem->value);
             $paramNum++;
         }
@@ -122,14 +122,13 @@ class PDODestination implements DestinationInterface
         $stmt->execute();
     }
 
-    public function putDataRows(array $dataRows) {
-
+    public function putDataRows(array $dataRows)
+    {
         $dataRowsToInsert = [];
         $dataRowsToUpdate = [];
 
         foreach ($dataRows as $dataRow) {
-
-            $keyDataItems = $dataRow->getKeyDataItems();            
+            $keyDataItems = $dataRow->getKeyDataItems();
 
             if (!$keyDataItems) {
                 $dataRowsToInsert[] = $dataRow;
@@ -141,16 +140,16 @@ class PDODestination implements DestinationInterface
             } else {
                 $dataRowsToInsert[] = $dataRow;
             }
-            
         }
 
         foreach ($dataRowsToInsert as $dataRow) {
             try {
                 $this->insertDataRow($dataRow);
             } catch (PDOException $e) {
-                if ($this->ignoreIntegrityConstraintViolations && $e->getCode()==23000) {
+                if ($this->ignoreIntegrityConstraintViolations && $e->getCode() == 23000) {
                     continue;
                 }
+
                 throw $e;
             }
         }
@@ -159,12 +158,12 @@ class PDODestination implements DestinationInterface
             try {
                 $this->updateDataRow($dataRow);
             } catch (PDOException $e) {
-                if ($this->ignoreIntegrityConstraintViolations && $e->getCode()==23000) {
+                if ($this->ignoreIntegrityConstraintViolations && $e->getCode() == 23000) {
                     continue;
                 }
+
                 throw $e;
             }
         }
-
     }
 }
