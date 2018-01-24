@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rapidwebltd/uxdm.svg?branch=master)](https://travis-ci.org/rapidwebltd/uxdm)
 [![Coverage Status](https://coveralls.io/repos/github/rapidwebltd/uxdm/badge.svg?branch=master)](https://coveralls.io/github/rapidwebltd/uxdm?branch=master)
+[![StyleCI](https://styleci.io/repos/90974025/shield?branch=master)](https://styleci.io/repos/90974025)
 
 Universal Extensible Data Migrator (UXDM) is a PHP package designed to help developers migrate data from one system/format to another.
 
