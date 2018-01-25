@@ -20,3 +20,4 @@ For general documentation and usage examples, see the main [README](../README.md
 * [CSV Destination](destinations/CSVDestination.md)
 * [JSON Files Destination](destinations/JSONFilesDestination.md)
 * [Associative Array Destination](destinations/AssociativeArrayDestination.md)
+* [Debug Output Destination](destinations/DebugOutputDestination.md)
