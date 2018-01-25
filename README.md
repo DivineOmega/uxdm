@@ -114,7 +114,7 @@ This migration will add a random number into a field called `random_number` for 
 
 #### Removing data items
 
-This example demonstrates has data items can be removed from a data row. You may wish to do this if you want to use its value, but not actually migrate it to the destination.
+This example demonstrates how data items can be removed from a data row. You may wish to do this if you want to use its value, but not actually migrate it to the destination.
 
 ```php
 $migrator = new Migrator;
