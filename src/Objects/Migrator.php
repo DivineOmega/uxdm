@@ -142,7 +142,7 @@ class Migrator
             }
         }
 
-        $nullDataItemManipulation = function() {
+        $nullDataItemManipulation = function () {
         };
 
         $results = [];
