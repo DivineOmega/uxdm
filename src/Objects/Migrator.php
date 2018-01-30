@@ -152,7 +152,7 @@ class Migrator
             }
 
             foreach ($dataRows as $key => $dataRow) {
-                $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator);
+                $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator ? $this->dataItemManipulator : function() {});
             }
 
             if ($this->dataRowManipulator !== null) {
