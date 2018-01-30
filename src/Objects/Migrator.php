@@ -142,6 +142,9 @@ class Migrator
             }
         }
 
+        $nullDataItemManipulation = function() {
+        };
+
         $results = [];
 
         for ($page = 1; $page < PHP_INT_MAX; $page++) {
@@ -152,7 +155,7 @@ class Migrator
             }
 
             foreach ($dataRows as $key => $dataRow) {
-                $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator ? $this->dataItemManipulator : function() {});
+                $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator ? $this->dataItemManipulator : $nullDataItemManipulation);
             }
 
             if ($this->dataRowManipulator !== null) {
