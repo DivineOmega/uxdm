@@ -128,7 +128,6 @@ class PDODestination implements DestinationInterface
             $keyDataItems = $dataRow->getKeyDataItems();
 
             try {
-
                 if (!$keyDataItems) {
                     $this->insertDataRow($dataRow);
                     continue;
@@ -139,7 +138,6 @@ class PDODestination implements DestinationInterface
                 } else {
                     $this->insertDataRow($dataRow);
                 }
-
             } catch (PDOException $e) {
                 if ($this->ignoreIntegrityConstraintViolations && $e->getCode() == 23000) {
                     continue;
@@ -148,6 +146,5 @@ class PDODestination implements DestinationInterface
                 throw $e;
             }
         }
-
     }
 }
