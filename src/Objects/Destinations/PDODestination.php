@@ -124,27 +124,22 @@ class PDODestination implements DestinationInterface
 
     public function putDataRows(array $dataRows)
     {
-        $dataRowsToInsert = [];
-        $dataRowsToUpdate = [];
-
         foreach ($dataRows as $dataRow) {
             $keyDataItems = $dataRow->getKeyDataItems();
 
-            if (!$keyDataItems) {
-                $dataRowsToInsert[] = $dataRow;
-                continue;
-            }
-
-            if ($this->rowAlreadyExists($keyDataItems)) {
-                $dataRowsToUpdate[] = $dataRow;
-            } else {
-                $dataRowsToInsert[] = $dataRow;
-            }
-        }
-
-        foreach ($dataRowsToInsert as $dataRow) {
             try {
-                $this->insertDataRow($dataRow);
+
+                if (!$keyDataItems) {
+                    $this->insertDataRow($dataRow);
+                    continue;
+                }
+
+                if ($this->rowAlreadyExists($keyDataItems)) {
+                    $this->updateDataRow($dataRow);
+                } else {
+                    $this->insertDataRow($dataRow);
+                }
+
             } catch (PDOException $e) {
                 if ($this->ignoreIntegrityConstraintViolations && $e->getCode() == 23000) {
                     continue;
@@ -154,16 +149,5 @@ class PDODestination implements DestinationInterface
             }
         }
 
-        foreach ($dataRowsToUpdate as $dataRow) {
-            try {
-                $this->updateDataRow($dataRow);
-            } catch (PDOException $e) {
-                if ($this->ignoreIntegrityConstraintViolations && $e->getCode() == 23000) {
-                    continue;
-                }
-
-                throw $e;
-            }
-        }
     }
 }
