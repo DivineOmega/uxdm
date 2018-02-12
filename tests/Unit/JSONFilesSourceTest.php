@@ -35,7 +35,7 @@ final class JSONFilesSourceTest extends TestCase
 
         $count = 1;
 
-        foreach($dataRows as $dataRow) {
+        foreach ($dataRows as $dataRow) {
             $dataItem = $dataRow->getDataItemByFieldName('_file');
             $expectedFileName = __DIR__.'/Data/JSONFiles/'.$count.'.json';
 
