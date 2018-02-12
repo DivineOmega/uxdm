@@ -16,6 +16,7 @@ class JSONFilesSource implements SourceInterface
         $this->files = $files;
 
         $this->fields = [];
+        $this->fields[] = '_file';
 
         foreach ($files as $file) {
             $array = json_decode(file_get_contents($file), true);
@@ -39,6 +40,10 @@ class JSONFilesSource implements SourceInterface
 
         foreach ($files as $file) {
             $dataRow = new DataRow();
+
+            if (in_array('_file', $fieldsToRetrieve)) {
+                $dataRow->addDataItem(new DataItem('_file', $file));
+            }
 
             $array = json_decode(file_get_contents($file), true);
             $dottedArray = array_dot($array);

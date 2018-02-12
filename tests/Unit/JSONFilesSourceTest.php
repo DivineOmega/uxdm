@@ -16,7 +16,7 @@ final class JSONFilesSourceTest extends TestCase
     {
         $source = $this->createSource();
 
-        $expectedFields = ['datePlaced', 'customer', 'billingAddress', 'deliveryAddress', 'items.0.product.id',
+        $expectedFields = ['_file', 'datePlaced', 'customer', 'billingAddress', 'deliveryAddress', 'items.0.product.id',
             'items.0.product.data.slug', 'items.0.product.data.name', 'items.0.product.data.description',
             'items.0.product.data.imageUrls', 'items.0.product.data.prices.0.value',
             'items.0.product.data.prices.0.currency', 'items.0.product.data.prices.1.value',
@@ -25,6 +25,24 @@ final class JSONFilesSourceTest extends TestCase
             'items.0.total', 'currency', 'subtotal', 'deliveryOption', 'total', ];
 
         $this->assertEquals($expectedFields, $source->getFields());
+    }
+
+    public function testGetFileName()
+    {
+        $source = $this->createSource();
+
+        $dataRows = $source->getDataRows(1, ['_file']);
+
+        $count = 1;
+
+        foreach($dataRows as $dataRow) {
+            $dataItem = $dataRow->getDataItemByFieldName('_file');
+            $expectedFileName = __DIR__.'/Data/JSONFiles/'.$count.'.json';
+
+            $this->assertEquals($expectedFileName, $dataItem->value);
+
+            $count++;
+        }
     }
 
     public function testGetDataRows()

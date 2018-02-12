@@ -38,6 +38,8 @@ Consider the following files.
 
 Deep fields and arrays are represented using dot notation, such as `access_level.number` and `colours.0`.
 
+Note that a `_file` field will also be available to the migrator which contains the full path to the source file.
+
 The following example creates a JSON files source object, using an array of file paths created by the PHP `glob` function.
 
 ```php
