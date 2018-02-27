@@ -24,7 +24,7 @@ Each UXDM migration requires a source object and at least one destination object
 * CSV (Comma Seperated Values) Source & Destination
 * Associative Array Source & Destination
 * JSON Files Source & Destination
-* XML Source
+* XML Source & Destination
 * WordPress Post Source
 * WordPress User Source
 * Debug Output Destination
