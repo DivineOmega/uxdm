@@ -2,9 +2,9 @@
 
 namespace RapidWeb\uxdm\Objects\Destinations;
 
-use RapidWeb\uxdm\Interfaces\DestinationInterface;
 use DOMDocument;
 use DOMElement;
+use RapidWeb\uxdm\Interfaces\DestinationInterface;
 
 class XMLDestination implements DestinationInterface
 {
