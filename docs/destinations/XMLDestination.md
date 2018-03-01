@@ -15,7 +15,7 @@ $xmlFile = __DIR__.'/users.xml';
 $domDoc = new DOMDocument();
 $rootElement = $domDoc->appendChild(new DOMElement('users'));
 $perRowElementName = 'user';
-$xmlDestination = new XMLDestination($file, $domDoc, $rootElement, $perRowElementName);
+$xmlDestination = new XMLDestination($xmlFile, $domDoc, $rootElement, $perRowElementName);
 ```
 
 This would create a file with a syntax similar to the following.
