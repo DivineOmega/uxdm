@@ -28,7 +28,7 @@ class XMLDestination implements DestinationInterface
             $dataRowDomElement = $this->rootElement->appendChild(new DOMElement($this->rowElementName));
 
             foreach ($dataItems as $dataItem) {
-                $dataItemDomElement = new DOMElement($dataItem->fieldName, $dataItem->value);
+                $dataItemDomElement = new DOMElement($dataItem->fieldName, htmlspecialchars($dataItem->value));
                 $dataRowDomElement->appendChild($dataItemDomElement);
             }
         }

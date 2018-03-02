@@ -23,6 +23,11 @@ final class XMLDestinationTest extends TestCase
         $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
         $dataRows[] = $dataRow;
 
+        $dataRow = new DataRow();
+        $dataRow->addDataItem(new DataItem('name', 'special_characters_test_&<>'));
+        $dataRow->addDataItem(new DataItem('value', $faker->randomNumber));
+        $dataRows[] = $dataRow;
+
         return $dataRows;
     }
 
@@ -33,9 +38,9 @@ final class XMLDestinationTest extends TestCase
 
         foreach ($dataRows as $dataRow) {
             $expectedFileContent .= '<dataRow><name>';
-            $expectedFileContent .= $dataRow->getDataItemByFieldName('name')->value;
+            $expectedFileContent .= htmlspecialchars($dataRow->getDataItemByFieldName('name')->value);
             $expectedFileContent .= '</name><value>';
-            $expectedFileContent .= $dataRow->getDataItemByFieldName('value')->value;
+            $expectedFileContent .= htmlspecialchars($dataRow->getDataItemByFieldName('value')->value);
             $expectedFileContent .= '</value></dataRow>';
         }
 
