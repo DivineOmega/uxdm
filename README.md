@@ -5,7 +5,7 @@
 [![StyleCI](https://styleci.io/repos/90974025/shield?branch=master)](https://styleci.io/repos/90974025)
 ![Packagist](https://img.shields.io/packagist/dt/rapidwebltd/uxdm.svg)
 
-UXDM helps developers migrate data from one system or format to another. It stands for Universal Extensible Data Migrator.
+UXDM helps developers migrate data from one system or format to another.
 
 ## Installation
 

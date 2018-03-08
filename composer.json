@@ -1,6 +1,6 @@
 {
     "name": "rapidwebltd/uxdm",
-    "description": "UXDM helps developers migrate data from one system or format to another. It stands for Universal Extensible Data Migrator.",
+    "description": "UXDM helps developers migrate data from one system or format to another.",
     "type": "library",
     "authors": [
         {
