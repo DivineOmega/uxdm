@@ -1,6 +1,6 @@
 {
     "name": "rapidwebltd/uxdm",
-    "description": "Universal Extensible Data Migrator (UXDM) is a package that helps developers migrate data from one system/format to another.",
+    "description": "UXDM helps developers migrate data from one system or format to another. It stands for Universal Extensible Data Migrator.",
     "type": "library",
     "authors": [
         {
