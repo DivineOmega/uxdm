@@ -14,6 +14,7 @@ class XMLSource implements SourceInterface
     private $xpath;
     private $xpathQuery;
     private $fields = [];
+    private $perPage = 10;
 
     public function __construct($file, $xpathQuery, $namespaces = [])
     {
@@ -52,9 +53,7 @@ class XMLSource implements SourceInterface
 
     public function getDataRows($page = 1, $fieldsToRetrieve = [])
     {
-        $perPage = 10;
-
-        $offset = (($page - 1) * $perPage);
+        $offset = (($page - 1) * $this->perPage);
 
         $domNodeList = $this->xpath->query($this->xpathQuery);
 
@@ -63,7 +62,7 @@ class XMLSource implements SourceInterface
         $count = 0;
 
         foreach ($domNodeList as $domElement) {
-            if ($count >= $offset && $count < $offset + $perPage) {
+            if ($count >= $offset && $count < $offset + $this->perPage) {
                 $dataRow = new DataRow();
 
                 foreach ($domElement->childNodes as $childNode) {
@@ -95,5 +94,10 @@ class XMLSource implements SourceInterface
         $domNodeList = $this->xpath->query($this->xpathQuery);
 
         return $domNodeList->length;
+    }
+
+    public function countPages()
+    {
+        return ceil($this->countDataRows() / $this->perPage);
     }
 }

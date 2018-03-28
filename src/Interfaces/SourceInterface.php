@@ -8,5 +8,7 @@ interface SourceInterface
 
     public function countDataRows();
 
+    public function countPages();
+
     public function getFields();
 }

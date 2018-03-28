@@ -144,4 +144,9 @@ class PDOSource implements SourceInterface
 
         return $row['countDataRows'];
     }
+
+    public function countPages()
+    {
+        return ceil($this->countDataRows() / $this->perPage);
+    }
 }

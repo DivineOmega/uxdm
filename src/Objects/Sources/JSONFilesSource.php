@@ -10,6 +10,7 @@ class JSONFilesSource implements SourceInterface
 {
     private $files;
     private $fields = [];
+    private $perPage = 10;
 
     public function __construct(array $files = [])
     {
@@ -30,11 +31,9 @@ class JSONFilesSource implements SourceInterface
 
     public function getDataRows($page = 1, $fieldsToRetrieve = [])
     {
-        $perPage = 10;
+        $offset = 0 + (($page - 1) * $this->perPage);
 
-        $offset = 0 + (($page - 1) * $perPage);
-
-        $files = array_slice($this->files, $offset, $perPage);
+        $files = array_slice($this->files, $offset, $this->perPage);
 
         $dataRows = [];
 
@@ -68,5 +67,10 @@ class JSONFilesSource implements SourceInterface
     public function countDataRows()
     {
         return count($this->files);
+    }
+
+    public function countPages()
+    {
+        return ceil($this->countDataRows() / $this->perPage);
     }
 }

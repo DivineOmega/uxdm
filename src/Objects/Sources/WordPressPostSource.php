@@ -13,6 +13,7 @@ class WordPressPostSource implements SourceInterface
     private $pdo;
     private $fields = [];
     private $postType;
+    private $perPage = 10;
 
     public function __construct(PDO $pdo, $postType = 'post')
     {
@@ -101,14 +102,12 @@ class WordPressPostSource implements SourceInterface
 
     public function getDataRows($page = 1, $fieldsToRetrieve = [])
     {
-        $perPage = 10;
-
-        $offset = (($page - 1) * $perPage);
+        $offset = (($page - 1) * $this->perPage);
 
         $postsSql = $this->getPostSQL($fieldsToRetrieve);
 
         $postsStmt = $this->pdo->prepare($postsSql);
-        $this->bindLimitParameters($postsStmt, $offset, $perPage);
+        $this->bindLimitParameters($postsStmt, $offset, $this->perPage);
 
         $postsStmt->execute();
 
@@ -151,5 +150,10 @@ class WordPressPostSource implements SourceInterface
         $sqlSuffix = substr($sql, $fromPos, $limitPos-$fromPos);
 
         $sql = 'count (*) '.$sqlSuffix;
+    }
+
+    public function countPages()
+    {
+        return ceil($this->countDataRows() / $this->perPage);
     }
 }

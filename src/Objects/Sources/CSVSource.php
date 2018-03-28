@@ -10,6 +10,7 @@ class CSVSource implements SourceInterface
 {
     private $file;
     private $fields = [];
+    private $perPage = 10;
 
     public function __construct($file)
     {
@@ -42,11 +43,9 @@ class CSVSource implements SourceInterface
 
     public function getDataRows($page = 1, $fieldsToRetrieve = [])
     {
-        $perPage = 10;
+        $offset = 1 + (($page - 1) * $this->perPage);
 
-        $offset = 1 + (($page - 1) * $perPage);
-
-        $lines = $this->getCSVLines($offset, $perPage);
+        $lines = $this->getCSVLines($offset, $this->perPage);
 
         $dataRows = [];
 
@@ -76,5 +75,10 @@ class CSVSource implements SourceInterface
         $file->seek(PHP_INT_MAX);
 
         return $file->key();
+    }
+
+    public function countPages()
+    {
+        return ceil($this->countDataRows() / $this->perPage);
     }
 }

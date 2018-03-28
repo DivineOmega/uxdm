@@ -12,6 +12,7 @@ class WordPressUserSource implements SourceInterface
 {
     private $pdo;
     private $fields = [];
+    private $perPage = 10;
 
     public function __construct(PDO $pdo)
     {
@@ -99,14 +100,12 @@ class WordPressUserSource implements SourceInterface
 
     public function getDataRows($page = 1, $fieldsToRetrieve = [])
     {
-        $perPage = 10;
-
-        $offset = (($page - 1) * $perPage);
+        $offset = (($page - 1) * $this->perPage);
 
         $usersSql = $this->getUserSQL($fieldsToRetrieve);
 
         $usersStmt = $this->pdo->prepare($usersSql);
-        $this->bindLimitParameters($usersStmt, $offset, $perPage);
+        $this->bindLimitParameters($usersStmt, $offset, $this->perPage);
 
         $usersStmt->execute();
 
@@ -149,5 +148,10 @@ class WordPressUserSource implements SourceInterface
         $sqlSuffix = substr($sql, $fromPos, $limitPos - $fromPos);
 
         $sql = 'count (*) '.$sqlSuffix;
+    }
+
+    public function countPages()
+    {
+        return ceil($this->countDataRows() / $this->perPage);
     }
 }
