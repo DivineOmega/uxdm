@@ -89,4 +89,10 @@ class XMLSource implements SourceInterface
 
         return $this->fields;
     }
+
+    public function countDataRows()
+    {
+        $domNodeList = $this->xpath->query($this->xpathQuery);
+        return $domNodeList->length;
+    }
 }

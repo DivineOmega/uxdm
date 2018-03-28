@@ -49,4 +49,9 @@ class AssociativeArraySource implements SourceInterface
     {
         return $this->fields;
     }
+
+    public function countDataRows()
+    {
+        return count($this->array);
+    }
 }

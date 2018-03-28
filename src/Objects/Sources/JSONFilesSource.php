@@ -64,4 +64,9 @@ class JSONFilesSource implements SourceInterface
     {
         return $this->fields;
     }
+
+    public function countDataRows()
+    {
+        return count($this->files);
+    }
 }
