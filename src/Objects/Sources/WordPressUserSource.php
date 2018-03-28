@@ -143,12 +143,11 @@ class WordPressUserSource implements SourceInterface
 
     public function countDataRows()
     {
-        $sql = $this->getUserSQL();
+        $sql = $this->getUserSQL([]);
         $fromPos = strpos($sql, 'from');
         $limitPos = strrpos($sql, 'limit');
         $sqlSuffix = substr($sql, $fromPos, $limitPos-$fromPos);
 
         $sql = 'count (*) '.$sqlSuffix;
-        var_dump($sql); die;
     }
 }

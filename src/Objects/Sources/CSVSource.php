@@ -72,8 +72,8 @@ class CSVSource implements SourceInterface
 
     public function countDataRows()
     {
-        $file = new SplFileObject($this->file, 'r');
+        $file = new \SplFileObject($this->file, 'r');
         $file->seek(PHP_INT_MAX);
-        return $file->key() + 1;
+        return $file->key();
     }
 }
