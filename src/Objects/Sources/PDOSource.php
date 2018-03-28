@@ -131,11 +131,13 @@ class PDOSource implements SourceInterface
     public function countDataRows()
     {
         $sql = $this->getSQL([]);
-        $fromPos = strpos($sql, 'from');
-        $limitPos = strrpos($sql, 'limit');
-        $sqlSuffix = substr($sql, $fromPos, $limitPos-$fromPos);
+        $fromPos = stripos($sql, 'from');
+        $limitPos = strripos($sql, 'limit');
+        $sqlSuffix = substr($sql, $fromPos, $limitPos - $fromPos);
 
         $sql = 'select count(*) as countDataRows '.$sqlSuffix;
+
+        var_dump($sql); die;
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();

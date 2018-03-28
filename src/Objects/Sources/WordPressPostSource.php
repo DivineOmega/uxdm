@@ -146,8 +146,8 @@ class WordPressPostSource implements SourceInterface
     public function countDataRows()
     {
         $sql = $this->getPostSQL([]);
-        $fromPos = strpos($sql, 'from');
-        $limitPos = strrpos($sql, 'limit');
+        $fromPos = stripos($sql, 'from');
+        $limitPos = strripos($sql, 'limit');
         $sqlSuffix = substr($sql, $fromPos, $limitPos-$fromPos);
 
         $sql = 'count (*) '.$sqlSuffix;
