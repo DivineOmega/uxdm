@@ -148,7 +148,7 @@ class WordPressPostSource implements SourceInterface
         $sql = $this->getPostSQL([]);
         $fromPos = stripos($sql, 'from');
         $limitPos = strripos($sql, 'limit');
-        $sqlSuffix = substr($sql, $fromPos, $limitPos-$fromPos);
+        $sqlSuffix = substr($sql, $fromPos, $limitPos - $fromPos);
 
         $sql = 'count (*) '.$sqlSuffix;
     }
