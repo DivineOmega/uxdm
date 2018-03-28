@@ -8,6 +8,7 @@ use RapidWeb\uxdm\Interfaces\SourceInterface;
 use RapidWeb\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
 use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
+use RapidWeb\CliProgressBar\ProgressBar;
 
 class Migrator
 {
@@ -22,6 +23,8 @@ class Migrator
     private $sourceCachePool;
     private $sourceCacheKey;
     private $sourceCacheExpiresAfter;
+    private $showProgressBar = false;
+    private $progressBar;
 
     public function setSource(SourceInterface $source)
     {
@@ -96,6 +99,12 @@ class Migrator
         return $this;
     }
 
+    public function withProgressBar()
+    {
+        $this->showProgressBar = true;
+        return $this;
+    }
+
     private function getSourceDataRows($page)
     {
         if (!$this->sourceCachePool || !$this->sourceCacheKey) {
@@ -147,7 +156,14 @@ class Migrator
 
         $results = [];
 
+        if ($this->showProgressBar) {
+            $this->progressBar = new ProgressBar();
+            $this->progressBar->setMaxProgress($this->source->countDataRows() * count($this->destinationContainers));
+            $this->progressBar->display();
+        }
+
         for ($page = 1; $page < PHP_INT_MAX; $page++) {
+
             $dataRows = $this->getSourceDataRows($page);
 
             if (!$dataRows) {
@@ -177,6 +193,7 @@ class Migrator
             foreach ($this->destinationContainers as $destinationContainer) {
                 if (!$destinationContainer->fields) {
                     $results[] = $destinationContainer->destination->putDataRows($dataRows);
+                    $this->advanceProgressBar(count($dataRows));
                     continue;
                 }
 
@@ -193,9 +210,23 @@ class Migrator
                 }
 
                 $results[] = $destinationContainer->destination->putDataRows($destinationDataRows);
+                $this->advanceProgressBar(count($dataRows));
             }
         }
 
+        if ($this->showProgressBar) {
+            $this->progressBar->complete();
+        }
+
         return $results;
+    }
+
+    private function advanceProgressBar($amount)
+    {
+        if ($this->showProgressBar) {
+            for ($i=0; $i < $amount; $i++) { 
+                $this->progressBar->advance()->display();
+            }
+        }
     }
 }

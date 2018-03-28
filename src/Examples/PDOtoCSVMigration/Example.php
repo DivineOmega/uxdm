@@ -16,4 +16,5 @@ $migrator->setSource($pdoSource)
          ->addDestination($csvDestination)
          ->addDestination($emailsCSVDestination, ['email'])
          ->setFieldsToMigrate(['email', 'name'])
+         ->withProgressBar()
          ->migrate();

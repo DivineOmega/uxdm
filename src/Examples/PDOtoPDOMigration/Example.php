@@ -44,4 +44,5 @@ $migrator->setSource($pdoSource)
                  }
              }
          })
+         ->withProgressBar()
          ->migrate();

@@ -15,4 +15,5 @@ $migrator = new Migrator();
 $migrator->setSource($xmlSource)
          ->setDestination($csvDestination)
          ->setFieldsToMigrate(['loc'])
+         ->withProgressBar()
          ->migrate();

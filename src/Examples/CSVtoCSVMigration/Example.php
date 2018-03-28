@@ -14,4 +14,5 @@ $migrator->setSource($csvSource)
          ->setDestination($csvDestination)
          ->setFieldsToMigrate(['Author'])
          ->setFieldMap(['Author' => 'Writer'])
+         ->withProgressBar()
          ->migrate();

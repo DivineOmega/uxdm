@@ -23,6 +23,7 @@ $migrator->setSource($assocArraySource)
                  $dataItem->value = round($dataItem->value, 1);
              }
          })
+         ->withProgressBar()
          ->migrate();
 
 var_dump($destinationArray);
