@@ -159,7 +159,7 @@ class Migrator
 
         if ($this->showProgressBar) {
             $this->progressBar = new ProgressBar();
-            $this->progressBar->setMaxProgress($this->source->countDataRows() * count($this->destinationContainers));
+            $this->progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
             $this->progressBar->display();
         }
 
@@ -193,7 +193,7 @@ class Migrator
             foreach ($this->destinationContainers as $destinationContainer) {
                 if (!$destinationContainer->fields) {
                     $results[] = $destinationContainer->destination->putDataRows($dataRows);
-                    $this->advanceProgressBar(count($dataRows));
+                    $this->advanceProgressBar();
                     continue;
                 }
 
@@ -210,7 +210,7 @@ class Migrator
                 }
 
                 $results[] = $destinationContainer->destination->putDataRows($destinationDataRows);
-                $this->advanceProgressBar(count($dataRows));
+                $this->advanceProgressBar();
             }
         }
 
@@ -221,12 +221,10 @@ class Migrator
         return $results;
     }
 
-    private function advanceProgressBar($amount)
+    private function advanceProgressBar()
     {
         if ($this->showProgressBar) {
-            for ($i = 0; $i < $amount; $i++) {
-                $this->progressBar->advance()->display();
-            }
+            $this->progressBar->advance()->display();
         }
     }
 }
