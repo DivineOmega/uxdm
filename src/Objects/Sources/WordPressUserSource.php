@@ -146,7 +146,7 @@ class WordPressUserSource implements SourceInterface
         $sql = $this->getUserSQL([]);
         $fromPos = stripos($sql, 'from');
         $limitPos = strripos($sql, 'limit');
-        $sqlSuffix = substr($sql, $fromPos, $limitPos-$fromPos);
+        $sqlSuffix = substr($sql, $fromPos, $limitPos - $fromPos);
 
         $sql = 'count (*) '.$sqlSuffix;
     }

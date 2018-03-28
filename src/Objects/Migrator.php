@@ -3,12 +3,12 @@
 namespace RapidWeb\uxdm\Objects;
 
 use Psr\Cache\CacheItemPoolInterface;
+use RapidWeb\CliProgressBar\ProgressBar;
 use RapidWeb\uxdm\Interfaces\DestinationInterface;
 use RapidWeb\uxdm\Interfaces\SourceInterface;
 use RapidWeb\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
 use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
-use RapidWeb\CliProgressBar\ProgressBar;
 
 class Migrator
 {
@@ -102,6 +102,7 @@ class Migrator
     public function withProgressBar()
     {
         $this->showProgressBar = true;
+
         return $this;
     }
 
@@ -163,7 +164,6 @@ class Migrator
         }
 
         for ($page = 1; $page < PHP_INT_MAX; $page++) {
-
             $dataRows = $this->getSourceDataRows($page);
 
             if (!$dataRows) {
@@ -224,7 +224,7 @@ class Migrator
     private function advanceProgressBar($amount)
     {
         if ($this->showProgressBar) {
-            for ($i=0; $i < $amount; $i++) { 
+            for ($i = 0; $i < $amount; $i++) {
                 $this->progressBar->advance()->display();
             }
         }
