@@ -133,7 +133,7 @@ class PDOSource implements SourceInterface
         $sql = $this->getSQL([]);
         $fromPos = strpos($sql, 'from');
         $limitPos = strrpos($sql, 'limit');
-        $sqlSuffix = substr($sql, $fromPos, $limitPos-$fromPos);
+        $sqlSuffix = substr($sql, $fromPos, $limitPos - $fromPos);
 
         $sql = 'select count(*) as countDataRows '.$sqlSuffix;
 
