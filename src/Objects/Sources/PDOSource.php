@@ -137,8 +137,6 @@ class PDOSource implements SourceInterface
 
         $sql = 'select count(*) as countDataRows '.$sqlSuffix;
 
-        var_dump($sql); die;
-
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
