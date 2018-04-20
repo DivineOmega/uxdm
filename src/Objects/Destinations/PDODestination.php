@@ -2,10 +2,10 @@
 
 namespace DivineOmega\uxdm\Objects\Destinations;
 
-use PDO;
-use PDOException;
 use DivineOmega\uxdm\Interfaces\DestinationInterface;
 use DivineOmega\uxdm\Objects\DataRow;
+use PDO;
+use PDOException;
 
 class PDODestination implements DestinationInterface
 {

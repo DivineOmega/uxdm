@@ -1,9 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
 use DivineOmega\uxdm\Objects\Destinations\XMLDestination;
+use PHPUnit\Framework\TestCase;
 
 final class XMLDestinationTest extends TestCase
 {

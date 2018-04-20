@@ -2,13 +2,13 @@
 
 namespace DivineOmega\uxdm\Objects\Sources;
 
-use Exception;
-use PDO;
-use PDOStatement;
 use DivineOmega\uxdm\Interfaces\SourceInterface;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
 use DivineOmega\uxdm\Objects\Sources\PDO\Join;
+use Exception;
+use PDO;
+use PDOStatement;
 
 class PDOSource implements SourceInterface
 {

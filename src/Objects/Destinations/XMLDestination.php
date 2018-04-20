@@ -2,9 +2,9 @@
 
 namespace DivineOmega\uxdm\Objects\Destinations;
 
+use DivineOmega\uxdm\Interfaces\DestinationInterface;
 use DOMDocument;
 use DOMElement;
-use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class XMLDestination implements DestinationInterface
 {

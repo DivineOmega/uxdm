@@ -2,11 +2,11 @@
 
 namespace DivineOmega\uxdm\Objects\Sources;
 
-use PDO;
-use PDOStatement;
 use DivineOmega\uxdm\Interfaces\SourceInterface;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
+use PDO;
+use PDOStatement;
 
 class WordPressUserSource implements SourceInterface
 {
