@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/DivineOmega/uxdm.svg?branch=master)](https://travis-ci.org/DivineOmega/uxdm)
 [![Coverage Status](https://coveralls.io/repos/github/DivineOmega/uxdm/badge.svg?branch=master)](https://coveralls.io/github/DivineOmega/uxdm?branch=master)
-[![StyleCI](https://styleci.io/repos/90974025/shield?branch=master)](https://styleci.io/repos/90974025)
+[![StyleCI](https://styleci.io/repos/130364449/shield?branch=master)](https://styleci.io/repos/130364449)
 ![Packagist](https://img.shields.io/packagist/dt/DivineOmega/uxdm.svg)
 
 UXDM helps developers migrate data from one system or format to another.
