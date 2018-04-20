@@ -1,6 +1,6 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects\Sources\PDO;
+namespace DivineOmega\uxdm\Objects\Sources\PDO;
 
 class Join
 {

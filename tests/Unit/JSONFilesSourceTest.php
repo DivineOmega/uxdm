@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\Sources\JSONFilesSource;
+use DivineOmega\uxdm\Objects\Sources\JSONFilesSource;
 
 final class JSONFilesSourceTest extends TestCase
 {

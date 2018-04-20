@@ -1,8 +1,8 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects;
+namespace DivineOmega\uxdm\Objects;
 
-use RapidWeb\uxdm\Interfaces\DestinationInterface;
+use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class DestinationContainer
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects\Destinations;
+namespace DivineOmega\uxdm\Objects\Destinations;
 
-use RapidWeb\uxdm\Interfaces\DestinationInterface;
+use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class JSONFilesDestination implements DestinationInterface
 {

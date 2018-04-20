@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\Sources\PDOSource;
+use DivineOmega\uxdm\Objects\Sources\PDOSource;
 
 final class PDOSourceTest extends TestCase
 {

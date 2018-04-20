@@ -1,14 +1,14 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects;
+namespace DivineOmega\uxdm\Objects;
 
 use Psr\Cache\CacheItemPoolInterface;
-use RapidWeb\CliProgressBar\ProgressBar;
-use RapidWeb\uxdm\Interfaces\DestinationInterface;
-use RapidWeb\uxdm\Interfaces\SourceInterface;
-use RapidWeb\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
-use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
-use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
+use DivineOmega\CliProgressBar\ProgressBar;
+use DivineOmega\uxdm\Interfaces\DestinationInterface;
+use DivineOmega\uxdm\Interfaces\SourceInterface;
+use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
+use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
+use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
 
 class Migrator
 {

@@ -2,9 +2,9 @@
 
 require_once __DIR__.'/../../../vendor/autoload.php';
 
-use RapidWeb\uxdm\Objects\Destinations\CSVDestination;
-use RapidWeb\uxdm\Objects\Migrator;
-use RapidWeb\uxdm\Objects\Sources\XMLSource;
+use DivineOmega\uxdm\Objects\Destinations\CSVDestination;
+use DivineOmega\uxdm\Objects\Migrator;
+use DivineOmega\uxdm\Objects\Sources\XMLSource;
 
 $xmlSource = new XMLSource(__DIR__.'/source.xml', '/ns:urlset/ns:url');
 $xmlSource->addXMLNamespace('ns', 'http://www.sitemaps.org/schemas/sitemap/0.9');

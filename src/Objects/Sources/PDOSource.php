@@ -1,14 +1,14 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects\Sources;
+namespace DivineOmega\uxdm\Objects\Sources;
 
 use Exception;
 use PDO;
 use PDOStatement;
-use RapidWeb\uxdm\Interfaces\SourceInterface;
-use RapidWeb\uxdm\Objects\DataItem;
-use RapidWeb\uxdm\Objects\DataRow;
-use RapidWeb\uxdm\Objects\Sources\PDO\Join;
+use DivineOmega\uxdm\Interfaces\SourceInterface;
+use DivineOmega\uxdm\Objects\DataItem;
+use DivineOmega\uxdm\Objects\DataRow;
+use DivineOmega\uxdm\Objects\Sources\PDO\Join;
 
 class PDOSource implements SourceInterface
 {

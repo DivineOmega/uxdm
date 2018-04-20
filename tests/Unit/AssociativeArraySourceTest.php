@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\Sources\AssociativeArraySource;
+use DivineOmega\uxdm\Objects\Sources\AssociativeArraySource;
 
 final class AssociativeArraySourceTest extends TestCase
 {

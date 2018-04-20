@@ -1,9 +1,9 @@
 # 🔀 Universal Extensible Data Migrator (UXDM)
 
-[![Build Status](https://travis-ci.org/rapidwebltd/uxdm.svg?branch=master)](https://travis-ci.org/rapidwebltd/uxdm)
-[![Coverage Status](https://coveralls.io/repos/github/rapidwebltd/uxdm/badge.svg?branch=master)](https://coveralls.io/github/rapidwebltd/uxdm?branch=master)
+[![Build Status](https://travis-ci.org/divineomega/uxdm.svg?branch=master)](https://travis-ci.org/divineomega/uxdm)
+[![Coverage Status](https://coveralls.io/repos/github/divineomega/uxdm/badge.svg?branch=master)](https://coveralls.io/github/divineomega/uxdm?branch=master)
 [![StyleCI](https://styleci.io/repos/90974025/shield?branch=master)](https://styleci.io/repos/90974025)
-![Packagist](https://img.shields.io/packagist/dt/rapidwebltd/uxdm.svg)
+![Packagist](https://img.shields.io/packagist/dt/divineomega/uxdm.svg)
 
 UXDM helps developers migrate data from one system or format to another.
 
@@ -12,7 +12,7 @@ UXDM helps developers migrate data from one system or format to another.
 UXDM can be easily installed using Composer. Just run the following command from the root of your project.
 
 ```
-composer require rapidwebltd/uxdm
+composer require divineomega/uxdm
 ```
 
 If you have never used the Composer dependency manager before, head to the [Composer website](https://getcomposer.org/) for more information on how to get started.

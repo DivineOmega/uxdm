@@ -1,6 +1,6 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects\Exceptions;
+namespace DivineOmega\uxdm\Objects\Exceptions;
 
 use Exception;
 

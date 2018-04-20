@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\Sources\CSVSource;
+use DivineOmega\uxdm\Objects\Sources\CSVSource;
 
 final class CSVSourceTest extends TestCase
 {

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\DataItem;
+use DivineOmega\uxdm\Objects\DataItem;
 
 final class DataItemTest extends TestCase
 {

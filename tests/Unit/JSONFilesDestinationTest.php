@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\DataItem;
-use RapidWeb\uxdm\Objects\DataRow;
-use RapidWeb\uxdm\Objects\Destinations\JSONFilesDestination;
+use DivineOmega\uxdm\Objects\DataItem;
+use DivineOmega\uxdm\Objects\DataRow;
+use DivineOmega\uxdm\Objects\Destinations\JSONFilesDestination;
 
 final class JSONFilesDestinationTest extends TestCase
 {

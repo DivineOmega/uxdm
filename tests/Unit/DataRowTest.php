@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\DataItem;
-use RapidWeb\uxdm\Objects\DataRow;
-use RapidWeb\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
+use DivineOmega\uxdm\Objects\DataItem;
+use DivineOmega\uxdm\Objects\DataRow;
+use DivineOmega\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
 
 final class DataRowTest extends TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\DestinationContainer;
-use RapidWeb\uxdm\Objects\Destinations\DebugOutputDestination;
+use DivineOmega\uxdm\Objects\DestinationContainer;
+use DivineOmega\uxdm\Objects\Destinations\DebugOutputDestination;
 
 final class DestinationContainerTest extends TestCase
 {

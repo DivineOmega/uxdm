@@ -2,13 +2,13 @@
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\DataItem;
-use RapidWeb\uxdm\Objects\Destinations\PDODestination;
-use RapidWeb\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
-use RapidWeb\uxdm\Objects\Exceptions\NoDestinationException;
-use RapidWeb\uxdm\Objects\Exceptions\NoSourceException;
-use RapidWeb\uxdm\Objects\Migrator;
-use RapidWeb\uxdm\Objects\Sources\PDOSource;
+use DivineOmega\uxdm\Objects\DataItem;
+use DivineOmega\uxdm\Objects\Destinations\PDODestination;
+use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
+use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
+use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
+use DivineOmega\uxdm\Objects\Migrator;
+use DivineOmega\uxdm\Objects\Sources\PDOSource;
 
 final class MigratorTest extends TestCase
 {

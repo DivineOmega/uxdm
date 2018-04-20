@@ -1,6 +1,6 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects;
+namespace DivineOmega\uxdm\Objects;
 
 class DataItem
 {

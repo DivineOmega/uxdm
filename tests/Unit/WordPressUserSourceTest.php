@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\Sources\WordPressUserSource;
+use DivineOmega\uxdm\Objects\Sources\WordPressUserSource;
 
 final class WordPressUserSourceTest extends TestCase
 {

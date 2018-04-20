@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use RapidWeb\uxdm\Objects\Sources\PDO\Join;
+use DivineOmega\uxdm\Objects\Sources\PDO\Join;
 
 final class PDOJoinTest extends TestCase
 {

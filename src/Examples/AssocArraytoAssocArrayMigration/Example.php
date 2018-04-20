@@ -2,9 +2,9 @@
 
 require_once __DIR__.'/../../../vendor/autoload.php';
 
-use RapidWeb\uxdm\Objects\Destinations\AssociativeArrayDestination;
-use RapidWeb\uxdm\Objects\Migrator;
-use RapidWeb\uxdm\Objects\Sources\AssociativeArraySource;
+use DivineOmega\uxdm\Objects\Destinations\AssociativeArrayDestination;
+use DivineOmega\uxdm\Objects\Migrator;
+use DivineOmega\uxdm\Objects\Sources\AssociativeArraySource;
 
 $sourceArray = [
     ['name' => 'James', 'height' => 1.88],

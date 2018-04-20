@@ -1,11 +1,11 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects\Destinations;
+namespace DivineOmega\uxdm\Objects\Destinations;
 
 use PDO;
 use PDOException;
-use RapidWeb\uxdm\Interfaces\DestinationInterface;
-use RapidWeb\uxdm\Objects\DataRow;
+use DivineOmega\uxdm\Interfaces\DestinationInterface;
+use DivineOmega\uxdm\Objects\DataRow;
 
 class PDODestination implements DestinationInterface
 {

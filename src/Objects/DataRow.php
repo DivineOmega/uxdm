@@ -1,8 +1,8 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects;
+namespace DivineOmega\uxdm\Objects;
 
-use RapidWeb\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
+use DivineOmega\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
 
 class DataRow
 {

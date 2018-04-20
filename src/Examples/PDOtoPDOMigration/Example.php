@@ -5,10 +5,10 @@ require_once __DIR__.'/../../../vendor/autoload.php';
 use Cache\Adapter\Filesystem\FilesystemCachePool;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use RapidWeb\uxdm\Objects\DataItem;
-use RapidWeb\uxdm\Objects\Destinations\PDODestination;
-use RapidWeb\uxdm\Objects\Migrator;
-use RapidWeb\uxdm\Objects\Sources\PDOSource;
+use DivineOmega\uxdm\Objects\DataItem;
+use DivineOmega\uxdm\Objects\Destinations\PDODestination;
+use DivineOmega\uxdm\Objects\Migrator;
+use DivineOmega\uxdm\Objects\Sources\PDOSource;
 
 $pdoSource = new PDOSource(new PDO('mysql:dbname=laravel-test;host=127.0.0.1', 'root', getenv('UXDM_EXAMPLE_PASSWORD')), 'users');
 

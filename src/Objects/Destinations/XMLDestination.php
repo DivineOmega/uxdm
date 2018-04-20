@@ -1,10 +1,10 @@
 <?php
 
-namespace RapidWeb\uxdm\Objects\Destinations;
+namespace DivineOmega\uxdm\Objects\Destinations;
 
 use DOMDocument;
 use DOMElement;
-use RapidWeb\uxdm\Interfaces\DestinationInterface;
+use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class XMLDestination implements DestinationInterface
 {

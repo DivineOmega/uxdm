@@ -1,6 +1,6 @@
 <?php
 
-namespace RapidWeb\uxdm\Interfaces;
+namespace DivineOmega\uxdm\Interfaces;
 
 interface SourceInterface
 {
