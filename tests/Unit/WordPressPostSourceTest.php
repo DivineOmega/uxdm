@@ -1,7 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\Sources\WordPressPostSource;
+use PHPUnit\Framework\TestCase;
 
 final class WordPressPostSourceTest extends TestCase
 {

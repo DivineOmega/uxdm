@@ -1,7 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\Sources\XMLSource;
+use PHPUnit\Framework\TestCase;
 
 final class XMLSourceTest extends TestCase
 {

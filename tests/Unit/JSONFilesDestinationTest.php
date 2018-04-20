@@ -1,9 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
 use DivineOmega\uxdm\Objects\Destinations\JSONFilesDestination;
+use PHPUnit\Framework\TestCase;
 
 final class JSONFilesDestinationTest extends TestCase
 {

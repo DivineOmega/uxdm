@@ -1,7 +1,6 @@
 <?php
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\Destinations\PDODestination;
 use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
@@ -9,6 +8,7 @@ use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
 use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
 use DivineOmega\uxdm\Objects\Migrator;
 use DivineOmega\uxdm\Objects\Sources\PDOSource;
+use PHPUnit\Framework\TestCase;
 
 final class MigratorTest extends TestCase
 {

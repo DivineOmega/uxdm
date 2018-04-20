@@ -1,7 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\DataItem;
+use PHPUnit\Framework\TestCase;
 
 final class DataItemTest extends TestCase
 {

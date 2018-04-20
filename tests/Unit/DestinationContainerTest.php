@@ -1,8 +1,8 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\DestinationContainer;
 use DivineOmega\uxdm\Objects\Destinations\DebugOutputDestination;
+use PHPUnit\Framework\TestCase;
 
 final class DestinationContainerTest extends TestCase
 {

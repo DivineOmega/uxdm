@@ -2,12 +2,12 @@
 
 namespace DivineOmega\uxdm\Objects\Sources;
 
-use DOMDocument;
-use DOMXPath;
-use Exception;
 use DivineOmega\uxdm\Interfaces\SourceInterface;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
+use DOMDocument;
+use DOMXPath;
+use Exception;
 
 class XMLSource implements SourceInterface
 {
