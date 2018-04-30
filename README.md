@@ -58,6 +58,7 @@ $migrator->setSource($pdoSource)
          ->setDestination($pdoDestination)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
+         ->withProgressBar()
          ->migrate();
 ```
 
@@ -74,6 +75,7 @@ $migrator->setSource($pdoSource)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
          ->setFieldMap(['name' => 'full_name'])
+         ->withProgressBar()
          ->migrate();
 ```
 
@@ -94,6 +96,7 @@ $migrator->setSource($pdoSource)
                 $dataItem->value = strtoupper($dataItem->value);
             }
          })
+         ->withProgressBar()
          ->migrate();
 ```
 
@@ -114,6 +117,7 @@ $migrator->setSource($pdoSource)
          ->setDataRowManipulator(function($dataRow) {
             $dataRow->addDataItem(new DataItem('random_number', rand(1,1000)));
          })
+         ->withProgressBar()
          ->migrate();
 ```
 
@@ -134,6 +138,7 @@ $migrator->setSource($pdoSource)
             $dataRow->addDataItem(new DataItem('email_hash', md5($emailDataItem->value)));
             $dataRow->removeDataItem($emailDataItem);
          })
+         ->withProgressBar()
          ->migrate();
 ```
 
