@@ -1,11 +1,17 @@
 # 🔀 Universal Extensible Data Migrator (UXDM)
 
-[![Build Status](https://travis-ci.org/DivineOmega/uxdm.svg?branch=master)](https://travis-ci.org/DivineOmega/uxdm)
-[![Coverage Status](https://coveralls.io/repos/github/DivineOmega/uxdm/badge.svg?branch=master)](https://coveralls.io/github/DivineOmega/uxdm?branch=master)
-[![StyleCI](https://styleci.io/repos/130364449/shield?branch=master)](https://styleci.io/repos/130364449)
-<!-- ![Packagist](https://img.shields.io/packagist/dt/DivineOmega/uxdm.svg) -->
-
 UXDM helps developers migrate data from one system or format to another.
+
+<p align="center">
+    <img src="assets/images/uxdm-data-migration-example.png">
+</p>
+
+<p align="center">
+    <a href="https://travis-ci.org/DivineOmega/uxdm"><img src="https://travis-ci.org/DivineOmega/uxdm.svg?branch=master"></a>
+    <a href="https://coveralls.io/github/DivineOmega/uxdm?branch=master"><img src="https://coveralls.io/repos/github/DivineOmega/uxdm/badge.svg?branch=master"></a>
+    <a href="https://styleci.io/repos/130364449"><img src="https://styleci.io/repos/130364449/shield?branch=master"></a>
+    <img src="https://img.shields.io/packagist/dt/DivineOmega/uxdm.svg">
+</p>
 
 ## Installation
 

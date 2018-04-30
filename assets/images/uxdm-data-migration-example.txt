@@ -1,0 +1,18 @@
+// composer require divineomega/uxdm
+
+// Setup your source and destination objects.
+// This example uses database connections, but UXDM supports many different source and destination formats.
+$pdoSource = new PDOSource(new PDO('mysql:dbname=old-test;host=localhost', 'un', 'pw'), 'users');
+$pdoDestination = new PDODestination(new PDO('mysql:dbname=new-test;host=localhost', 'un', 'pw'), 'new_users');
+
+// Create a new migrator
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)						// Source
+         ->setDestination($pdoDestination)				// Destination
+         ->setFieldsToMigrate(['id', 'email', 'name'])	// Fields to migrate
+         ->setKeyFields(['id'])							// Key(s) used to identify unique rows
+  		 ->setFieldMap(['name' => 'full_name'])			// Mapping of fields names, from source to destination
+  		 ->withProgressBar()							// Show progress bar, when run in CLI.
+         ->migrate();									// Do the migration!
+
+// UXDM also supports advanced features, such as modifying data during migration and conditionally skipping rows.
