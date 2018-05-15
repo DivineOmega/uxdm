@@ -9,7 +9,8 @@ final class EloquentSourceTest extends TestCase
     {
         require_once 'includes/BootSourceEloquentDatabase.php';
         require_once 'includes/EloquentUserModel.php';
-        return new EloquentSource(User::class);
+        
+        return new EloquentSource('App\User');
     }
 
     public function testGetFields()
