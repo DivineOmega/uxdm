@@ -17,7 +17,8 @@ class EloquentSource implements SourceInterface
     {
         $this->model = new $eloquentModelClassName;
 
-        $this->fields = array_keys($this->model::first()->getAttributes());
+        $firstModel = $this->model::first();
+        $this->fields = array_keys($firstModel->getAttributes());
     }
 
     public function getDataRows($page = 1, $fieldsToRetrieve = [])
