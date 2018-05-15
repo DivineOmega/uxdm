@@ -5,7 +5,6 @@ namespace DivineOmega\uxdm\Objects\Sources;
 use DivineOmega\uxdm\Interfaces\SourceInterface;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
-use Illuminate\Database\Eloquent\Model;
 
 class EloquentSource implements SourceInterface
 {
@@ -15,7 +14,7 @@ class EloquentSource implements SourceInterface
 
     public function __construct($eloquentModelClassName)
     {
-        $this->model = new $eloquentModelClassName;
+        $this->model = new $eloquentModelClassName();
 
         $this->fields = array_keys($this->model->first()->getAttributes());
     }
@@ -28,9 +27,9 @@ class EloquentSource implements SourceInterface
 
         $dataRows = [];
 
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $dataRow = new DataRow();
-            foreach($record->getAttributes() as $key => $value) {
+            foreach ($record->getAttributes() as $key => $value) {
                 $dataRow->addDataItem(new DataItem($key, $value));
             }
             $dataRows[] = $dataRow;
