@@ -7,7 +7,7 @@ final class EloquentSourceTest extends TestCase
 {
     private function createSource()
     {
-        require_once 'includes/BootEloquent.php';
+        require_once 'includes/BootSourceEloquentDatabase.php';
         require_once 'includes/EloquentUserModel.php';
         return new EloquentSource(User::class);
     }
