@@ -46,7 +46,7 @@ class EloquentSource implements SourceInterface
 
     public function countDataRows()
     {
-        return $this->model::count();
+        return $this->model->count();
     }
 
     public function countPages()
