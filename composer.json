@@ -22,7 +22,7 @@
     "require": {
         "psr/cache": "^1.0",
         "cache/array-adapter": "^1.0",
-        "illuminate/support": "^5.1",
+        "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
         "divineomega/array_undot": "^2.0",
         "divineomega/php-cli-progress-bar": "^2.0",
         "illuminate/database": "^5.1" 
