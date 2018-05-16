@@ -16,8 +16,8 @@ class EloquentDestination implements DestinationInterface
 
     private function alreadyExists(array $keyDataItems)
     {
-        $count = $this->model->where(function($query) use ($keyDataItems) {
-            foreach($keyDataItems as $keyDataItem) {
+        $count = $this->model->where(function ($query) use ($keyDataItems) {
+            foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
         })->count();
@@ -30,8 +30,8 @@ class EloquentDestination implements DestinationInterface
         $dataItems = $dataRow->getDataItems();
 
         $newRecord = (new \ReflectionObject($this->model))->newInstance();
-        
-        foreach($dataItems as $dataItem) {
+
+        foreach ($dataItems as $dataItem) {
             $newRecord->setAttribute($dataItem->fieldName, $dataItem->value);
         }
 
@@ -43,13 +43,13 @@ class EloquentDestination implements DestinationInterface
         $dataItems = $dataRow->getDataItems();
         $keyDataItems = $dataRow->getKeyDataItems();
 
-        $record = $this->model->where(function($query) use ($keyDataItems) {
-            foreach($keyDataItems as $keyDataItem) {
+        $record = $this->model->where(function ($query) use ($keyDataItems) {
+            foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
         })->first();
 
-        foreach($dataItems as $dataItem) {
+        foreach ($dataItems as $dataItem) {
             $record->setAttribute($dataItem->fieldName, $dataItem->value);
         }
 
