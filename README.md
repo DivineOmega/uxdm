@@ -23,6 +23,36 @@ composer require divineomega/uxdm
 
 If you have never used the Composer dependency manager before, head to the [Composer website](https://getcomposer.org/) for more information on how to get started.
 
+## Quick Start
+
+1. Create a new PHP file to contain your UXDM migration code. In this case, we'll call it `user-csv-import.php`. Remember to add `require 'vendor/autoload.php'` if necessary.
+
+* If you're using Laravel, you could create a new Artisan command class to contain your UXDM migration code.
+
+2. Create your source and destination objects. This examples uses a CSV source and PDO (database) destination.
+
+```php
+$csvSource = new CSVSource('users.csv');
+
+$pdoDestination = new PDODestination(new PDO('mysql:dbname=test-database;host=127.0.0.1', 'root', 'password'), 'users');
+```
+
+3. Create and configure a new UXDM migrator object.
+
+```php
+$migrator = new Migrator;
+$migrator->setSource($csvSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name'])
+         ->setKeyFields(['id'])
+         ->withProgressBar()
+         ->migrate();
+```
+
+4. Run your newly created migration. In this example, we can just run `php user-csv-import.php` from the command line and will get a nice progress bar.
+
+See the sections below for more information on the available source and destination objects, and more advanced usage examples.
+
 ## Migrations
 
 Each UXDM migration requires a source object and at least one destination object. These determine where and how data is read and written. The UXDM package comes with a variety of source and destination objects, including the following.
