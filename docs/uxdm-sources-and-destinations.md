@@ -7,6 +7,7 @@ For general documentation and usage examples, see the main [README](../README.md
 ## Sources
 
 * [PDO Source](sources/PDOSource.md)
+* [Eloquent Source](sources/EloquentSource.md)
 * [CSV Source](sources/CSVSource.md)
 * [XML Source](sources/XMLSource.md)
 * [JSON Files Source](sources/JSONFilesSource.md)
@@ -17,6 +18,7 @@ For general documentation and usage examples, see the main [README](../README.md
 ## Destinations
 
 * [PDO Destination](destinations/PDODestination.md)
+* [Eloquent Destination](sources/EloquentDestination.md)
 * [CSV Destination](destinations/CSVDestination.md)
 * [XML Destination](destinations/XMLDestination.md)
 * [JSON Files Destination](destinations/JSONFilesDestination.md)
