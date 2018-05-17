@@ -25,11 +25,9 @@ If you have never used the Composer dependency manager before, head to the [Comp
 
 ## Quick Start
 
-1. Create a new PHP file to contain your UXDM migration code. In this case, we'll call it `user-csv-import.php`. Remember to add `require 'vendor/autoload.php'` if necessary.
+1. Create a new PHP file to contain your UXDM migration code. In this example, we'll call it `user-csv-import.php`. Remember to add `require 'vendor/autoload.php'` and relevant use statements, if necessary.
 
-* If you're using Laravel, you could create a new Artisan command class to contain your UXDM migration code.
-
-2. Create your source and destination objects. This examples uses a CSV source and PDO (database) destination.
+2. Create your source and destination objects. This example uses a CSV source and PDO (database) destination.
 
 ```php
 $csvSource = new CSVSource('users.csv');
