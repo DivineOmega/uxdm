@@ -28,6 +28,7 @@ If you have never used the Composer dependency manager before, head to the [Comp
 Each UXDM migration requires a source object and at least one destination object. These determine where and how data is read and written. The UXDM package comes with a variety of source and destination objects, including the following.
 
 * PDO (PHP Database Object) Source & Destination
+* Eloquent (as used in Laravel) Source & Destination
 * CSV (Comma Seperated Values) Source & Destination
 * Associative Array Source & Destination
 * JSON Files Source & Destination
