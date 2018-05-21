@@ -26,11 +26,11 @@ class EloquentSource implements SourceInterface
         $offset = ($page - 1) * $this->perPage;
 
         $query = $this->model->offset($offset)->limit($this->perPage)->select($fieldsToRetrieve);
-        
+
         if (is_callable($this->queryCallback)) {
             $query = $query->where($this->queryCallback);
         }
-        
+
         $records = $query->get();
 
         $dataRows = [];
