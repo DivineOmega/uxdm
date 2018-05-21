@@ -18,7 +18,7 @@ final class EloquentSourceTest extends TestCase
         require_once 'includes/BootSourceEloquentDatabase.php';
         require_once 'includes/EloquentUserModel.php';
 
-        return new EloquentSource(User::class, function($query) {
+        return new EloquentSource(User::class, function ($query) {
             $query->where('name', 'Bear');
         });
     }
