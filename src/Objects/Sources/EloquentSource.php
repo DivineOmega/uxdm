@@ -9,12 +9,14 @@ use DivineOmega\uxdm\Objects\DataRow;
 class EloquentSource implements SourceInterface
 {
     private $model;
+    private $queryCallback;
     private $fields = [];
     private $perPage = 10;
 
-    public function __construct($eloquentModelClassName)
+    public function __construct($eloquentModelClassName, $queryCallback = null)
     {
         $this->model = new $eloquentModelClassName();
+        $this->queryCallback = $queryCallback;
 
         $this->fields = array_keys($this->model->first()->getAttributes());
     }
@@ -23,7 +25,13 @@ class EloquentSource implements SourceInterface
     {
         $offset = ($page - 1) * $this->perPage;
 
-        $records = $this->model->offset($offset)->limit($this->perPage)->select($fieldsToRetrieve)->get();
+        $query = $this->model->offset($offset)->limit($this->perPage)->select($fieldsToRetrieve);
+        
+        if (is_callable($this->queryCallback)) {
+            $query = $query->where($this->queryCallback);
+        }
+        
+        $records = $query->get();
 
         $dataRows = [];
 
