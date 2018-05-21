@@ -28,7 +28,7 @@ You can then loop through this data and access it, as shown in the example below
 
 ```php
 foreach($destinationArray as $row) {
-    echo 'Crew member '.$row->name.' has the role of '.$row->role.'.'.PHP_EOL;
+    echo 'Crew member '.$row['name'].' has the role of '.$row['role'].'.'.PHP_EOL;
 }
 ```
 
