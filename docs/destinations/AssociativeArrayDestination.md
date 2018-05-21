@@ -24,6 +24,14 @@ After migration, the `$destinationArray` will contain the exported data, similar
 ];
 ```
 
+You can then loop through this data and access it, as shown in the example below..
+
+```php
+foreach($destinationArray as $row) {
+    echo 'Crew member '.$row->name.' has the role of '.$row->role.'.'.PHP_EOL;
+}
+```
+
 ## Assigning to migrator
 
 To use the associative array destination as part of a UXDM migration, you must assign it to the migrator. This process is the same for most destinations.
