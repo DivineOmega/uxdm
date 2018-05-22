@@ -41,5 +41,7 @@ class CSVDestination implements DestinationInterface
 
             $this->rowNum++;
         }
+
+        fclose($fh);
     }
 }

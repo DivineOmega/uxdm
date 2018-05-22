@@ -42,5 +42,7 @@ class MarkdownDestination implements DestinationInterface
 
             $this->rowNum++;
         }
+
+        fclose($fh);
     }
 }
