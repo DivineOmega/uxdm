@@ -131,4 +131,18 @@ final class JSONFilesSourceTest extends TestCase
 
         $this->assertCount(0, $dataRows);
     }
+
+    public function testCountDataRows()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(2, $source->countDataRows());
+    }
+
+    public function testCountPages()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(1, $source->countPages());
+    }
 }

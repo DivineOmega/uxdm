@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 final class XMLSourceTest extends TestCase
 {
-    private function createXMLSource()
+    private function createSource()
     {
         $xmlSource = new XMLSource(__DIR__.'/Data/source.xml', '/ns:urlset/ns:url');
         $xmlSource->addXMLNamespace('ns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
@@ -25,14 +25,14 @@ final class XMLSourceTest extends TestCase
 
     public function testGetFields()
     {
-        $source = $this->createXMLSource();
+        $source = $this->createSource();
 
         $this->assertEquals(['#text', 'loc', 'lastmod', 'changefreq', 'priority'], $source->getFields());
     }
 
     public function testGetDataRows()
     {
-        $source = $this->createXMLSource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['loc', 'lastmod']);
 
@@ -65,7 +65,7 @@ final class XMLSourceTest extends TestCase
 
     public function testGetDataRowsOnlyOneField()
     {
-        $source = $this->createXMLSource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['priority']);
 
@@ -88,5 +88,19 @@ final class XMLSourceTest extends TestCase
         $dataRows = $source->getDataRows(2, ['priority']);
 
         $this->assertCount(0, $dataRows);
+    }
+
+    public function testCountDataRows()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(2, $source->countDataRows());
+    }
+
+    public function testCountPages()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(1, $source->countPages());
     }
 }

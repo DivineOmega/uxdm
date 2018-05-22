@@ -5,21 +5,21 @@ use PHPUnit\Framework\TestCase;
 
 final class PDOSourceTest extends TestCase
 {
-    private function createPDOSource()
+    private function createSource()
     {
         return new PDOSource(new PDO('sqlite:'.__DIR__.'/Data/source.sqlite'), 'users');
     }
 
     public function testGetFields()
     {
-        $source = $this->createPDOSource();
+        $source = $this->createSource();
 
         $this->assertEquals(['id', 'name', 'email'], $source->getFields());
     }
 
     public function testGetDataRows()
     {
-        $source = $this->createPDOSource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['name', 'email']);
 
@@ -52,7 +52,7 @@ final class PDOSourceTest extends TestCase
 
     public function testGetDataRowsOnlyOneField()
     {
-        $source = $this->createPDOSource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['email']);
 
@@ -79,7 +79,7 @@ final class PDOSourceTest extends TestCase
 
     public function testOverrideSQLWithoutSelect()
     {
-        $source = $this->createPDOSource();
+        $source = $this->createSource();
 
         $this->expectException(Exception::class);
 
@@ -88,7 +88,7 @@ final class PDOSourceTest extends TestCase
 
     public function testOverrideSQLWithoutLimit()
     {
-        $source = $this->createPDOSource();
+        $source = $this->createSource();
 
         $this->expectException(Exception::class);
 
@@ -97,7 +97,7 @@ final class PDOSourceTest extends TestCase
 
     public function testOverrideSQL()
     {
-        $source = $this->createPDOSource();
+        $source = $this->createSource();
 
         $source->setOverrideSQL('select name, email from users where name = \'Tim\' limit ? , ?');
 
@@ -118,7 +118,7 @@ final class PDOSourceTest extends TestCase
 
     public function testGetDataRowsPagination()
     {
-        $source = $this->createPDOSource();
+        $source = $this->createSource();
         $source->setPerPage(1);
 
         $dataRows = $source->getDataRows(1, ['name', 'email']);
@@ -150,5 +150,19 @@ final class PDOSourceTest extends TestCase
         $dataRows = $source->getDataRows(3, ['name', 'email']);
 
         $this->assertCount(0, $dataRows);
+    }
+
+    public function testCountDataRows()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(2, $source->countDataRows());
+    }
+
+    public function testCountPages()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(1, $source->countPages());
     }
 }

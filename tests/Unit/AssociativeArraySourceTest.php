@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 final class AssociativeArraySourceTest extends TestCase
 {
-    private function createAssociativeArraySource()
+    private function createSource()
     {
         $associativeArray = [
             ['name' => 'Thing', 'weight' => 2, 'value' => 900],
@@ -17,14 +17,14 @@ final class AssociativeArraySourceTest extends TestCase
 
     public function testGetFields()
     {
-        $source = $this->createAssociativeArraySource();
+        $source = $this->createSource();
 
         $this->assertEquals(['name', 'weight', 'value'], $source->getFields());
     }
 
     public function testGetDataRows()
     {
-        $source = $this->createAssociativeArraySource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['name', 'weight']);
 
@@ -57,7 +57,7 @@ final class AssociativeArraySourceTest extends TestCase
 
     public function testGetDataRowsOnlyOneField()
     {
-        $source = $this->createAssociativeArraySource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['value']);
 
@@ -80,5 +80,19 @@ final class AssociativeArraySourceTest extends TestCase
         $dataRows = $source->getDataRows(2, ['value']);
 
         $this->assertCount(0, $dataRows);
+    }
+
+    public function testCountDataRows()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(2, $source->countDataRows());
+    }
+
+    public function testCountPages()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(1, $source->countPages());
     }
 }

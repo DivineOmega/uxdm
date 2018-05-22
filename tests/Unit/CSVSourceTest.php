@@ -5,21 +5,21 @@ use PHPUnit\Framework\TestCase;
 
 final class CSVSourceTest extends TestCase
 {
-    private function createCSVSource()
+    private function createSource()
     {
         return new CSVSource(__DIR__.'/Data/source.csv');
     }
 
     public function testGetFields()
     {
-        $source = $this->createCSVSource();
+        $source = $this->createSource();
 
         $this->assertEquals(['Title', 'Author'], $source->getFields());
     }
 
     public function testGetDataRows()
     {
-        $source = $this->createCSVSource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['Title', 'Author']);
 
@@ -52,7 +52,7 @@ final class CSVSourceTest extends TestCase
 
     public function testGetDataRowsOnlyOneField()
     {
-        $source = $this->createCSVSource();
+        $source = $this->createSource();
 
         $dataRows = $source->getDataRows(1, ['Author']);
 
@@ -75,5 +75,19 @@ final class CSVSourceTest extends TestCase
         $dataRows = $source->getDataRows(2, ['Author']);
 
         $this->assertCount(0, $dataRows);
+    }
+
+    public function testCountDataRows()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(2, $source->countDataRows());
+    }
+
+    public function testCountPages()
+    {
+        $source = $this->createSource();
+
+        $this->assertEquals(1, $source->countPages());
     }
 }
