@@ -123,6 +123,40 @@ final class MigratorTest extends TestCase
         $this->assertEquals($this->getExpectedArray(), $this->getActualArray());
     }
 
+    public function testMigratorWithProgressBar()
+    {
+        $migrator = new Migrator();
+
+        ob_start();
+
+        $migrator->setSource($this->getPDOSource())
+                 ->setDestination($this->getPDODestination())
+                 ->setFieldsToMigrate(['id', 'name', 'email'])
+                 ->setKeyFields(['id'])
+                 ->setFieldMap(['email' => 'email_address'])
+                 ->setDataItemManipulator(function ($dataItem) {
+                     if ($dataItem->fieldName == 'name') {
+                         $dataItem->value = strtoupper($dataItem->value);
+                     }
+                 })
+                 ->setDataRowManipulator(function ($dataRow) {
+                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
+                 })
+                 ->setSkipIfTrueCheck(function ($dataRow) {
+                     if ($dataRow->getDataItemByFieldName('name')->value == 'TIM') {
+                         return true;
+                     }
+                 })
+                 ->withProgressBar()
+                 ->migrate();
+
+        $progressBarOutput = ob_get_clean();
+        $expectedProgressBarOutput = file_get_contents(__DIR__.'/expectedProgressBarOutput.txt');
+
+        $this->assertEquals($this->getExpectedArray(), $this->getActualArray());
+        $this->assertEquals($expectedProgressBarOutput, $progressBarOutput);
+    }
+
     public function testMigratorWithNoSource()
     {
         $this->expectException(NoSourceException::class);
