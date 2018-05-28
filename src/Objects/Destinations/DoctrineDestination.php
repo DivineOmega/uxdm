@@ -4,16 +4,16 @@ namespace DivineOmega\uxdm\Objects\Destinations;
 
 use DivineOmega\uxdm\Interfaces\DestinationInterface;
 use DivineOmega\uxdm\Objects\DataRow;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
 
 class DoctrineDestination implements DestinationInterface
 {
-    private $entityRepository;
+    private $entityManager;
 
-    public function __construct(EntityRepository $entityRepository)
+    public function __construct(EntityManager $entityManager, $entityClassName)
     {
         $this->entityManager = $entityManager;
-        $this->entityRepository = $entityRepository;
+        $this->entityRepository = $this->entityManager->getRepository($entityClassName);
     }
 
     private function alreadyExists(array $keyDataItems)
@@ -35,13 +35,12 @@ class DoctrineDestination implements DestinationInterface
         $newRecord = new $className;
 
         foreach ($dataItems as $dataItem) {
-            $methodName = 'set'.$dataItem->fieldName;
+            $methodName = 'set'.ucfirst($dataItem->fieldName);
             call_user_func_array([$newRecord, $methodName], [$dataItem->value]);
         }
 
-        $entityManager = $this->entityRepository->getEntityManager();
-        $entityManager->persist($newRecord);
-        $entityManager->flush();
+        $this->entityManager->persist($newRecord);
+        $this->entityManager->flush();
     }
 
     private function updateDataRow(DataRow $dataRow)
@@ -58,12 +57,11 @@ class DoctrineDestination implements DestinationInterface
         $record = $this->entityRepository->findOneBy($criteria);
 
         foreach ($dataItems as $dataItem) {
-            $methodName = 'set'.$dataItem->fieldName;
+            $methodName = 'set'.ucfirst($dataItem->fieldName);
             call_user_func_array([$record, $methodName], [$dataItem->value]);
         }
 
-        $entityManager = $this->entityRepository->getEntityManager();
-        $entityManager->flush();
+        $this->entityManager->flush();
     }
 
     public function putDataRows(array $dataRows)

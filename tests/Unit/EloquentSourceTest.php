@@ -2,13 +2,13 @@
 
 use DivineOmega\uxdm\Objects\Sources\EloquentSource;
 use PHPUnit\Framework\TestCase;
+use DivineOmega\uxdm\TestClasses\Eloquent\User;
 
 final class EloquentSourceTest extends TestCase
 {
     private function createSource()
     {
         require_once 'includes/BootSourceEloquentDatabase.php';
-        require_once 'includes/EloquentUserModel.php';
 
         return new EloquentSource(User::class);
     }
@@ -16,7 +16,6 @@ final class EloquentSourceTest extends TestCase
     private function createSourceWithCallback()
     {
         require_once 'includes/BootSourceEloquentDatabase.php';
-        require_once 'includes/EloquentUserModel.php';
 
         return new EloquentSource(User::class, function ($query) {
             $query->where('name', 'Bear');

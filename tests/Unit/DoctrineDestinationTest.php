@@ -2,11 +2,13 @@
 
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
-use DivineOmega\uxdm\Objects\Destinations\EloquentDestination;
+use DivineOmega\uxdm\Objects\Destinations\DoctrineDestination;
 use PHPUnit\Framework\TestCase;
-use DivineOmega\uxdm\TestClasses\Eloquent\User;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+use DivineOmega\uxdm\TestClasses\Doctrine\User;
 
-final class EloquentDestinationTest extends TestCase
+final class DoctrineDestinationTest extends TestCase
 {
     private $pdo = null;
 
@@ -22,9 +24,17 @@ final class EloquentDestinationTest extends TestCase
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
-        require_once 'includes/BootDestinationEloquentDatabase.php';
+        $isDevMode = true;
+        $config = Setup::createAnnotationMetadataConfiguration(['/tmp'], $isDevMode);
 
-        return new EloquentDestination(User::class);
+        $conn = array(
+            'driver' => 'pdo_sqlite',
+            'path' => __DIR__.'/Data/destination.sqlite',
+        );
+
+        $entityManager = EntityManager::create($conn, $config);
+
+        return new DoctrineDestination($entityManager, User::class);
     }
 
     private function createDataRows()

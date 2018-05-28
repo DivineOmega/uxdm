@@ -18,6 +18,11 @@
             "DivineOmega\\uxdm\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "DivineOmega\\uxdm\\TestClasses\\": "tests/Unit/includes/TestClasses/"
+        }
+    },
     "license": "LGPL-3.0-only",
     "require": {
         "psr/cache": "^1.0",
