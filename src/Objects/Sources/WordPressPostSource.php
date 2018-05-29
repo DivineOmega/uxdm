@@ -14,6 +14,7 @@ class WordPressPostSource implements SourceInterface
     private $fields = [];
     private $postType;
     private $perPage = 10;
+    private $prefix = 'wp_';
 
     public function __construct(PDO $pdo, $postType = 'post')
     {
@@ -21,6 +22,11 @@ class WordPressPostSource implements SourceInterface
         $this->pdo = $pdo;
         $this->postType = $postType;
         $this->fields = $this->getPostFields();
+    }
+
+    public function setTablePrefix($prefix)
+    {
+        $this->prefix = $prefix;
     }
 
     private function getPostFields()
@@ -36,7 +42,7 @@ class WordPressPostSource implements SourceInterface
         $postFields = array_keys($row);
 
         foreach ($postFields as $key => $postField) {
-            $postFields[$key] = 'wp_posts.'.$postField;
+            $postFields[$key] = $this->prefix.'posts.'.$postField;
         }
 
         $sql = $this->getPostMetaSQL($row['ID']);
@@ -47,7 +53,7 @@ class WordPressPostSource implements SourceInterface
         $postMetaFields = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $postMetaFields[] = 'wp_postmeta.'.$row['meta_key'];
+            $postMetaFields[] = $this->prefix.'postmeta.'.$row['meta_key'];
         }
 
         return array_merge($postFields, $postMetaFields);
@@ -56,14 +62,14 @@ class WordPressPostSource implements SourceInterface
     private function getPostSQL($fieldsToRetrieve)
     {
         foreach ($fieldsToRetrieve as $key => $fieldToRetrieve) {
-            if (strpos($fieldToRetrieve, 'wp_posts.') !== 0 && $fieldToRetrieve !== '*') {
+            if (strpos($fieldToRetrieve, $this->prefix.'posts.') !== 0 && $fieldToRetrieve !== '*') {
                 unset($fieldsToRetrieve[$key]);
             }
         }
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
-        $sql = 'select '.$fieldsSQL.' from wp_posts where post_type = \''.$this->postType.'\'';
+        $sql = 'select '.$fieldsSQL.' from '.$this->prefix.'posts where post_type = \''.$this->postType.'\'';
         $sql .= ' limit ? , ?';
 
         return $sql;
@@ -71,16 +77,16 @@ class WordPressPostSource implements SourceInterface
 
     private function getPostMetaSQL($postID, array $fieldsToRetrieve = null)
     {
-        $sql = 'select meta_key, meta_value from wp_postmeta where ';
+        $sql = 'select meta_key, meta_value from '.$this->prefix.'postmeta where ';
 
         $sql .= 'post_id = '.$postID;
 
         if ($fieldsToRetrieve) {
             foreach ($fieldsToRetrieve as $key => $fieldToRetrieve) {
-                if (strpos($fieldToRetrieve, 'wp_postmeta.') !== 0) {
+                if (strpos($fieldToRetrieve, $this->prefix.'postmeta.') !== 0) {
                     unset($fieldsToRetrieve[$key]);
                 }
-                $fieldsToRetrieve[$key] = str_replace('wp_postmeta.', '', $fieldToRetrieve);
+                $fieldsToRetrieve[$key] = str_replace($this->prefix.'postmeta.', '', $fieldToRetrieve);
             }
 
             $sql .= ' and ( ';
@@ -117,7 +123,7 @@ class WordPressPostSource implements SourceInterface
             $dataRow = new DataRow();
 
             foreach ($postsRow as $key => $value) {
-                $dataRow->addDataItem(new DataItem('wp_posts.'.$key, $value));
+                $dataRow->addDataItem(new DataItem($this->prefix.'posts.'.$key, $value));
             }
 
             if (isset($postsRow['ID'])) {
@@ -127,7 +133,7 @@ class WordPressPostSource implements SourceInterface
                 $postMetaStmt->execute();
 
                 while ($postMetaRow = $postMetaStmt->fetch(PDO::FETCH_ASSOC)) {
-                    $dataRow->addDataItem(new DataItem('wp_postmeta.'.$postMetaRow['meta_key'], $postMetaRow['meta_value']));
+                    $dataRow->addDataItem(new DataItem($this->prefix.'postmeta.'.$postMetaRow['meta_key'], $postMetaRow['meta_value']));
                 }
             }
 

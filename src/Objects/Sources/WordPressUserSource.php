@@ -13,12 +13,18 @@ class WordPressUserSource implements SourceInterface
     private $pdo;
     private $fields = [];
     private $perPage = 10;
+    private $prefix = 'wp_';
 
     public function __construct(PDO $pdo)
     {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo = $pdo;
         $this->fields = $this->getUserFields();
+    }
+
+    public function setTablePrefix($prefix)
+    {
+        $this->prefix = $prefix;
     }
 
     private function getUserFields()
@@ -34,7 +40,7 @@ class WordPressUserSource implements SourceInterface
         $userFields = array_keys($row);
 
         foreach ($userFields as $key => $userField) {
-            $userFields[$key] = 'wp_users.'.$userField;
+            $userFields[$key] = $this->prefix.'users.'.$userField;
         }
 
         $sql = $this->getUserMetaSQL($row['ID']);
@@ -45,7 +51,7 @@ class WordPressUserSource implements SourceInterface
         $userMetaFields = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $userMetaFields[] = 'wp_usermeta.'.$row['meta_key'];
+            $userMetaFields[] = $this->prefix.'usermeta.'.$row['meta_key'];
         }
 
         return array_merge($userFields, $userMetaFields);
@@ -54,14 +60,14 @@ class WordPressUserSource implements SourceInterface
     private function getUserSQL($fieldsToRetrieve)
     {
         foreach ($fieldsToRetrieve as $key => $fieldToRetrieve) {
-            if (strpos($fieldToRetrieve, 'wp_users.') !== 0 && $fieldToRetrieve !== '*') {
+            if (strpos($fieldToRetrieve, $this->prefix.'users.') !== 0 && $fieldToRetrieve !== '*') {
                 unset($fieldsToRetrieve[$key]);
             }
         }
 
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
-        $sql = 'select '.$fieldsSQL.' from wp_users';
+        $sql = 'select '.$fieldsSQL.' from '.$this->prefix.'users';
         $sql .= ' limit ? , ?';
 
         return $sql;
@@ -69,16 +75,16 @@ class WordPressUserSource implements SourceInterface
 
     private function getUserMetaSQL($userID, array $fieldsToRetrieve = null)
     {
-        $sql = 'select meta_key, meta_value from wp_usermeta where ';
+        $sql = 'select meta_key, meta_value from '.$this->prefix.'usermeta where ';
 
         $sql .= 'user_id = '.$userID;
 
         if ($fieldsToRetrieve) {
             foreach ($fieldsToRetrieve as $key => $fieldToRetrieve) {
-                if (strpos($fieldToRetrieve, 'wp_usermeta.') !== 0) {
+                if (strpos($fieldToRetrieve, $this->prefix.'usermeta.') !== 0) {
                     unset($fieldsToRetrieve[$key]);
                 }
-                $fieldsToRetrieve[$key] = str_replace('wp_usermeta.', '', $fieldToRetrieve);
+                $fieldsToRetrieve[$key] = str_replace($this->prefix.'usermeta.', '', $fieldToRetrieve);
             }
 
             $sql .= ' and ( ';
@@ -115,7 +121,7 @@ class WordPressUserSource implements SourceInterface
             $dataRow = new DataRow();
 
             foreach ($usersRow as $key => $value) {
-                $dataRow->addDataItem(new DataItem('wp_users.'.$key, $value));
+                $dataRow->addDataItem(new DataItem($this->prefix.'users.'.$key, $value));
             }
 
             if (isset($usersRow['ID'])) {
@@ -125,7 +131,7 @@ class WordPressUserSource implements SourceInterface
                 $userMetaStmt->execute();
 
                 while ($userMetaRow = $userMetaStmt->fetch(PDO::FETCH_ASSOC)) {
-                    $dataRow->addDataItem(new DataItem('wp_usermeta.'.$userMetaRow['meta_key'], $userMetaRow['meta_value']));
+                    $dataRow->addDataItem(new DataItem($this->prefix.'usermeta.'.$userMetaRow['meta_key'], $userMetaRow['meta_value']));
                 }
             }
 
