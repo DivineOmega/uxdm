@@ -14,6 +14,12 @@ $pdo = new PDO('mysql:dbname=wordpress;host=127.0.0.1', 'root', 'password123');
 $wordPressPostSource = new WordPressPostSource($pdo);
 ```
 
+If you wish, you can also change the table prefix, as shown below. If not changed, it defaults to `wp_`.
+
+```php
+$wordPressPostSource->setTablePrefix('wp2_');
+```
+
 ## Assigning to migrator
 
 To use the WordPress post source as part of a UXDM migration, you must assign it to the migrator. This process is the same for most sources.
