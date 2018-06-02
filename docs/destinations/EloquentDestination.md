@@ -19,7 +19,7 @@ To use the Eloquent destination as part of a UXDM migration, you must assign it 
 
 ```php
 $migrator = new Migrator;
-$migrator->setDestination($qloquentDestination);
+$migrator->setDestination($eloquentDestination);
 ```
 
 Alternatively, you can add multiple destinations, as shown below. You can also specify the fields you wish to send to each destination by 
