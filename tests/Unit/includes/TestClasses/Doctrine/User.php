@@ -8,10 +8,9 @@ namespace DivineOmega\uxdm\TestClasses\Doctrine;
  */
 class User
 {
-    
     /**
      * @var string
-     * 
+     *
      * @Column(name="name", type="string", length=15, nullable=false)
      * @Id
      */
@@ -19,7 +18,7 @@ class User
 
     /**
      * @var int
-     * 
+     *
      * @Column(name="value", type="integer", length=15, nullable=false)
      */
     protected $value;
