@@ -3,10 +3,10 @@
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
 use DivineOmega\uxdm\Objects\Destinations\DoctrineDestination;
-use PHPUnit\Framework\TestCase;
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 use DivineOmega\uxdm\TestClasses\Doctrine\User;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
+use PHPUnit\Framework\TestCase;
 
 final class DoctrineDestinationTest extends TestCase
 {
@@ -27,10 +27,10 @@ final class DoctrineDestinationTest extends TestCase
         $isDevMode = true;
         $config = Setup::createAnnotationMetadataConfiguration(['/tmp'], $isDevMode);
 
-        $conn = array(
+        $conn = [
             'driver' => 'pdo_sqlite',
-            'path' => __DIR__.'/Data/destination.sqlite',
-        );
+            'path'   => __DIR__.'/Data/destination.sqlite',
+        ];
 
         $entityManager = EntityManager::create($conn, $config);
 

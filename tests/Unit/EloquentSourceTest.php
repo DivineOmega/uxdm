@@ -1,8 +1,8 @@
 <?php
 
 use DivineOmega\uxdm\Objects\Sources\EloquentSource;
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\TestClasses\Eloquent\User;
+use PHPUnit\Framework\TestCase;
 
 final class EloquentSourceTest extends TestCase
 {
