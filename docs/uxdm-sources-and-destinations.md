@@ -19,6 +19,7 @@ For general documentation and usage examples, see the main [README](../README.md
 
 * [PDO Destination](destinations/PDODestination.md)
 * [Eloquent Destination](destinations/EloquentDestination.md)
+* [Doctrine Destination](destinations/DoctrineDestination.md)
 * [CSV Destination](destinations/CSVDestination.md)
 * [XML Destination](destinations/XMLDestination.md)
 * [JSON Files Destination](destinations/JSONFilesDestination.md)

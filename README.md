@@ -57,6 +57,7 @@ Each UXDM migration requires a source object and at least one destination object
 
 * PDO (PHP Database Object) Source & Destination
 * Eloquent (as used in Laravel) Source & Destination
+* Doctrine (as used in Symfony) Destination
 * CSV (Comma Seperated Values) Source & Destination
 * Associative Array Source & Destination
 * JSON Files Source & Destination
