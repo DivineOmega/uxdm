@@ -35,8 +35,8 @@ class DoctrineDestination implements DestinationInterface
         $dataItems = $dataRow->getDataItems();
 
         $className = $this->entityRepository->getClassName();
-        $newRecord = new $className;
-        
+        $newRecord = new $className();
+
         foreach ($dataItems as $dataItem) {
             $this->propertyAccessor->setValue($newRecord, $dataItem->fieldName, $dataItem->value);
         }
