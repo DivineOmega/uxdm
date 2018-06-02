@@ -31,6 +31,6 @@
         "divineomega/array_undot": "^2.0",
         "divineomega/php-cli-progress-bar": "^2.0",
         "illuminate/database": "^5.1",
-        "doctrine/orm": "^2.5.11" 
+        "doctrine/orm": "^2.6" 
     }
 }
