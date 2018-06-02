@@ -27,7 +27,11 @@ class DoctrineDestination implements DestinationInterface
             $criteria[$keyDataItem->fieldName] = $keyDataItem->value;
         }
 
-        return $this->entityRepository->count($criteria) > 0;
+        if (method_exists($this->entityRepository, 'count')) {
+            return $this->entityRepository->count($criteria) > 0;
+        } else {
+            return $this->entityRepository->findOneBy($criteria) !== null;
+        }
     }
 
     private function insertDataRow(DataRow $dataRow)
