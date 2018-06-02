@@ -32,6 +32,6 @@
         "divineomega/php-cli-progress-bar": "^2.0",
         "illuminate/database": "^5.1",
         "doctrine/orm": "^2.6",
-        "symfony/property-access": "^4.1" 
+        "symfony/property-access": "^3.4" 
     }
 }
