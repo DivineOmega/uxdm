@@ -5,15 +5,18 @@ namespace DivineOmega\uxdm\Objects\Destinations;
 use DivineOmega\uxdm\Interfaces\DestinationInterface;
 use DivineOmega\uxdm\Objects\DataRow;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class DoctrineDestination implements DestinationInterface
 {
     private $entityManager;
+    private $propertyAccessor;
 
     public function __construct(EntityManager $entityManager, $entityClassName)
     {
         $this->entityManager = $entityManager;
         $this->entityRepository = $this->entityManager->getRepository($entityClassName);
+        $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
     private function alreadyExists(array $keyDataItems)
@@ -33,10 +36,9 @@ class DoctrineDestination implements DestinationInterface
 
         $className = $this->entityRepository->getClassName();
         $newRecord = new $className;
-
+        
         foreach ($dataItems as $dataItem) {
-            $methodName = 'set'.ucfirst($dataItem->fieldName);
-            call_user_func_array([$newRecord, $methodName], [$dataItem->value]);
+            $this->propertyAccessor->setValue($newRecord, $dataItem->fieldName, $dataItem->value);
         }
 
         $this->entityManager->persist($newRecord);
@@ -57,8 +59,7 @@ class DoctrineDestination implements DestinationInterface
         $record = $this->entityRepository->findOneBy($criteria);
 
         foreach ($dataItems as $dataItem) {
-            $methodName = 'set'.ucfirst($dataItem->fieldName);
-            call_user_func_array([$record, $methodName], [$dataItem->value]);
+            $this->propertyAccessor->setValue($record, $dataItem->fieldName, $dataItem->value);
         }
 
         $this->entityManager->flush();
