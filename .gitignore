@@ -1,4 +1,5 @@
 composer.lock
+.vscode/
 vendor/
 tests/Logs/
 tests/Unit/Data/destination.*
