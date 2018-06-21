@@ -30,7 +30,7 @@ class EloquentDestination implements DestinationInterface
         $dataArray = [];
         $dataItems = $dataRow->getDataItems();
 
-        foreach($dataItems as $dataItem) {
+        foreach ($dataItems as $dataItem) {
             $dataArray[$dataItem->fieldName] = $dataItem->value;
         }
 
