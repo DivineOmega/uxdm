@@ -16,7 +16,7 @@ class EloquentDestination implements DestinationInterface
 
     private function alreadyExists(array $keyDataItems)
     {
-        $count = $this->model::where(function ($query) use ($keyDataItems) {
+        $count = $this->model->where(function ($query) use ($keyDataItems) {
             foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
@@ -39,14 +39,14 @@ class EloquentDestination implements DestinationInterface
 
     private function insertDataRow(DataRow $dataRow)
     {
-        $this->model::create($this->getAssocArrayFromDataRow($dataRow));
+        $this->model->create($this->getAssocArrayFromDataRow($dataRow));
     }
 
     private function updateDataRow(DataRow $dataRow)
     {
         $keyDataItems = $dataRow->getKeyDataItems();
 
-        $record = $this->model::where(function ($query) use ($keyDataItems) {
+        $record = $this->model->where(function ($query) use ($keyDataItems) {
             foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
@@ -56,7 +56,7 @@ class EloquentDestination implements DestinationInterface
 
     public function putDataRows(array $dataRows)
     {
-        $this->model::unguard();
+        $this->model->unguard();
 
         foreach ($dataRows as $dataRow) {
             $keyDataItems = $dataRow->getKeyDataItems();
@@ -73,6 +73,6 @@ class EloquentDestination implements DestinationInterface
             }
         }
 
-        $this->model::reguard();
+        $this->model->reguard();
     }
 }
