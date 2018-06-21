@@ -16,7 +16,7 @@ class EloquentDestination implements DestinationInterface
 
     private function alreadyExists(array $keyDataItems)
     {
-        $count = $this->model->where(function ($query) use ($keyDataItems) {
+        $count = $this->model::where(function ($query) use ($keyDataItems) {
             foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
@@ -25,39 +25,39 @@ class EloquentDestination implements DestinationInterface
         return $count > 0;
     }
 
-    private function insertDataRow(DataRow $dataRow)
+    private function getAssocArrayFromDataRow(DataRow $dataRow)
     {
+        $dataArray = [];
         $dataItems = $dataRow->getDataItems();
 
-        $newRecord = (new \ReflectionObject($this->model))->newInstance();
-
-        foreach ($dataItems as $dataItem) {
-            $newRecord->setAttribute($dataItem->fieldName, $dataItem->value);
+        foreach($dataItems as $dataItem) {
+            $dataArray[$dataItem->fieldName] = $dataItem->value;
         }
 
-        $newRecord->save();
+        return $dataArray;
+    }
+
+    private function insertDataRow(DataRow $dataRow)
+    {
+        $this->model::create($this->getAssocArrayFromDataRow($dataRow));
     }
 
     private function updateDataRow(DataRow $dataRow)
     {
-        $dataItems = $dataRow->getDataItems();
         $keyDataItems = $dataRow->getKeyDataItems();
 
-        $record = $this->model->where(function ($query) use ($keyDataItems) {
+        $record = $this->model::where(function ($query) use ($keyDataItems) {
             foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
-        })->first();
+        })->update($this->getAssocArrayFromDataRow($dataRow));
 
-        foreach ($dataItems as $dataItem) {
-            $record->setAttribute($dataItem->fieldName, $dataItem->value);
-        }
-
-        $record->save();
     }
 
     public function putDataRows(array $dataRows)
     {
+        $this->model::unguard();
+
         foreach ($dataRows as $dataRow) {
             $keyDataItems = $dataRow->getKeyDataItems();
 
@@ -72,5 +72,7 @@ class EloquentDestination implements DestinationInterface
                 $this->insertDataRow($dataRow);
             }
         }
+
+        $this->model::reguard();
     }
 }
