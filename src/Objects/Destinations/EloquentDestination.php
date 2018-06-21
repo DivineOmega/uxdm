@@ -51,7 +51,6 @@ class EloquentDestination implements DestinationInterface
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
         })->update($this->getAssocArrayFromDataRow($dataRow));
-
     }
 
     public function putDataRows(array $dataRows)
