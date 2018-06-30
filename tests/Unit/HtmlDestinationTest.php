@@ -2,9 +2,8 @@
 
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
-use DivineOmega\uxdm\Objects\Destinations\MarkdownDestination;
-use PHPUnit\Framework\TestCase;
 use DivineOmega\uxdm\Objects\Destinations\HtmlDestination;
+use PHPUnit\Framework\TestCase;
 
 final class HtmlDestinationTest extends TestCase
 {
