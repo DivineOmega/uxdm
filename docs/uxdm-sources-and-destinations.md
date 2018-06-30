@@ -24,6 +24,7 @@ For general documentation and usage examples, see the main [README](../README.md
 * [XML Destination](destinations/XMLDestination.md)
 * [JSON Files Destination](destinations/JSONFilesDestination.md)
 * [Associative Array Destination](destinations/AssociativeArrayDestination.md)
+* [HTML Destination](destinations/HtmlDestination.md)
 * [Markdown Destination](destinations/MarkdownDestination.md)
 * [Debug Output Destination](destinations/DebugOutputDestination.md)
 * [Null Destination](destinations/NullDestination.md)
