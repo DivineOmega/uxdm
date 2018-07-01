@@ -30,6 +30,5 @@ class AssociativeArrayDestination implements DestinationInterface
 
     public function finishMigration()
     {
-        
     }
 }

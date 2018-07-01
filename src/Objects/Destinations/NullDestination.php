@@ -12,6 +12,5 @@ class NullDestination implements DestinationInterface
 
     public function finishMigration()
     {
-        
     }
 }

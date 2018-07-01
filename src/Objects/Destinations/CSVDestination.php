@@ -47,6 +47,5 @@ class CSVDestination implements DestinationInterface
 
     public function finishMigration()
     {
-        
     }
 }
