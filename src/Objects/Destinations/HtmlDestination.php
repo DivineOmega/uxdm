@@ -22,8 +22,6 @@ class HtmlDestination implements DestinationInterface
             $fh = fopen($this->file, 'a');
         }
 
-        fwrite($fh, '<table class="uxdm-table">');
-
         foreach ($dataRows as $dataRow) {
             $dataItems = $dataRow->getDataItems();
 
@@ -32,6 +30,7 @@ class HtmlDestination implements DestinationInterface
                 foreach ($dataItems as $dataItem) {
                     $fieldNames[] = htmlentities($dataItem->fieldName);
                 }
+                fwrite($fh, '<table class="uxdm-table">');
                 fwrite($fh, '<tr class="uxdm-fields"><th class="uxdm-field">');
                 fwrite($fh, implode('</th><th class="uxdm-field">', $fieldNames));
                 fwrite($fh, '</th></tr>');
@@ -47,9 +46,12 @@ class HtmlDestination implements DestinationInterface
 
             $this->rowNum++;
         }
+    }
 
+    public function finishMigration()
+    {
+        $fh = fopen($this->file, 'a');
         fwrite($fh, '</table>');
-
         fclose($fh);
     }
 }

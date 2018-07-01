@@ -34,4 +34,9 @@ class JSONFilesDestination implements DestinationInterface
             $this->fileNum++;
         }
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

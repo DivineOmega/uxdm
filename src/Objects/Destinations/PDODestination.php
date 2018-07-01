@@ -147,4 +147,9 @@ class PDODestination implements DestinationInterface
             }
         }
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

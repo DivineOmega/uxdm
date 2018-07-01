@@ -214,6 +214,10 @@ class Migrator
             }
         }
 
+        foreach ($this->destinationContainers as $destinationContainer) {
+            $destinationContainer->destination->finishMigration();
+        }
+
         if ($this->showProgressBar) {
             $this->progressBar->complete();
         }

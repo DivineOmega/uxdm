@@ -44,4 +44,9 @@ class CSVDestination implements DestinationInterface
 
         fclose($fh);
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

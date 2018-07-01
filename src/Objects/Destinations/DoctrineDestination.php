@@ -86,4 +86,9 @@ class DoctrineDestination implements DestinationInterface
             }
         }
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

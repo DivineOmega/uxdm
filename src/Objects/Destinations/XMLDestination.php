@@ -32,7 +32,10 @@ class XMLDestination implements DestinationInterface
                 $dataRowDomElement->appendChild($dataItemDomElement);
             }
         }
+    }
 
+    public function finishMigration()
+    {
         file_put_contents($this->file, $this->domDoc->saveXML());
     }
 }

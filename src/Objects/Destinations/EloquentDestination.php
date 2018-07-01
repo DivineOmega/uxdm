@@ -74,4 +74,9 @@ class EloquentDestination implements DestinationInterface
 
         $this->model->reguard();
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

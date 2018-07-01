@@ -45,4 +45,9 @@ class MarkdownDestination implements DestinationInterface
 
         fclose($fh);
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

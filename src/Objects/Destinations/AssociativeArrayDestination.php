@@ -27,4 +27,9 @@ class AssociativeArrayDestination implements DestinationInterface
             $this->array[] = $row;
         }
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

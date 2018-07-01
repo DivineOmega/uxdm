@@ -51,6 +51,7 @@ final class HtmlDestinationTest extends TestCase
 
         $destination = new HtmlDestination($file);
         $destination->putDataRows($dataRows);
+        $destination->finishMigration();
 
         $fileContent = file_get_contents($file);
 

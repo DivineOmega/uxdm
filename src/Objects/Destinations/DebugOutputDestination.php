@@ -10,4 +10,9 @@ class DebugOutputDestination implements DestinationInterface
     {
         var_dump($dataRows);
     }
+
+    public function finishMigration()
+    {
+        
+    }
 }

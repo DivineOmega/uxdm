@@ -60,6 +60,7 @@ final class XMLDestinationTest extends TestCase
 
         $destination = new XMLDestination($file, $domDoc, $rootElement, 'dataRow');
         $destination->putDataRows($dataRows);
+        $destination->finishMigration();
 
         $fileContent = file_get_contents($file);
 
