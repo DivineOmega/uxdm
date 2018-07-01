@@ -48,6 +48,5 @@ class MarkdownDestination implements DestinationInterface
 
     public function finishMigration()
     {
-        
     }
 }

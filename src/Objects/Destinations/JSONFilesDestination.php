@@ -37,6 +37,5 @@ class JSONFilesDestination implements DestinationInterface
 
     public function finishMigration()
     {
-        
     }
 }

@@ -13,6 +13,5 @@ class DebugOutputDestination implements DestinationInterface
 
     public function finishMigration()
     {
-        
     }
 }

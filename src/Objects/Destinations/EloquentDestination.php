@@ -77,6 +77,5 @@ class EloquentDestination implements DestinationInterface
 
     public function finishMigration()
     {
-        
     }
 }
