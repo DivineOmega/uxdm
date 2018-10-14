@@ -84,6 +84,5 @@ class PDFDestination implements DestinationInterface
         $pdfContent = $dompdf->output();
 
         file_put_contents($this->file, $pdfContent);
-
     }
 }
