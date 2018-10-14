@@ -30,9 +30,10 @@ final class NullDestinationTest extends TestCase
     {
         $dataRows = $this->createDataRows();
 
-        $destination = new NullDestination();
         ob_start();
+        $destination = new NullDestination();
         $destination->putDataRows($dataRows);
+        $destination->finishMigration();
         $output = ob_get_clean();
 
         $expectedOutput = '';

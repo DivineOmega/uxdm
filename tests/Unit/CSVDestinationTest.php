@@ -48,6 +48,7 @@ final class CSVDestinationTest extends TestCase
 
         $destination = new CSVDestination($file);
         $destination->putDataRows($dataRows);
+        $destination->finishMigration();
 
         $fileContent = file_get_contents($file);
 

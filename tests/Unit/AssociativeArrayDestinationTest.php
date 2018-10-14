@@ -43,6 +43,8 @@ final class AssociativeArrayDestinationTest extends TestCase
             $expectedArray[] = $expectedArrayRow;
         }
 
+        $destination->finishMigration();
+
         $this->assertEquals($expectedArray, $array);
     }
 }

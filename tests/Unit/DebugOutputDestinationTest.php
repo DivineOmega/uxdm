@@ -30,9 +30,10 @@ final class DebugOutputDestinationTest extends TestCase
     {
         $dataRows = $this->createDataRows();
 
-        $destination = new DebugOutputDestination();
         ob_start();
+        $destination = new DebugOutputDestination();
         $destination->putDataRows($dataRows);
+        $destination->finishMigration();
         $output = $this->stripFirstLine(ob_get_clean());
 
         ob_start();
