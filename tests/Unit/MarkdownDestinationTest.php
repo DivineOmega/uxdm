@@ -59,6 +59,7 @@ final class MarkdownDestinationTest extends TestCase
 
         $destination = new MarkdownDestination($file);
         $destination->putDataRows($dataRows);
+        $destination->finishMigration();
 
         $fileContent = file_get_contents($file);
 
