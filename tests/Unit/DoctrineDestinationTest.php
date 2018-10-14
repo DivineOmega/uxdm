@@ -109,5 +109,7 @@ final class DoctrineDestinationTest extends TestCase
         $destination->putDataRows($dataRows);
 
         $this->assertEquals($this->getExpectedArray($dataRows), $this->getActualArray());
+
+        $destination->finishMigration();
     }
 }
