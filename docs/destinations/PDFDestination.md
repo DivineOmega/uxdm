@@ -66,6 +66,6 @@ passing an array of field names as the second parameter.
 
 ```php
 $migrator = new Migrator;
-$migrator->addDestination($PDFDestination, ['field1', 'field2']);
+$migrator->addDestination($pdfDestination, ['field1', 'field2']);
 $migrator->addDestination($otherDestination, ['field3', 'field2']);
 ```
