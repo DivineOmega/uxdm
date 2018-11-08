@@ -126,7 +126,7 @@ class Migrator
         return $dataRows;
     }
 
-    public function migrate()
+    private function sanityCheck()
     {
         if (!$this->source) {
             throw new NoSourceException('No source specified for migration.');
@@ -151,9 +151,18 @@ class Migrator
                 throw new MissingFieldToMigrateException('The field `'.$keyField.'` is present in the key fields list but not present in the fields to migrate.');
             }
         }
+    }
+
+    public function migrate()
+    {
+        $this->sanityCheck();
 
         $nullDataItemManipulation = function () {
         };
+
+        $dataItemManipulator = $this->dataItemManipulator;
+        $dataRowManipulator = $this->dataRowManipulator;
+        $skipIfTrueCheck = $this->skipIfTrueCheck;
 
         $results = [];
 
@@ -171,18 +180,16 @@ class Migrator
             }
 
             foreach ($dataRows as $key => $dataRow) {
-                $dataRow->prepare($this->keyFields, $this->fieldMap, $this->dataItemManipulator ? $this->dataItemManipulator : $nullDataItemManipulation);
+                $dataRow->prepare($this->keyFields, $this->fieldMap, $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation);
             }
 
-            if ($this->dataRowManipulator !== null) {
-                $dataRowManipulator = $this->dataRowManipulator;
+            if ($dataRowManipulator !== null) {
                 foreach ($dataRows as $dataRow) {
                     $dataRowManipulator($dataRow);
                 }
             }
 
-            if ($this->skipIfTrueCheck !== null) {
-                $skipIfTrueCheck = $this->skipIfTrueCheck;
+            if ($skipIfTrueCheck !== null) {
                 foreach ($dataRows as $key => $dataRow) {
                     if ($skipIfTrueCheck($dataRow)) {
                         unset($dataRows[$key]);
