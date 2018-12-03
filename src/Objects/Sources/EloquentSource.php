@@ -25,10 +25,11 @@ class EloquentSource implements SourceInterface
     {
         $offset = ($page - 1) * $this->perPage;
 
-        $query = $this->model->offset($offset)->limit($this->perPage)->select($fieldsToRetrieve);
+        $query = $this->model->offset($offset)->limit($this->perPage);
 
         if (is_callable($this->queryCallback)) {
-            $query = $query->where($this->queryCallback);
+            $queryCallback = $this->queryCallback;
+            $queryCallback($query);
         }
 
         $records = $query->get();
@@ -36,9 +37,13 @@ class EloquentSource implements SourceInterface
         $dataRows = [];
 
         foreach ($records as $record) {
+            $attributes = array_dot($record->toArray());
             $dataRow = new DataRow();
-            foreach ($record->getAttributes() as $key => $value) {
-                $dataRow->addDataItem(new DataItem($key, $value));
+            foreach ($fieldsToRetrieve as $key) {
+                if (in_array($key, $fieldsToRetrieve) && array_key_exists($key, $attributes)) {
+                    $dataRow->addDataItem(new DataItem($key, $attributes[$key]));
+                }
+
             }
             $dataRows[] = $dataRow;
         }
