@@ -43,7 +43,6 @@ class EloquentSource implements SourceInterface
                 if (in_array($key, $fieldsToRetrieve) && array_key_exists($key, $attributes)) {
                     $dataRow->addDataItem(new DataItem($key, $attributes[$key]));
                 }
-
             }
             $dataRows[] = $dataRow;
         }
