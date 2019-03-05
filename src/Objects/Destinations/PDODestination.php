@@ -135,7 +135,7 @@ class PDODestination implements DestinationInterface
     public function putDataRows(array $dataRows)
     {
         if ($this->transactions) {
-            $this->pdo->beginTransactions();
+            $this->pdo->beginTransaction();
         }
 
         foreach ($dataRows as $dataRow) {
