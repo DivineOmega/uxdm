@@ -41,3 +41,11 @@ If you wish to ignore integrity constraint violations, you do this easily, as sh
 ```php
 $pdoDestination->ignoreIntegrityConstraintViolations();
 ```
+
+# Transactions
+
+By default PDO transactions are enabled. This helps speed up the migration process by keeping changes in memory until they are committed to disk. If you do not want to have transactions or is not supported you can easily disable this, as shown below.
+
+```php
+$pdoDestination->disableTransactions();
+```
