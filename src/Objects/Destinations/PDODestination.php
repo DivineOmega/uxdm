@@ -12,6 +12,7 @@ class PDODestination implements DestinationInterface
     private $pdo;
     private $tableName;
     private $ignoreIntegrityConstraintViolations;
+    private $transactions = true;
 
     public function __construct(PDO $pdo, $tableName)
     {
@@ -23,6 +24,15 @@ class PDODestination implements DestinationInterface
     public function ignoreIntegrityConstraintViolations($active = true)
     {
         $this->ignoreIntegrityConstraintViolations = $active;
+
+        return $this;
+    }
+
+    public function disableTransactions()
+    {
+        $this->transactions = false;
+
+        return $this;
     }
 
     private function rowAlreadyExists(array $keyDataItems)
@@ -124,6 +134,10 @@ class PDODestination implements DestinationInterface
 
     public function putDataRows(array $dataRows)
     {
+        if ($this->transactions) {
+            $this->pdo->beginTransactions();
+        }
+
         foreach ($dataRows as $dataRow) {
             $keyDataItems = $dataRow->getKeyDataItems();
 
@@ -145,6 +159,10 @@ class PDODestination implements DestinationInterface
 
                 throw $e;
             }
+        }
+
+        if ($this->transactions) {
+            $this->pdo->commit();
         }
     }
 
