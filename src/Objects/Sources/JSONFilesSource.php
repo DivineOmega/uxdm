@@ -29,7 +29,7 @@ class JSONFilesSource implements SourceInterface
         $this->fields = array_unique($this->fields);
     }
 
-    public function getDataRows($page = 1, $fieldsToRetrieve = [])
+    public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
         $offset = 0 + (($page - 1) * $this->perPage);
 
@@ -59,17 +59,17 @@ class JSONFilesSource implements SourceInterface
         return $dataRows;
     }
 
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
 
-    public function countDataRows()
+    public function countDataRows(): int
     {
         return count($this->files);
     }
 
-    public function countPages()
+    public function countPages(): int
     {
         return ceil($this->countDataRows() / $this->perPage);
     }

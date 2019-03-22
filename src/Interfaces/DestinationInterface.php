@@ -4,7 +4,7 @@ namespace DivineOmega\uxdm\Interfaces;
 
 interface DestinationInterface
 {
-    public function putDataRows(array $dataRows);
+    public function putDataRows(array $dataRows): void;
 
-    public function finishMigration();
+    public function finishMigration(): void;
 }

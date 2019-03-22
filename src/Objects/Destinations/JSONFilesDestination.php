@@ -14,7 +14,7 @@ class JSONFilesDestination implements DestinationInterface
         $this->directory = realpath($directory);
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         foreach ($dataRows as $dataRow) {
             $dataItems = $dataRow->getDataItems();
@@ -35,7 +35,7 @@ class JSONFilesDestination implements DestinationInterface
         }
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
     }
 }

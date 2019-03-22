@@ -21,7 +21,7 @@ class EloquentSource implements SourceInterface
         $this->fields = array_keys($this->model->first()->getAttributes());
     }
 
-    public function getDataRows($page = 1, $fieldsToRetrieve = [])
+    public function getDataRows(int$page = 1, array $fieldsToRetrieve = []): array
     {
         $offset = ($page - 1) * $this->perPage;
 
@@ -50,17 +50,17 @@ class EloquentSource implements SourceInterface
         return $dataRows;
     }
 
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
 
-    public function countDataRows()
+    public function countDataRows(): int
     {
         return $this->model->count();
     }
 
-    public function countPages()
+    public function countPages(): int
     {
         return ceil($this->countDataRows() / $this->perPage);
     }

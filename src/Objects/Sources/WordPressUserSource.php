@@ -104,7 +104,7 @@ class WordPressUserSource implements SourceInterface
         $stmt->bindValue(2, $perPage, PDO::PARAM_INT);
     }
 
-    public function getDataRows($page = 1, $fieldsToRetrieve = [])
+    public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
         $offset = (($page - 1) * $this->perPage);
 
@@ -141,12 +141,12 @@ class WordPressUserSource implements SourceInterface
         return $dataRows;
     }
 
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
 
-    public function countDataRows()
+    public function countDataRows(): int
     {
         $sql = $this->getUserSQL([]);
         $fromPos = stripos($sql, 'from');
@@ -163,7 +163,7 @@ class WordPressUserSource implements SourceInterface
         return $countRow['count'];
     }
 
-    public function countPages()
+    public function countPages(): int
     {
         return ceil($this->countDataRows() / $this->perPage);
     }

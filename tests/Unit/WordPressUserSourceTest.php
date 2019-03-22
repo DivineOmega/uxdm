@@ -7,7 +7,7 @@ final class WordPressUserSourceTest extends TestCase
 {
     private function createSource()
     {
-        return new WordPressUserSource(new PDO('sqlite:'.__DIR__.'/Data/wordpress.sqlite'), 'post');
+        return new WordPressUserSource(new PDO('sqlite:'.__DIR__.'/Data/wordpress.sqlite'));
     }
 
     public function testGetFields()

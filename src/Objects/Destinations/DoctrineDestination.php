@@ -69,7 +69,7 @@ class DoctrineDestination implements DestinationInterface
         $this->entityManager->flush();
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         foreach ($dataRows as $dataRow) {
             $keyDataItems = $dataRow->getKeyDataItems();
@@ -87,7 +87,7 @@ class DoctrineDestination implements DestinationInterface
         }
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
     }
 }

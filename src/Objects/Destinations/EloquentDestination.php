@@ -46,14 +46,14 @@ class EloquentDestination implements DestinationInterface
     {
         $keyDataItems = $dataRow->getKeyDataItems();
 
-        $record = $this->model->where(function ($query) use ($keyDataItems) {
+        $this->model->where(function ($query) use ($keyDataItems) {
             foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
         })->update($this->getAssocArrayFromDataRow($dataRow));
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         $this->model->unguard();
 
@@ -75,7 +75,7 @@ class EloquentDestination implements DestinationInterface
         $this->model->reguard();
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
     }
 }

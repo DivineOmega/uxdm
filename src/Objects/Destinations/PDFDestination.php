@@ -40,7 +40,7 @@ class PDFDestination implements DestinationInterface
         $this->paperOrientation = $paperOrientation;
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         foreach ($dataRows as $dataRow) {
             $dataItems = $dataRow->getDataItems();
@@ -68,7 +68,7 @@ class PDFDestination implements DestinationInterface
         }
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
         $this->html .= '</table>';
 

@@ -35,6 +35,8 @@ class DataRow
                 return $dataItem;
             }
         }
+
+        return null;
     }
 
     public function getKeyDataItems()

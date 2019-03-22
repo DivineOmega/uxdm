@@ -183,13 +183,13 @@ class Migrator
                 $dataRow->prepare($this->keyFields, $this->fieldMap, $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation);
             }
 
-            if ($dataRowManipulator !== null) {
+            if (is_callable($dataRowManipulator)) {
                 foreach ($dataRows as $dataRow) {
                     $dataRowManipulator($dataRow);
                 }
             }
 
-            if ($skipIfTrueCheck !== null) {
+            if (is_callable($skipIfTrueCheck)) {
                 foreach ($dataRows as $key => $dataRow) {
                     if ($skipIfTrueCheck($dataRow)) {
                         unset($dataRows[$key]);
