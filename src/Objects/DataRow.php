@@ -84,7 +84,7 @@ class DataRow
         if ($validationRules) {
             $validator = new Validator($this->toArray(), $validationRules);
             if ($validator->fails()) {
-                $messages = trim(implode(' ', $validator->messages()));
+                $messages = print_r($validator->messages(), true);
                 throw new ValidationException($messages);
             }
         }
