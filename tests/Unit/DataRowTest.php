@@ -108,7 +108,7 @@ final class DataRowTest extends TestCase
         $dataItemManipulator = function () {
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
 
         $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName);
 
@@ -130,7 +130,7 @@ final class DataRowTest extends TestCase
         $dataItemManipulator = function () {
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
 
         $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName);
 
@@ -153,7 +153,7 @@ final class DataRowTest extends TestCase
             }
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
 
         $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName);
 
@@ -171,6 +171,6 @@ final class DataRowTest extends TestCase
         $dataItemManipulator = function () {
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
     }
 }

@@ -3,11 +3,13 @@
 namespace DivineOmega\uxdm\Objects;
 
 use DivineOmega\CliProgressBar\ProgressBar;
+use DivineOmega\OmegaValidator\Validator;
 use DivineOmega\uxdm\Interfaces\DestinationInterface;
 use DivineOmega\uxdm\Interfaces\SourceInterface;
 use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
 use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
+use DivineOmega\uxdm\Objects\Exceptions\ValidationException;
 use Psr\Cache\CacheItemPoolInterface;
 
 class Migrator
@@ -20,6 +22,7 @@ class Migrator
     private $dataRowManipulator = null;
     private $dataItemManipulator = null;
     private $skipIfTrueCheck = null;
+    private $validationRules = [];
     private $sourceCachePool;
     private $sourceCacheKey;
     private $sourceCacheExpiresAfter;
@@ -86,6 +89,13 @@ class Migrator
     public function setSkipIfTrueCheck(callable $skipIfTrueCheck)
     {
         $this->skipIfTrueCheck = $skipIfTrueCheck;
+
+        return $this;
+    }
+
+    public function setValidationRules(array $rules)
+    {
+        $this->validationRules = $rules;
 
         return $this;
     }
@@ -180,7 +190,12 @@ class Migrator
             }
 
             foreach ($dataRows as $key => $dataRow) {
-                $dataRow->prepare($this->keyFields, $this->fieldMap, $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation);
+                $dataRow->prepare(
+                    $this->validationRules,
+                    $this->keyFields,
+                    $this->fieldMap,
+                    $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation
+                );
             }
 
             if (is_callable($dataRowManipulator)) {

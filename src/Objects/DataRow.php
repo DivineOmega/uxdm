@@ -2,7 +2,9 @@
 
 namespace DivineOmega\uxdm\Objects;
 
+use DivineOmega\OmegaValidator\Validator;
 use DivineOmega\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
+use DivineOmega\uxdm\Objects\Exceptions\ValidationException;
 
 class DataRow
 {
@@ -28,6 +30,16 @@ class DataRow
         return $this->dataItems;
     }
 
+    public function toArray()
+    {
+        $array = [];
+        foreach($this->dataItems as $dataItem) {
+            $array[$dataItem->fieldName] = $dataItem->value;
+        }
+        return $array;
+    }
+
+
     public function getDataItemByFieldName($fieldName)
     {
         foreach ($this->dataItems as $dataItem) {
@@ -52,9 +64,9 @@ class DataRow
         return $keyDataItems;
     }
 
-    public function prepare(array $keyFields, array $fieldMap, callable $dataItemManipulator)
+    public function prepare(array $validationRules, array $keyFields, array $fieldMap, callable $dataItemManipulator)
     {
-        $this->validate();
+        $this->validate($validationRules);
         $this->setKeyFields($keyFields);
         $this->mapFields($fieldMap);
 
@@ -63,10 +75,18 @@ class DataRow
         }
     }
 
-    private function validate()
+    private function validate($validationRules)
     {
         if (!$this->dataItems) {
             throw new NoDataItemsInDataRowException('Data row contains no data items. The specified source may be producing an invalid data row.');
+        }
+
+        if ($validationRules) {
+            $validator = new Validator($this->toArray(), $validationRules);
+            if ($validator->fails()) {
+                $messages = trim(implode(' ', $validator->messages()));
+                throw new ValidationException($messages);
+            }
         }
     }
 
