@@ -18,7 +18,8 @@ final class EloquentDestinationTest extends TestCase
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
-        $sql = 'CREATE TABLE IF NOT EXISTS users (name TEXT, value INTEGER)';
+
+        $sql = 'CREATE TABLE IF NOT EXISTS users (id integer primary key autoincrement, name TEXT, value INTEGER)';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
@@ -60,7 +61,7 @@ final class EloquentDestinationTest extends TestCase
 
     private function getActualArray()
     {
-        $sql = 'SELECT * FROM users';
+        $sql = 'SELECT name, value FROM users';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 

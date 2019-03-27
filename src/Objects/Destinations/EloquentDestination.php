@@ -46,11 +46,15 @@ class EloquentDestination implements DestinationInterface
     {
         $keyDataItems = $dataRow->getKeyDataItems();
 
-        $record = $this->model->where(function ($query) use ($keyDataItems) {
+        $records = $this->model->where(function ($query) use ($keyDataItems) {
             foreach ($keyDataItems as $keyDataItem) {
                 $query->where($keyDataItem->fieldName, $keyDataItem->value);
             }
-        })->update($this->getAssocArrayFromDataRow($dataRow));
+        })->get();
+
+        foreach($records as $record) {
+            $record->update($this->getAssocArrayFromDataRow($dataRow));
+        }
     }
 
     public function putDataRows(array $dataRows)
