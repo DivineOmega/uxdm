@@ -53,7 +53,8 @@ See the sections below for more information on the available source and destinat
 
 ## Migrations
 
-Each UXDM migration requires a source object and at least one destination object. These determine where and how data is read and written. The UXDM package comes with a variety of source and destination objects, including the following.
+Each UXDM migration requires a source object and at least one destination object. These determine where and how data is read and written. 
+The UXDM package works with a variety of source and destination objects, including the following.
 
 * PDO (PHP Database Object) Source & Destination
 * Eloquent (as used in Laravel) Source & Destination
@@ -65,6 +66,8 @@ Each UXDM migration requires a source object and at least one destination object
 * WordPress Post Source
 * WordPress User Source
 * Debug Output Destination
+
+Some of these are built-in to the core UXDM package, while others are available as separate packages.
 
 Source and destination objects can be used in any combination. Data can be migrated from a CSV and inserted into a database, just as easily as data can be migrated from a database to a CSV.
 
