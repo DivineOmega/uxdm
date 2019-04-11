@@ -40,7 +40,7 @@ class DataRow
     }
 
 
-    public function getDataItemByFieldName($fieldName)
+    public function getDataItemByFieldName(string $fieldName)
     {
         foreach ($this->dataItems as $dataItem) {
             if ($dataItem->fieldName == $fieldName) {
