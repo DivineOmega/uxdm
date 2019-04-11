@@ -36,7 +36,6 @@
         "illuminate/database": "^5.1",
         "doctrine/orm": "^2.5",
         "symfony/property-access": "^3.4",
-        "dompdf/dompdf": "^0.8.2",
         "ext-json": "*",
         "divineomega/omega-validator": "^1.1"
     }
