@@ -100,7 +100,7 @@ class Migrator
         return $this;
     }
 
-    public function setSourceCache(CacheItemPoolInterface $sourceCachePool, string $sourceCacheKey, $sourceCacheExpiresAfter = 60 * 60 * 24)
+    public function setSourceCache(CacheItemPoolInterface $sourceCachePool, string $sourceCacheKey, int $sourceCacheExpiresAfter = 60 * 60 * 24)
     {
         $this->sourceCachePool = $sourceCachePool;
         $this->sourceCacheKey = $sourceCacheKey;
