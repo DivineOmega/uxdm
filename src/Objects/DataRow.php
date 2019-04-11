@@ -75,7 +75,7 @@ class DataRow
         }
     }
 
-    private function validate($validationRules)
+    private function validate(array $validationRules)
     {
         if (!$this->dataItems) {
             throw new NoDataItemsInDataRowException('Data row contains no data items. The specified source may be producing an invalid data row.');
