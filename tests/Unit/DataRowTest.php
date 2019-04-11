@@ -180,7 +180,14 @@ final class DataRowTest extends TestCase
 
     public function testValidationRulesFailure()
     {
+        $expectedExceptionMessageArray = [
+            'email' => [
+                IsEmail::class => 'The email must be a valid email address.',
+            ],
+        ];
+
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(print_r($expectedExceptionMessageArray, true));
 
         $dataRow = new DataRow();
         $dataRow->addDataItem(new DataItem('email', 'not-an-email'));
