@@ -6,3 +6,4 @@ tests/Logs/
 tests/Unit/Data/destination.*
 tests/Unit/Data/JSONFilesDestination/*.json
 src/Examples/**/cache/**
+*.cache
