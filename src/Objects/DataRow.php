@@ -33,12 +33,12 @@ class DataRow
     public function toArray()
     {
         $array = [];
-        foreach($this->dataItems as $dataItem) {
+        foreach ($this->dataItems as $dataItem) {
             $array[$dataItem->fieldName] = $dataItem->value;
         }
+
         return $array;
     }
-
 
     public function getDataItemByFieldName(string $fieldName)
     {
@@ -47,8 +47,6 @@ class DataRow
                 return $dataItem;
             }
         }
-
-        return null;
     }
 
     public function getKeyDataItems()
@@ -85,6 +83,7 @@ class DataRow
             $validator = new Validator($this->toArray(), $validationRules);
             if ($validator->fails()) {
                 $messages = print_r($validator->messages(), true);
+
                 throw new ValidationException($messages);
             }
         }

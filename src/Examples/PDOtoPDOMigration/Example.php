@@ -43,6 +43,7 @@ $migrator->setSource($pdoSource)
                      return true;
                  }
              }
+
              return false;
          })
          ->withProgressBar()

@@ -114,7 +114,7 @@ final class MigratorTest extends TestCase
                      $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
                  ->setSkipIfTrueCheck(function ($dataRow) {
-                     return ($dataRow->getDataItemByFieldName('name')->value == 'TIM');
+                     return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
                  ->migrate();
 
@@ -141,7 +141,7 @@ final class MigratorTest extends TestCase
                      $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
                  ->setSkipIfTrueCheck(function ($dataRow) {
-                     return ($dataRow->getDataItemByFieldName('name')->value == 'TIM');
+                     return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
                  ->withProgressBar()
                  ->migrate();
@@ -211,7 +211,7 @@ final class MigratorTest extends TestCase
                      $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
                  ->setSkipIfTrueCheck(function ($dataRow) {
-                     return ($dataRow->getDataItemByFieldName('name')->value == 'TIM');
+                     return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
                  ->migrate();
 
@@ -237,7 +237,7 @@ final class MigratorTest extends TestCase
                      $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
                  ->setSkipIfTrueCheck(function ($dataRow) {
-                     return ($dataRow->getDataItemByFieldName('name')->value == 'TIM');
+                     return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
                  ->migrate();
 
@@ -266,7 +266,7 @@ final class MigratorTest extends TestCase
                      $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
                  ->setSkipIfTrueCheck(function ($dataRow) {
-                     return ($dataRow->getDataItemByFieldName('name')->value == 'TIM');
+                     return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
                  ->migrate();
 
@@ -287,7 +287,7 @@ final class MigratorTest extends TestCase
                      $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
                  })
                  ->setSkipIfTrueCheck(function ($dataRow) {
-                     return ($dataRow->getDataItemByFieldName('name')->value == 'TIM');
+                     return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
                  ->migrate();
 

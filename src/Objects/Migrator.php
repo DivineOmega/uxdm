@@ -3,13 +3,11 @@
 namespace DivineOmega\uxdm\Objects;
 
 use DivineOmega\CliProgressBar\ProgressBar;
-use DivineOmega\OmegaValidator\Validator;
 use DivineOmega\uxdm\Interfaces\DestinationInterface;
 use DivineOmega\uxdm\Interfaces\SourceInterface;
 use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
 use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
-use DivineOmega\uxdm\Objects\Exceptions\ValidationException;
 use Psr\Cache\CacheItemPoolInterface;
 
 class Migrator

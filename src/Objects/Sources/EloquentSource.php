@@ -21,7 +21,7 @@ class EloquentSource implements SourceInterface
         $this->fields = array_keys($this->model->first()->getAttributes());
     }
 
-    public function getDataRows(int$page = 1, array $fieldsToRetrieve = []): array
+    public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
         $offset = ($page - 1) * $this->perPage;
 
