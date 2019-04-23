@@ -28,13 +28,13 @@
         "php": ">=7.1",
         "ext-pdo": "*",
         "ext-dom": "*",
+        "ext-json": "*",
         "psr/cache": "^1.0",
         "cache/array-adapter": "^1.0",
         "divineomega/array_undot": "^2.0",
         "divineomega/php-cli-progress-bar": "^2.0",
         "doctrine/orm": "^2.5",
         "symfony/property-access": "^3.4",
-        "ext-json": "*",
         "divineomega/omega-validator": "^1.1"
     }
 }
