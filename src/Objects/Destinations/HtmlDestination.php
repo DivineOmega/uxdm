@@ -14,7 +14,7 @@ class HtmlDestination implements DestinationInterface
         $this->file = $file;
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         if ($this->rowNum === 0) {
             $fh = fopen($this->file, 'w');
@@ -48,7 +48,7 @@ class HtmlDestination implements DestinationInterface
         }
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
         $fh = fopen($this->file, 'a');
         fwrite($fh, '</table>');

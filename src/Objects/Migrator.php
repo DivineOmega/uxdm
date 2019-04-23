@@ -20,6 +20,7 @@ class Migrator
     private $dataRowManipulator = null;
     private $dataItemManipulator = null;
     private $skipIfTrueCheck = null;
+    private $validationRules = [];
     private $sourceCachePool;
     private $sourceCacheKey;
     private $sourceCacheExpiresAfter;
@@ -90,7 +91,14 @@ class Migrator
         return $this;
     }
 
-    public function setSourceCache(CacheItemPoolInterface $sourceCachePool, $sourceCacheKey, $sourceCacheExpiresAfter = 60 * 60 * 24)
+    public function setValidationRules(array $rules)
+    {
+        $this->validationRules = $rules;
+
+        return $this;
+    }
+
+    public function setSourceCache(CacheItemPoolInterface $sourceCachePool, string $sourceCacheKey, int $sourceCacheExpiresAfter = 60 * 60 * 24)
     {
         $this->sourceCachePool = $sourceCachePool;
         $this->sourceCacheKey = $sourceCacheKey;
@@ -180,16 +188,21 @@ class Migrator
             }
 
             foreach ($dataRows as $key => $dataRow) {
-                $dataRow->prepare($this->keyFields, $this->fieldMap, $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation);
+                $dataRow->prepare(
+                    $this->validationRules,
+                    $this->keyFields,
+                    $this->fieldMap,
+                    $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation
+                );
             }
 
-            if ($dataRowManipulator !== null) {
+            if (is_callable($dataRowManipulator)) {
                 foreach ($dataRows as $dataRow) {
                     $dataRowManipulator($dataRow);
                 }
             }
 
-            if ($skipIfTrueCheck !== null) {
+            if (is_callable($skipIfTrueCheck)) {
                 foreach ($dataRows as $key => $dataRow) {
                     if ($skipIfTrueCheck($dataRow)) {
                         unset($dataRows[$key]);

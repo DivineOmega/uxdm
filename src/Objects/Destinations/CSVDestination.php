@@ -14,7 +14,7 @@ class CSVDestination implements DestinationInterface
         $this->file = $file;
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         if ($this->rowNum === 0) {
             $fh = fopen($this->file, 'w');
@@ -45,7 +45,7 @@ class CSVDestination implements DestinationInterface
         fclose($fh);
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
     }
 }

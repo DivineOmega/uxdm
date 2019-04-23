@@ -21,7 +21,7 @@ class AssociativeArraySource implements SourceInterface
         }
     }
 
-    public function getDataRows($page = 1, $fieldsToRetrieve = [])
+    public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
         $offset = 0 + (($page - 1) * $this->perPage);
 
@@ -44,17 +44,17 @@ class AssociativeArraySource implements SourceInterface
         return $dataRows;
     }
 
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
 
-    public function countDataRows()
+    public function countDataRows(): int
     {
         return count($this->array);
     }
 
-    public function countPages()
+    public function countPages(): int
     {
         return ceil($this->countDataRows() / $this->perPage);
     }

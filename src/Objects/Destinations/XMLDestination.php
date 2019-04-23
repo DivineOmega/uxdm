@@ -10,7 +10,6 @@ class XMLDestination implements DestinationInterface
 {
     private $file;
     private $domDoc;
-    private $domNode;
 
     public function __construct($file, DOMDocument $domDoc, DOMElement $rootElement, $rowElementName = 'row')
     {
@@ -20,7 +19,7 @@ class XMLDestination implements DestinationInterface
         $this->rowElementName = $rowElementName;
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         foreach ($dataRows as $dataRow) {
             $dataItems = $dataRow->getDataItems();
@@ -34,7 +33,7 @@ class XMLDestination implements DestinationInterface
         }
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
         file_put_contents($this->file, $this->domDoc->saveXML());
     }

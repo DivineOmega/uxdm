@@ -77,7 +77,7 @@ class PDODestination implements DestinationInterface
 
         $sql .= ') values (';
 
-        foreach ($dataItems as $dataItem) {
+        for ($i = 0; $i < count($dataItems); $i++) {
             $sql .= '? , ';
         }
         $sql = substr($sql, 0, -2);
@@ -132,7 +132,7 @@ class PDODestination implements DestinationInterface
         $stmt->execute();
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         if ($this->transactions) {
             $this->pdo->beginTransaction();
@@ -166,7 +166,7 @@ class PDODestination implements DestinationInterface
         }
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
     }
 }

@@ -41,7 +41,7 @@ class CSVSource implements SourceInterface
         return $lines;
     }
 
-    public function getDataRows($page = 1, $fieldsToRetrieve = [])
+    public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
         $offset = 1 + (($page - 1) * $this->perPage);
 
@@ -64,12 +64,12 @@ class CSVSource implements SourceInterface
         return $dataRows;
     }
 
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
 
-    public function countDataRows()
+    public function countDataRows(): int
     {
         $file = new \SplFileObject($this->file, 'r');
         $file->seek(PHP_INT_MAX);
@@ -77,7 +77,7 @@ class CSVSource implements SourceInterface
         return $file->key();
     }
 
-    public function countPages()
+    public function countPages(): int
     {
         return ceil($this->countDataRows() / $this->perPage);
     }

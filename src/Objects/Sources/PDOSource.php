@@ -32,7 +32,7 @@ class PDOSource implements SourceInterface
         $sql = $this->getSQL(['*']);
 
         $stmt = $this->pdo->prepare($sql);
-        $this->bindLimitParameters($stmt, 0, 1);
+        $this->bindLimitParameters($stmt, 0);
 
         $stmt->execute();
 
@@ -97,7 +97,7 @@ class PDOSource implements SourceInterface
         $stmt->bindValue(2, $this->perPage, PDO::PARAM_INT);
     }
 
-    public function getDataRows($page = 1, $fieldsToRetrieve = [])
+    public function getDataRows(int $page = 1, array $fieldsToRetrieve = []): array
     {
         $offset = (($page - 1) * $this->perPage);
 
@@ -123,12 +123,12 @@ class PDOSource implements SourceInterface
         return $dataRows;
     }
 
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
 
-    public function countDataRows()
+    public function countDataRows(): int
     {
         $sql = $this->getSQL([]);
         $fromPos = stripos($sql, 'from');
@@ -145,7 +145,7 @@ class PDOSource implements SourceInterface
         return $row['countDataRows'];
     }
 
-    public function countPages()
+    public function countPages(): int
     {
         return ceil($this->countDataRows() / $this->perPage);
     }

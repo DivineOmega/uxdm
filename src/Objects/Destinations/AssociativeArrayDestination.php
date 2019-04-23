@@ -13,7 +13,7 @@ class AssociativeArrayDestination implements DestinationInterface
         $this->array = &$array;
     }
 
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
         foreach ($dataRows as $dataRow) {
             $dataItems = $dataRow->getDataItems();
@@ -28,7 +28,7 @@ class AssociativeArrayDestination implements DestinationInterface
         }
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
     }
 }

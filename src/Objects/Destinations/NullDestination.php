@@ -6,11 +6,11 @@ use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class NullDestination implements DestinationInterface
 {
-    public function putDataRows(array $dataRows)
+    public function putDataRows(array $dataRows): void
     {
     }
 
-    public function finishMigration()
+    public function finishMigration(): void
     {
     }
 }

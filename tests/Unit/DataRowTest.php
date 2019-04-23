@@ -1,8 +1,12 @@
 <?php
 
+use DivineOmega\OmegaValidator\Rules\IsEmail;
+use DivineOmega\OmegaValidator\Rules\IsString;
+use DivineOmega\OmegaValidator\Rules\Required;
 use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\DataRow;
 use DivineOmega\uxdm\Objects\Exceptions\NoDataItemsInDataRowException;
+use DivineOmega\uxdm\Objects\Exceptions\ValidationException;
 use PHPUnit\Framework\TestCase;
 
 final class DataRowTest extends TestCase
@@ -108,7 +112,7 @@ final class DataRowTest extends TestCase
         $dataItemManipulator = function () {
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
 
         $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName);
 
@@ -130,7 +134,7 @@ final class DataRowTest extends TestCase
         $dataItemManipulator = function () {
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
 
         $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName);
 
@@ -153,7 +157,7 @@ final class DataRowTest extends TestCase
             }
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
 
         $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName);
 
@@ -171,6 +175,45 @@ final class DataRowTest extends TestCase
         $dataItemManipulator = function () {
         };
 
-        $dataRow->prepare($keyFields, $fieldMap, $dataItemManipulator);
+        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
+    }
+
+    public function testValidationRulesFailure()
+    {
+        $expectedExceptionMessageArray = [
+            'email' => [
+                IsEmail::class => 'The email must be a valid email address.',
+            ],
+        ];
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(print_r($expectedExceptionMessageArray, true));
+
+        $dataRow = new DataRow();
+        $dataRow->addDataItem(new DataItem('email', 'not-an-email'));
+
+        $rules = ['email' => [new Required(), new IsString(), new IsEmail()]];
+        $keyFields = [];
+        $fieldMap = [];
+        $dataItemManipulator = function () {
+        };
+
+        $dataRow->prepare($rules, $keyFields, $fieldMap, $dataItemManipulator);
+    }
+
+    public function testValidationRulesSuccess()
+    {
+        $this->expectNotToPerformAssertions();
+
+        $dataRow = new DataRow();
+        $dataRow->addDataItem(new DataItem('email', 'test@example.com'));
+
+        $rules = ['email' => [new Required(), new IsString(), new IsEmail()]];
+        $keyFields = [];
+        $fieldMap = [];
+        $dataItemManipulator = function () {
+        };
+
+        $dataRow->prepare($rules, $keyFields, $fieldMap, $dataItemManipulator);
     }
 }

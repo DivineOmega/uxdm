@@ -53,7 +53,8 @@ See the sections below for more information on the available source and destinat
 
 ## Migrations
 
-Each UXDM migration requires a source object and at least one destination object. These determine where and how data is read and written. The UXDM package comes with a variety of source and destination objects, including the following.
+Each UXDM migration requires a source object and at least one destination object. These determine where and how data is read and written. 
+The UXDM package works with a variety of source and destination objects, including the following.
 
 * PDO (PHP Database Object) Source & Destination
 * Eloquent (as used in Laravel) Source & Destination
@@ -65,6 +66,8 @@ Each UXDM migration requires a source object and at least one destination object
 * WordPress Post Source
 * WordPress User Source
 * Debug Output Destination
+
+Some of these are built-in to the core UXDM package, while others are available as separate packages.
 
 Source and destination objects can be used in any combination. Data can be migrated from a CSV and inserted into a database, just as easily as data can be migrated from a database to a CSV.
 
@@ -93,6 +96,41 @@ $migrator->setSource($pdoSource)
 ```
 
 This migration will move the `id`, `email` and `name` fields from the the `users` table in the `old-test` database, to the `new_users` table in the `new-test` database, replacing any existing records with the same `id` (the key field).
+
+### Source data validation
+
+You can use UXDM to validate the source data. If validation fails part way through a migration, the migration will 
+halt and a `ValidationException` will be thrown.
+
+The code below shows how to validate various fields.
+
+```php
+$pdoSource = new PDOSource(new PDO('mysql:dbname=old-test;host=127.0.0.1', 'root', 'password123'), 'users');
+
+$pdoDestination = new PDODestination(new PDO('mysql:dbname=new-test;host=127.0.0.1', 'root', 'password456'), 'new_users');
+
+$migrator = new Migrator;
+$migrator->setSource($pdoSource)
+         ->setDestination($pdoDestination)
+         ->setFieldsToMigrate(['id', 'email', 'name'])
+         ->setValidationRules([
+            'id' => [new Required(), new IsNumeric()],
+            'email' => [new Required(), new IsString(), new IsEmail()],
+            'name' => [new Required(), new IsString()],
+         ])
+         ->setKeyFields(['id'])
+         ->withProgressBar()
+         ->migrate();
+```
+
+This migration will validate the source data matches the defined validation rules.
+
+* 'id' must be present, and numeric.
+* 'email' must be present, a string, and a correctly formatted email address.
+* 'name' must be present, and a string.
+
+UXDM uses the [Omega Validator](https://github.com/DivineOmega/omega-validator) package. 
+See its documentation for all available validation rules.
 
 ### Mapping field names from source to destination
 
