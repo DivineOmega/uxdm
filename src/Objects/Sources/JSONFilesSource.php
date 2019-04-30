@@ -8,9 +8,9 @@ use DivineOmega\uxdm\Objects\DataRow;
 
 class JSONFilesSource implements SourceInterface
 {
-    private $files;
-    private $fields = [];
-    private $perPage = 10;
+    protected $files;
+    protected $fields = [];
+    protected $perPage = 10;
 
     public function __construct(array $files = [])
     {

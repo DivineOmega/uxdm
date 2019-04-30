@@ -11,10 +11,10 @@ use Exception;
 
 class XMLSource implements SourceInterface
 {
-    private $xpath;
-    private $xpathQuery;
-    private $fields = [];
-    private $perPage = 10;
+    protected $xpath;
+    protected $xpathQuery;
+    protected $fields = [];
+    protected $perPage = 10;
 
     public function __construct($file, $xpathQuery)
     {

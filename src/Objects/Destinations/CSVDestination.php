@@ -6,8 +6,8 @@ use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class CSVDestination implements DestinationInterface
 {
-    private $file;
-    private $rowNum = 0;
+    protected $file;
+    protected $rowNum = 0;
 
     public function __construct($file)
     {

@@ -8,9 +8,9 @@ use DivineOmega\uxdm\Objects\DataRow;
 
 class AssociativeArraySource implements SourceInterface
 {
-    private $array;
-    private $fields = [];
-    private $perPage = 10;
+    protected $array;
+    protected $fields = [];
+    protected $perPage = 10;
 
     public function __construct(array &$array)
     {

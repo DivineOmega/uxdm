@@ -9,10 +9,10 @@ use PDOException;
 
 class PDODestination implements DestinationInterface
 {
-    private $pdo;
-    private $tableName;
-    private $ignoreIntegrityConstraintViolations;
-    private $transactions = true;
+    protected $pdo;
+    protected $tableName;
+    protected $ignoreIntegrityConstraintViolations;
+    protected $transactions = true;
 
     public function __construct(PDO $pdo, $tableName)
     {

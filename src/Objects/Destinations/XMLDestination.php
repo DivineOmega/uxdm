@@ -8,8 +8,8 @@ use DOMElement;
 
 class XMLDestination implements DestinationInterface
 {
-    private $file;
-    private $domDoc;
+    protected $file;
+    protected $domDoc;
 
     public function __construct($file, DOMDocument $domDoc, DOMElement $rootElement, $rowElementName = 'row')
     {
