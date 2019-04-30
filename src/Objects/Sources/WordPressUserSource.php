@@ -10,10 +10,10 @@ use PDOStatement;
 
 class WordPressUserSource implements SourceInterface
 {
-    private $pdo;
-    private $fields = [];
-    private $perPage = 10;
-    private $prefix = 'wp_';
+    protected $pdo;
+    protected $fields = [];
+    protected $perPage = 10;
+    protected $prefix = 'wp_';
 
     public function __construct(PDO $pdo)
     {

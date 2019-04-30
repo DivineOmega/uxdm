@@ -8,9 +8,9 @@ use DivineOmega\uxdm\Objects\DataRow;
 
 class CSVSource implements SourceInterface
 {
-    private $file;
-    private $fields = [];
-    private $perPage = 10;
+    protected $file;
+    protected $fields = [];
+    protected $perPage = 10;
 
     public function __construct($file)
     {

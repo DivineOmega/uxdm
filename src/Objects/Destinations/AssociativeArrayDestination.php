@@ -6,7 +6,7 @@ use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class AssociativeArrayDestination implements DestinationInterface
 {
-    private $array;
+    protected $array;
 
     public function __construct(array &$array)
     {

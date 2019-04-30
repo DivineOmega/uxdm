@@ -6,8 +6,8 @@ use DivineOmega\uxdm\Interfaces\DestinationInterface;
 
 class JSONFilesDestination implements DestinationInterface
 {
-    private $directory;
-    private $fileNum = 1;
+    protected $directory;
+    protected $fileNum = 1;
 
     public function __construct($directory)
     {

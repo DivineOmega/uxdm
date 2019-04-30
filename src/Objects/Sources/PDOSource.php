@@ -12,12 +12,12 @@ use PDOStatement;
 
 class PDOSource implements SourceInterface
 {
-    private $pdo;
-    private $tableName;
-    private $fields = [];
-    private $overrideSQL;
-    private $joins = [];
-    private $perPage = 10;
+    protected $pdo;
+    protected $tableName;
+    protected $fields = [];
+    protected $overrideSQL;
+    protected $joins = [];
+    protected $perPage = 10;
 
     public function __construct(PDO $pdo, $tableName)
     {
