@@ -86,27 +86,31 @@ class CSVSource implements SourceInterface
         return ceil($this->countDataRows() / $this->perPage);
     }
 
-    public function setPerPage(int $perPage): CSVSource
+    public function setPerPage(int $perPage): self
     {
         $this->perPage = $perPage;
+
         return $this;
     }
 
-    public function setDelimiter(string $delimiter): CSVSource
+    public function setDelimiter(string $delimiter): self
     {
         $this->delimiter = $delimiter;
+
         return $this;
     }
 
-    public function setEnclosure(string $enclosure): CSVSource
+    public function setEnclosure(string $enclosure): self
     {
         $this->enclosure = $enclosure;
+
         return $this;
     }
 
-    public function setEscape(string $escape): CSVSource
+    public function setEscape(string $escape): self
     {
         $this->escape = $escape;
+
         return $this;
     }
 }
