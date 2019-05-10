@@ -12,6 +12,10 @@ class CSVSource implements SourceInterface
     protected $fields = [];
     protected $perPage = 10;
 
+    protected $delimiter = ',';
+    protected $enclosure = '"';
+    protected $escape = '\\';
+
     public function __construct($file)
     {
         $this->file = $file;
@@ -20,13 +24,13 @@ class CSVSource implements SourceInterface
         $this->fields = reset($firstCSVLine);
     }
 
-    private function getCSVLines($offset, $amount)
+    protected function getCSVLines($offset, $amount)
     {
         $lines = [];
         $lineCount = 0;
         $fh = fopen($this->file, 'r');
 
-        while (($line = fgetcsv($fh)) !== false) {
+        while (($line = fgetcsv($fh, 0, $this->delimiter, $this->enclosure, $this->escape)) !== false) {
             if ($lineCount >= $offset && $lineCount < $offset + $amount) {
                 $lines[] = $line;
             }
@@ -80,5 +84,29 @@ class CSVSource implements SourceInterface
     public function countPages(): int
     {
         return ceil($this->countDataRows() / $this->perPage);
+    }
+
+    public function setPerPage(int $perPage): CSVSource
+    {
+        $this->perPage = $perPage;
+        return $this;
+    }
+
+    public function setDelimiter(string $delimiter): CSVSource
+    {
+        $this->delimiter = $delimiter;
+        return $this;
+    }
+
+    public function setEnclosure(string $enclosure): CSVSource
+    {
+        $this->enclosure = $enclosure;
+        return $this;
+    }
+
+    public function setEscape(string $escape): CSVSource
+    {
+        $this->escape = $escape;
+        return $this;
     }
 }
