@@ -27,7 +27,7 @@ class PDOSource implements SourceInterface
         $this->fields = $this->getTableFields();
     }
 
-    private function getTableFields()
+    protected function getTableFields()
     {
         $sql = $this->getSQL(['*']);
 
@@ -78,7 +78,7 @@ class PDOSource implements SourceInterface
         return $this;
     }
 
-    private function getSQL($fieldsToRetrieve)
+    protected function getSQL($fieldsToRetrieve)
     {
         $fieldsSQL = implode(', ', $fieldsToRetrieve);
 
