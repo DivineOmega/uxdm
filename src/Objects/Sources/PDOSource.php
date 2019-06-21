@@ -43,7 +43,7 @@ class PDOSource implements SourceInterface
         return $tableFields;
     }
 
-    public function addJoin(Join $join) : self
+    public function addJoin(Join $join) : SourceInterface
     {
         $this->joins[] = $join;
         $this->fields = $this->getTableFields();
@@ -51,7 +51,7 @@ class PDOSource implements SourceInterface
         return $this;
     }
 
-    public function setOverrideSQL($overrideSQL) : self
+    public function setOverrideSQL($overrideSQL) : SourceInterface
     {
         $selectString = 'SELECT ';
 
@@ -71,7 +71,7 @@ class PDOSource implements SourceInterface
         return $this;
     }
 
-    public function setPerPage($perPage = 10) : self
+    public function setPerPage($perPage = 10) : SourceInterface
     {
         $this->perPage = $perPage;
 
