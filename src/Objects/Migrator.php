@@ -148,14 +148,19 @@ class Migrator
             $this->fieldsToMigrate = $this->source->getFields();
         }
 
+        $postDotFieldsToMigrate = array_map(function ($field) {
+            $fieldParts = explode('.', $field);
+            return end($fieldParts);
+        }, $this->fieldsToMigrate);
+
         foreach (array_keys($this->fieldMap) as $sourceField) {
-            if (!in_array($sourceField, $this->fieldsToMigrate)) {
+            if (!in_array($sourceField, $this->fieldsToMigrate) && !in_array($sourceField, $postDotFieldsToMigrate)) {
                 throw new MissingFieldToMigrateException('The source field `'.$sourceField.'` is present in the field map but not present in the fields to migrate.');
             }
         }
 
         foreach ($this->keyFields as $keyField) {
-            if (!in_array($keyField, $this->fieldsToMigrate)) {
+            if (!in_array($keyField, $this->fieldsToMigrate)  && !in_array($keyField, $postDotFieldsToMigrate)) {
                 throw new MissingFieldToMigrateException('The field `'.$keyField.'` is present in the key fields list but not present in the fields to migrate.');
             }
         }
