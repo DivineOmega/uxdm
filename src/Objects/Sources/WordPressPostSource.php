@@ -155,7 +155,7 @@ class WordPressPostSource implements SourceInterface
         $limitPos = strripos($sql, 'limit');
         $sqlSuffix = substr($sql, $fromPos, $limitPos - $fromPos);
 
-        $sql = 'select count (*) as count '.$sqlSuffix;
+        $sql = 'select count(*) as count '.$sqlSuffix;
 
         $countStmt = $this->pdo->prepare($sql);
         $countStmt->execute();
