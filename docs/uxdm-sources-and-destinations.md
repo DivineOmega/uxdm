@@ -15,6 +15,7 @@ For general documentation and usage examples, see the main [README](../README.md
 * [Associative Array Source](sources/AssociativeArraySource.md)
 * [WordPress Post Source](sources/WordPressPostSource.md)
 * [WordPress User Source](sources/WordPressUserSource.md)
+* [Spatie Data Transfer Object Source](sources/SpatieDataTransferObjectSource.md)
 
 ## Destinations
 
@@ -30,3 +31,4 @@ For general documentation and usage examples, see the main [README](../README.md
 * [Markdown Destination](destinations/MarkdownDestination.md)
 * [Debug Output Destination](destinations/DebugOutputDestination.md)
 * [Null Destination](destinations/NullDestination.md)
+* [Spatie Data Transfer Object Destination](destinations/SpatieDataTransferObjectDestination.md)
