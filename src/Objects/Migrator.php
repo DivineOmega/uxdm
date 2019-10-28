@@ -167,7 +167,7 @@ class Migrator
         }
     }
 
-    public function migrate()
+    public function migrate(): void
     {
         $this->sanityCheck();
 
@@ -175,10 +175,6 @@ class Migrator
         };
 
         $dataItemManipulator = $this->dataItemManipulator;
-        $dataRowManipulator = $this->dataRowManipulator;
-        $skipIfTrueCheck = $this->skipIfTrueCheck;
-
-        $results = [];
 
         if ($this->showProgressBar) {
             $this->progressBar = new ProgressBar();
@@ -202,40 +198,11 @@ class Migrator
                 );
             }
 
-            if (is_callable($dataRowManipulator)) {
-                foreach ($dataRows as $dataRow) {
-                    $dataRowManipulator($dataRow);
-                }
-            }
-
-            if (is_callable($skipIfTrueCheck)) {
-                foreach ($dataRows as $key => $dataRow) {
-                    if ($skipIfTrueCheck($dataRow)) {
-                        unset($dataRows[$key]);
-                    }
-                }
-            }
+            $this->manipulateDataRows($dataRows);
+            $this->unsetDataRowsToSkip($dataRows);
 
             foreach ($this->destinationContainers as $destinationContainer) {
-                if (!$destinationContainer->fields) {
-                    $results[] = $destinationContainer->destination->putDataRows($dataRows);
-                    $this->advanceProgressBar();
-                    continue;
-                }
-
-                $destinationDataRows = [];
-
-                foreach ($dataRows as $dataRow) {
-                    $destinationDataRow = new DataRow();
-                    foreach ($dataRow->getDataItems() as $dataItem) {
-                        if (in_array($dataItem->fieldName, $destinationContainer->fields)) {
-                            $destinationDataRow->addDataItem($dataItem);
-                        }
-                    }
-                    $destinationDataRows[] = $destinationDataRow;
-                }
-
-                $results[] = $destinationContainer->destination->putDataRows($destinationDataRows);
+                $destinationContainer->putDataRows($dataRows);
                 $this->advanceProgressBar();
             }
         }
@@ -247,14 +214,36 @@ class Migrator
         if ($this->showProgressBar) {
             $this->progressBar->complete();
         }
-
-        return $results;
     }
 
     private function advanceProgressBar()
     {
         if ($this->showProgressBar) {
             $this->progressBar->advance()->display();
+        }
+    }
+
+    private function manipulateDataRows(array &$dataRows): void
+    {
+        $dataRowManipulator = $this->dataRowManipulator;
+
+        if (is_callable($dataRowManipulator)) {
+            foreach ($dataRows as $dataRow) {
+                $dataRowManipulator($dataRow);
+            }
+        }
+    }
+
+    private function unsetDataRowsToSkip(array &$dataRows): void
+    {
+        $skipIfTrueCheck = $this->skipIfTrueCheck;
+
+        if (is_callable($skipIfTrueCheck)) {
+            foreach ($dataRows as $key => $dataRow) {
+                if ($skipIfTrueCheck($dataRow)) {
+                    unset($dataRows[$key]);
+                }
+            }
         }
     }
 }
