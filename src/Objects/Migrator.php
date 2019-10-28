@@ -190,7 +190,10 @@ class Migrator
 
             foreach ($this->destinationContainers as $destinationContainer) {
                 $destinationContainer->putDataRows($dataRows);
-                $this->advanceProgressBar();
+
+                if ($this->showProgressBar) {
+                    $this->progressBar->advance()->display();
+                }
             }
         }
 
@@ -200,13 +203,6 @@ class Migrator
 
         if ($this->showProgressBar) {
             $this->progressBar->complete();
-        }
-    }
-
-    private function advanceProgressBar()
-    {
-        if ($this->showProgressBar) {
-            $this->progressBar->advance()->display();
         }
     }
 
