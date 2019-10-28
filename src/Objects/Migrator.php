@@ -171,11 +171,6 @@ class Migrator
     {
         $this->sanityCheck();
 
-        $nullDataItemManipulation = function () {
-        };
-
-        $dataItemManipulator = $this->dataItemManipulator;
-
         if ($this->showProgressBar) {
             $this->progressBar = new ProgressBar();
             $this->progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
@@ -189,15 +184,7 @@ class Migrator
                 break;
             }
 
-            foreach ($dataRows as $key => $dataRow) {
-                $dataRow->prepare(
-                    $this->validationRules,
-                    $this->keyFields,
-                    $this->fieldMap,
-                    $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation
-                );
-            }
-
+            $this->prepareDataRows($dataRows);
             $this->manipulateDataRows($dataRows);
             $this->unsetDataRowsToSkip($dataRows);
 
@@ -208,7 +195,7 @@ class Migrator
         }
 
         foreach ($this->destinationContainers as $destinationContainer) {
-            $destinationContainer->destination->finishMigration();
+            $destinationContainer->finishMigration();
         }
 
         if ($this->showProgressBar) {
@@ -220,6 +207,23 @@ class Migrator
     {
         if ($this->showProgressBar) {
             $this->progressBar->advance()->display();
+        }
+    }
+
+    private function prepareDataRows(&$dataRows): void
+    {
+        $nullDataItemManipulation = function () {
+        };
+
+        $dataItemManipulator = $this->dataItemManipulator;
+
+        foreach ($dataRows as $key => $dataRow) {
+            $dataRow->prepare(
+                $this->validationRules,
+                $this->keyFields,
+                $this->fieldMap,
+                $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation
+            );
         }
     }
 
