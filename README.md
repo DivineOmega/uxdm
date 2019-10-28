@@ -60,6 +60,7 @@ The UXDM package works with a variety of source and destination objects, includi
 * Eloquent (as used in Laravel) Source & Destination
 * Doctrine (as used in Symfony) Destination
 * CSV (Comma Separated Values) Source & Destination
+* Excel Source & Destination
 * Associative Array Source & Destination
 * JSON Files Source & Destination
 * XML Source & Destination
@@ -73,7 +74,7 @@ Source and destination objects can be used in any combination. Data can be migra
 
 You can also use similar source and destination objects in the same migration. For example, a common use of UXDM is to use a PDO source and PDO destination to transfer data from one database to another. 
 
-Please see the [Sources & Destinations](/docs/uxdm-sources-and-destinations.md) page for more detailed documentation on their usage.
+Please see the [Sources & Destinations](/docs/uxdm-sources-and-destinations.md) page for more sources and destinations, and detailed documentation on their usage.
 
 ## Examples
 
