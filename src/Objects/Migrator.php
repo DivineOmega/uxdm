@@ -25,7 +25,6 @@ class Migrator
     private $sourceCacheKey;
     private $sourceCacheExpiresAfter;
     private $showProgressBar = false;
-    private $progressBar;
 
     public function setSource(SourceInterface $source)
     {
@@ -172,9 +171,9 @@ class Migrator
         $this->sanityCheck();
 
         if ($this->showProgressBar) {
-            $this->progressBar = new ProgressBar();
-            $this->progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
-            $this->progressBar->display();
+            $progressBar = new ProgressBar();
+            $progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
+            $progressBar->display();
         }
 
         for ($page = 1; $page < PHP_INT_MAX; $page++) {
@@ -191,8 +190,8 @@ class Migrator
             foreach ($this->destinationContainers as $destinationContainer) {
                 $destinationContainer->putDataRows($dataRows);
 
-                if ($this->showProgressBar) {
-                    $this->progressBar->advance()->display();
+                if (isset($progressBar)) {
+                    $progressBar->advance()->display();
                 }
             }
         }
@@ -201,8 +200,8 @@ class Migrator
             $destinationContainer->finishMigration();
         }
 
-        if ($this->showProgressBar) {
-            $this->progressBar->complete();
+        if (isset($progressBar)) {
+            $progressBar->complete();
         }
     }
 
