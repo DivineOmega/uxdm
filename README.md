@@ -59,7 +59,7 @@ The UXDM package works with a variety of source and destination objects, includi
 * PDO (PHP Database Object) Source & Destination
 * Eloquent (as used in Laravel) Source & Destination
 * Doctrine (as used in Symfony) Destination
-* CSV (Comma Seperated Values) Source & Destination
+* CSV (Comma Separated Values) Source & Destination
 * Associative Array Source & Destination
 * JSON Files Source & Destination
 * XML Source & Destination
