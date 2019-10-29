@@ -10,6 +10,10 @@ use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
 use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
 use Psr\Cache\CacheItemPoolInterface;
 
+/**
+ * Class Migrator
+ * @package DivineOmega\uxdm\Objects
+ */
 class Migrator
 {
     private $source;
@@ -27,6 +31,12 @@ class Migrator
     private $showProgressBar = false;
     private $progressBar;
 
+    /**
+     * Set the source object to migrate data from.
+     *
+     * @param SourceInterface $source
+     * @return $this
+     */
     public function setSource(SourceInterface $source)
     {
         $this->source = $source;
@@ -34,6 +44,16 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Set the destination object to migrate data to.
+     *
+     * The fields you wish to migrate into this destination can be optionally specified.
+     * If no fields are specified, it is assumed you wish to migrate all fields set via the `setFieldsToMigrate` method.
+     *
+     * @param DestinationInterface $destination
+     * @param array $fields
+     * @return $this
+     */
     public function setDestination(DestinationInterface $destination, array $fields = [])
     {
         $this->destinationContainers = [];
@@ -42,6 +62,16 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Add a destination object to migrate data to. Multiple destination objects can be added using this method.
+     *
+     * The fields you wish to migrate into this destination can be optionally specified.
+     * If no fields are specified, it is assumed you wish to migrate all fields set via the `setFieldsToMigrate` method.
+     *
+     * @param DestinationInterface $destination
+     * @param array $fields
+     * @return $this
+     */
     public function addDestination(DestinationInterface $destination, array $fields = [])
     {
         $this->destinationContainers[] = new DestinationContainer($destination, $fields);
@@ -49,6 +79,12 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Set the fields you wish to migrate from the source.
+     *
+     * @param array $fieldsToMigrate
+     * @return $this
+     */
     public function setFieldsToMigrate(array $fieldsToMigrate)
     {
         $this->fieldsToMigrate = $fieldsToMigrate;
@@ -56,6 +92,16 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Set the fields you consider to be key fields (those fields, when combined, uniquely represent a particular
+     * data row). Consider key fields to be similar to the primary keys of a database table.
+     *
+     * Destination objects will typically use key fields to prevent duplicates when importing multiple data rows and/or
+     * running multiple migrations after one another.
+     *
+     * @param array $keyFields
+     * @return $this
+     */
     public function setKeyFields(array $keyFields)
     {
         $this->keyFields = $keyFields;
@@ -63,6 +109,20 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Set the mapping from source fields to destination fields.
+     *
+     * This field map should be an associated array with the source field name as the keys and the destination field
+     * names as the values.
+     *
+     * Example: [
+     *   'name'  => 'full_name',
+     *   'email' => 'email_address',
+     * ]
+     *
+     * @param array $fieldMap
+     * @return $this
+     */
     public function setFieldMap(array $fieldMap)
     {
         $this->fieldMap = $fieldMap;
@@ -70,6 +130,23 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Set the data item manipulator.
+     *
+     * The data item manipulator is a function that is ran on every data item of every data row. It can be used to
+     * manipulate the values of data items during the migration process.
+     *
+     * Example that changes all name fields to be uppercase:
+     *
+     * function(DataItem $dataItem) {
+     *   if ($dataItem->fieldName === 'name') {
+     *     $dataItem->value = strtoupper($dataItem->value);
+     *   }
+     * }
+     *
+     * @param callable $dataItemManipulator
+     * @return $this
+     */
     public function setDataItemManipulator(callable $dataItemManipulator)
     {
         $this->dataItemManipulator = $dataItemManipulator;
@@ -77,6 +154,21 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Set the data row manipulator.
+     *
+     * The data row manipulator is a function that is ran on every data row. It can be used to manipulate the values of
+     * data items, add data items or remove data items, during the migration process.
+     *
+     * Example that adds a `random_number` data item to each data row:
+     *
+     * function(DataRow $dataRow) {
+     *   $dataRow->addDataItem(new DataItem('random_number', rand(1,100));
+     * }
+     *
+     * @param callable $dataRowManipulator
+     * @return $this
+     */
     public function setDataRowManipulator(callable $dataRowManipulator)
     {
         $this->dataRowManipulator = $dataRowManipulator;
