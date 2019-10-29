@@ -175,6 +175,24 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Set the skip if true check.
+     *
+     * The skip if true check is a function that is ran on each data row. If it return true, the data row is skipped
+     * during the migration process, and thus not sent to the destination(s).
+     *
+     * This can be useful to filter out data rows you do not want to be migrated.
+     *
+     * Example that skips crew members that are not captains:
+     *
+     * function(DataRow $dataRow) {
+     *   $rankDataItem = $dataRow->getDataItemByFieldName('rank');
+     *   return $rankDataItem->value !== 'Captain';
+     * }
+     *
+     * @param callable $skipIfTrueCheck
+     * @return $this
+     */
     public function setSkipIfTrueCheck(callable $skipIfTrueCheck)
     {
         $this->skipIfTrueCheck = $skipIfTrueCheck;
