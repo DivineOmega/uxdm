@@ -36,4 +36,9 @@ class DestinationContainer
 
         $this->destination->putDataRows($destinationDataRows);
     }
+
+    public function finishMigration(): void
+    {
+        $this->destination->finishMigration();
+    }
 }

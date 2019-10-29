@@ -29,7 +29,6 @@ class Migrator
     private $sourceCacheKey;
     private $sourceCacheExpiresAfter;
     private $showProgressBar = false;
-    private $progressBar;
 
     /**
      * Set the source object to migrate data from.
@@ -263,15 +262,10 @@ class Migrator
     {
         $this->sanityCheck();
 
-        $nullDataItemManipulation = function () {
-        };
-
-        $dataItemManipulator = $this->dataItemManipulator;
-
         if ($this->showProgressBar) {
-            $this->progressBar = new ProgressBar();
-            $this->progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
-            $this->progressBar->display();
+            $progressBar = new ProgressBar();
+            $progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
+            $progressBar->display();
         }
 
         for ($page = 1; $page < PHP_INT_MAX; $page++) {
@@ -281,37 +275,42 @@ class Migrator
                 break;
             }
 
-            foreach ($dataRows as $key => $dataRow) {
-                $dataRow->prepare(
-                    $this->validationRules,
-                    $this->keyFields,
-                    $this->fieldMap,
-                    $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation
-                );
-            }
-
+            $this->prepareDataRows($dataRows);
             $this->manipulateDataRows($dataRows);
             $this->unsetDataRowsToSkip($dataRows);
 
             foreach ($this->destinationContainers as $destinationContainer) {
                 $destinationContainer->putDataRows($dataRows);
-                $this->advanceProgressBar();
+
+                if (isset($progressBar)) {
+                    $progressBar->advance()->display();
+                }
             }
         }
 
         foreach ($this->destinationContainers as $destinationContainer) {
-            $destinationContainer->destination->finishMigration();
+            $destinationContainer->finishMigration();
         }
 
-        if ($this->showProgressBar) {
-            $this->progressBar->complete();
+        if (isset($progressBar)) {
+            $progressBar->complete();
         }
     }
 
-    private function advanceProgressBar()
+    private function prepareDataRows(&$dataRows): void
     {
-        if ($this->showProgressBar) {
-            $this->progressBar->advance()->display();
+        $nullDataItemManipulation = function () {
+        };
+
+        $dataItemManipulator = $this->dataItemManipulator;
+
+        foreach ($dataRows as $key => $dataRow) {
+            $dataRow->prepare(
+                $this->validationRules,
+                $this->keyFields,
+                $this->fieldMap,
+                $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation
+            );
         }
     }
 
