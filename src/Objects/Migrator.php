@@ -11,8 +11,7 @@ use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
- * Class Migrator
- * @package DivineOmega\uxdm\Objects
+ * Class Migrator.
  */
 class Migrator
 {
@@ -34,6 +33,7 @@ class Migrator
      * Set the source object to migrate data from.
      *
      * @param SourceInterface $source
+     *
      * @return $this
      */
     public function setSource(SourceInterface $source)
@@ -50,7 +50,8 @@ class Migrator
      * If no fields are specified, it is assumed you wish to migrate all fields set via the `setFieldsToMigrate` method.
      *
      * @param DestinationInterface $destination
-     * @param array $fields
+     * @param array                $fields
+     *
      * @return $this
      */
     public function setDestination(DestinationInterface $destination, array $fields = [])
@@ -68,7 +69,8 @@ class Migrator
      * If no fields are specified, it is assumed you wish to migrate all fields set via the `setFieldsToMigrate` method.
      *
      * @param DestinationInterface $destination
-     * @param array $fields
+     * @param array                $fields
+     *
      * @return $this
      */
     public function addDestination(DestinationInterface $destination, array $fields = [])
@@ -82,6 +84,7 @@ class Migrator
      * Set the fields you wish to migrate from the source.
      *
      * @param array $fieldsToMigrate
+     *
      * @return $this
      */
     public function setFieldsToMigrate(array $fieldsToMigrate)
@@ -99,6 +102,7 @@ class Migrator
      * running multiple migrations after one another.
      *
      * @param array $keyFields
+     *
      * @return $this
      */
     public function setKeyFields(array $keyFields)
@@ -120,6 +124,7 @@ class Migrator
      * ]
      *
      * @param array $fieldMap
+     *
      * @return $this
      */
     public function setFieldMap(array $fieldMap)
@@ -144,6 +149,7 @@ class Migrator
      * }
      *
      * @param callable $dataItemManipulator
+     *
      * @return $this
      */
     public function setDataItemManipulator(callable $dataItemManipulator)
@@ -166,6 +172,7 @@ class Migrator
      * }
      *
      * @param callable $dataRowManipulator
+     *
      * @return $this
      */
     public function setDataRowManipulator(callable $dataRowManipulator)
@@ -191,6 +198,7 @@ class Migrator
      * }
      *
      * @param callable $skipIfTrueCheck
+     *
      * @return $this
      */
     public function setSkipIfTrueCheck(callable $skipIfTrueCheck)

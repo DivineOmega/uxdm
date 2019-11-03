@@ -19,6 +19,7 @@ class DestinationContainer
     {
         if (!$this->fields) {
             $this->destination->putDataRows($dataRows);
+
             return;
         }
 
