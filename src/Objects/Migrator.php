@@ -214,6 +214,7 @@ class Migrator
      * @see https://github.com/DivineOmega/omega-validator
      *
      * @param array $rules
+     *
      * @return $this
      */
     public function setValidationRules(array $rules)
@@ -229,8 +230,9 @@ class Migrator
      * This requires a PSR-6 compliant cache item pool object, a cache key, and an cache expiry time in seconds.
      *
      * @param CacheItemPoolInterface $sourceCachePool
-     * @param string $sourceCacheKey
-     * @param int $sourceCacheExpiresAfter
+     * @param string                 $sourceCacheKey
+     * @param int                    $sourceCacheExpiresAfter
+     *
      * @return $this
      */
     public function setSourceCache(CacheItemPoolInterface $sourceCachePool, string $sourceCacheKey, int $sourceCacheExpiresAfter = 60 * 60 * 24)
@@ -259,6 +261,7 @@ class Migrator
      * Retrieves one page of data rows from the source.
      *
      * @param $page
+     *
      * @return mixed
      */
     private function getSourceDataRows($page)
