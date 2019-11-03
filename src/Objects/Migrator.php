@@ -208,6 +208,14 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Sets the validation rules for the source data.
+     *
+     * @see https://github.com/DivineOmega/omega-validator
+     *
+     * @param array $rules
+     * @return $this
+     */
     public function setValidationRules(array $rules)
     {
         $this->validationRules = $rules;
@@ -215,6 +223,16 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Sets the (optional) caching of the source data.
+     *
+     * This requires a PSR-6 compliant cache item pool object, a cache key, and an cache expiry time in seconds.
+     *
+     * @param CacheItemPoolInterface $sourceCachePool
+     * @param string $sourceCacheKey
+     * @param int $sourceCacheExpiresAfter
+     * @return $this
+     */
     public function setSourceCache(CacheItemPoolInterface $sourceCachePool, string $sourceCacheKey, int $sourceCacheExpiresAfter = 60 * 60 * 24)
     {
         $this->sourceCachePool = $sourceCachePool;
@@ -224,6 +242,12 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Enables output of progress bar during migration. This is useful when running UXDM migrations as part of a
+     * command line script.
+     *
+     * @return $this
+     */
     public function withProgressBar()
     {
         $this->showProgressBar = true;
@@ -231,6 +255,12 @@ class Migrator
         return $this;
     }
 
+    /**
+     * Retrieves one page of data rows from the source.
+     *
+     * @param $page
+     * @return mixed
+     */
     private function getSourceDataRows($page)
     {
         if (!$this->sourceCachePool || !$this->sourceCacheKey) {
@@ -251,6 +281,14 @@ class Migrator
         return $dataRows;
     }
 
+    /**
+     * Performs a sanity check on the current state of the object, and throws an appropriate explantory exception if a
+     * migration can not be performed.
+     *
+     * @throws MissingFieldToMigrateException
+     * @throws NoDestinationException
+     * @throws NoSourceException
+     */
     private function sanityCheck()
     {
         if (!$this->source) {
@@ -284,6 +322,14 @@ class Migrator
         }
     }
 
+    /**
+     * Handles the data migration process, involving pulling data from the source, validating and/or manipulating the
+     * data if required, and pushing it to one or more specified destinations.
+     *
+     * @throws MissingFieldToMigrateException
+     * @throws NoDestinationException
+     * @throws NoSourceException
+     */
     public function migrate(): void
     {
         $this->sanityCheck();
@@ -323,6 +369,14 @@ class Migrator
         }
     }
 
+    /**
+     * Prepares an array of data rows for migration.
+     *
+     * This involves validating the data, assigning the key field flag, mapping their field names, and performing any
+     * specified manipulations of the data items.
+     *
+     * @param $dataRows
+     */
     private function prepareDataRows(&$dataRows): void
     {
         $nullDataItemManipulation = function () {
@@ -340,6 +394,11 @@ class Migrator
         }
     }
 
+    /**
+     * Manipulates an array of data rows, by calling the specified data row manipulator function for each data row.
+     *
+     * @param array $dataRows
+     */
     private function manipulateDataRows(array &$dataRows): void
     {
         $dataRowManipulator = $this->dataRowManipulator;
@@ -351,6 +410,11 @@ class Migrator
         }
     }
 
+    /**
+     * Removes any data rows from the passed array, if passing them to skip if true check function returns true.
+     *
+     * @param array $dataRows
+     */
     private function unsetDataRowsToSkip(array &$dataRows): void
     {
         $skipIfTrueCheck = $this->skipIfTrueCheck;
