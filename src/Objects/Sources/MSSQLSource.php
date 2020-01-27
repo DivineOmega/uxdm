@@ -8,7 +8,7 @@ use PDO;
 
 class MSSQLSource extends PDOSource implements SourceInterface
 {
-    public function setOverrideSQL($overrideSQL) : SourceInterface
+    public function setOverrideSQL($overrideSQL): SourceInterface
     {
         $selectString = 'SELECT ';
 
