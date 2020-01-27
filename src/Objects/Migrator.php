@@ -376,7 +376,7 @@ class Migrator
             }
 
             if (isset($progressBar)) {
-                $this->progressBar->complete();
+                $progressBar->complete();
             }
         }
 
