@@ -353,10 +353,10 @@ class Migrator
 
         if ($this->validateBeforeMigrating) {
             if ($this->showProgressBar) {
-                $this->progressBar = new ProgressBar();
-                $this->progressBar->setMessage('Validating...');
-                $this->progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
-                $this->progressBar->display();
+                $progressBar = new ProgressBar();
+                $progressBar->setMessage('Validating...');
+                $progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
+                $progressBar->display();
             }
 
             for ($page = 1; $page < PHP_INT_MAX; $page++) {
@@ -370,10 +370,12 @@ class Migrator
                     $dataRow->validate($this->validationRules);
                 }
 
-                $this->advanceProgressBar();
+                if (isset($progressBar)) {
+                    $progressBar->advance()->display();
+                }
             }
 
-            if ($this->showProgressBar) {
+            if (isset($progressBar)) {
                 $this->progressBar->complete();
             }
         }
