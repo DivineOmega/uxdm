@@ -367,7 +367,7 @@ class Migrator
                 }
 
                 foreach ($dataRows as $key => $dataRow) {
-                    $dataRow->validate();
+                    $dataRow->validate($this->validationRules);
                 }
 
                 $this->advanceProgressBar();
