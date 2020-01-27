@@ -73,7 +73,7 @@ class DataRow
         }
     }
 
-    private function validate(array $validationRules)
+    public function validate(array $validationRules)
     {
         if (!$this->dataItems) {
             throw new NoDataItemsInDataRowException('Data row contains no data items. The specified source may be producing an invalid data row.');
@@ -82,9 +82,7 @@ class DataRow
         if ($validationRules) {
             $validator = new Validator($this->toArray(), $validationRules);
             if ($validator->fails()) {
-                $messages = print_r($validator->messages(), true);
-
-                throw new ValidationException($messages);
+                throw new ValidationException($validator->messages(), $this);
             }
         }
     }

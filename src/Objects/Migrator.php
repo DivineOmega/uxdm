@@ -28,6 +28,8 @@ class Migrator
     private $sourceCacheKey;
     private $sourceCacheExpiresAfter;
     private $showProgressBar = false;
+    private $validateBeforeMigrating = false;
+    private $progressBar = null;
 
     /**
      * Set the source object to migrate data from.
@@ -258,6 +260,18 @@ class Migrator
     }
 
     /**
+     * Enables validation of all data rows before the migration begins.
+     *
+     * @return $this
+     */
+    public function validateBeforeMigrating()
+    {
+        $this->validateBeforeMigrating = true;
+
+        return $this;
+    }
+
+    /**
      * Retrieves one page of data rows from the source.
      *
      * @param $page
@@ -336,6 +350,33 @@ class Migrator
     public function migrate(): void
     {
         $this->sanityCheck();
+
+        if ($this->validateBeforeMigrating) {
+            if ($this->showProgressBar) {
+                $this->progressBar = new ProgressBar();
+                $this->progressBar->setMessage('Validating...');
+                $this->progressBar->setMaxProgress($this->source->countPages() * count($this->destinationContainers));
+                $this->progressBar->display();
+            }
+
+            for ($page = 1; $page < PHP_INT_MAX; $page++) {
+                $dataRows = $this->getSourceDataRows($page);
+
+                if (!$dataRows) {
+                    break;
+                }
+
+                foreach ($dataRows as $key => $dataRow) {
+                    $dataRow->validate();
+                }
+
+                $this->advanceProgressBar();
+            }
+
+            if ($this->showProgressBar) {
+                $this->progressBar->complete();
+            }
+        }
 
         if ($this->showProgressBar) {
             $progressBar = new ProgressBar();

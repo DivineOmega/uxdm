@@ -101,7 +101,8 @@ This migration will move the `id`, `email` and `name` fields from the the `users
 ### Source data validation
 
 You can use UXDM to validate the source data. If validation fails part way through a migration, the migration will 
-halt and a `ValidationException` will be thrown.
+halt and a `ValidationException` will be thrown. However, if `->validateBeforeMigrating()` is called, all data rows
+will be preemptively validated before the migration begins.
 
 The code below shows how to validate various fields.
 
@@ -119,6 +120,7 @@ $migrator->setSource($pdoSource)
             'email' => [new Required(), new IsString(), new IsEmail()],
             'name' => [new Required(), new IsString()],
          ])
+      // ->validateBeforeMigrating()
          ->setKeyFields(['id'])
          ->withProgressBar()
          ->migrate();
