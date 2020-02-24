@@ -38,7 +38,7 @@ class PDOSource implements SourceInterface
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $tableFields = array_keys($row);
+        $tableFields = is_array($row) ? array_keys($row) : [];
 
         return $tableFields;
     }

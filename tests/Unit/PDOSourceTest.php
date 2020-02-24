@@ -165,4 +165,25 @@ final class PDOSourceTest extends TestCase
 
         $this->assertEquals(1, $source->countPages());
     }
+
+    private function createEmptyTableSource()
+    {
+        return new PDOSource(new PDO('sqlite:'.__DIR__.'/Data/source.sqlite'), 'empty_table');
+    }
+
+    public function testGetFieldsOnEmptyTable()
+    {
+        $source = $this->createEmptyTableSource();
+
+        $this->assertEquals([], $source->getFields());
+    }
+
+    public function testGetDataRowsOnEmptyTable()
+    {
+        $source = $this->createEmptyTableSource();
+
+        $dataRows = $source->getDataRows(1, ['thing1', 'thing2']);
+
+        $this->assertCount(0, $dataRows);
+    }
 }
