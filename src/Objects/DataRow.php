@@ -62,15 +62,11 @@ class DataRow
         return $keyDataItems;
     }
 
-    public function prepare(array $validationRules, array $keyFields, array $fieldMap, callable $dataItemManipulator)
+    public function prepare(array $validationRules, array $keyFields, array $fieldMap)
     {
         $this->validate($validationRules);
         $this->setKeyFields($keyFields);
         $this->mapFields($fieldMap);
-
-        if ($dataItemManipulator !== null) {
-            $this->callDataItemManipulator($dataItemManipulator);
-        }
     }
 
     public function validate(array $validationRules)
@@ -105,13 +101,6 @@ class DataRow
                 $dataItem->fieldName = $newFieldName;
                 $dataItems[$key] = $dataItem;
             }
-        }
-    }
-
-    private function callDataItemManipulator(callable $dataItemManipulator)
-    {
-        foreach ($this->dataItems as $key => $dataItem) {
-            $dataItemManipulator($dataItem);
         }
     }
 }

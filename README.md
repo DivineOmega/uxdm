@@ -152,65 +152,95 @@ $migrator->setSource($pdoSource)
 
 This migration will move data from the source `name` field into the destination `full_name` field, while still moving the `id` and `email` fields normally.
 
-### Modifying data items during migration
+### Transforming data rows during migration
 
-The following example shows how you can use UXDM to modify items of data during the migration process.
+Sometimes the data you want to move from source to destination needs transforming. This can be 
+changing existing items of data, adding new data items, or removing items you do not need.
+
+UXDM allows you to create one or more transformer objects, and add them to the migration.
+See the following examples of how to use transformers to manipulate your data. 
+
+#### Changing existing data items
+
+This example shows how you can transform existing data items during migration.
 
 ```php
+class NameCaseTransformer implements TransformerInterface
+{
+    public function transform(DataRow $dataRow): void
+    {
+        $nameDataItem = $dataRow->getDataItemByFieldName('name');
+        $nameDataItem->value = ucwords(strtolower($nameDataItem->value));
+    }
+}
+
 $migrator = new Migrator;
 $migrator->setSource($pdoSource)
          ->setDestination($pdoDestination)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
-         ->setDataItemManipulator(function($dataItem) {
-            if ($dataItem->fieldName=='name') {
-                $dataItem->value = strtoupper($dataItem->value);
-            }
-         })
+         ->addTransformer(new NameCaseTransformer())
          ->withProgressBar()
          ->migrate();
 ```
 
-This migration will move user data between two databases. However, it will also convert the value in the `name` field to uppercase.
-
-### Modifying data rows during migration
+This migration will ensure that all names fields have consistent case.
 
 #### Adding data items
 
-This examples shows how UXDM can modify each row of data while the migration is taking place.
+This example shows how you can add new data items while the migration is taking place.
 
 ```php
+class AddRandomNumberTransformer implements TransformerInterface
+{
+    public function transform(DataRow &$dataRow): void
+    {
+        $dataRow->addDataItem(new DataItem('random_number', rand(1,1000)));
+    }
+}
+
 $migrator = new Migrator;
 $migrator->setSource($pdoSource)
          ->setDestination($pdoDestination)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
-         ->setDataRowManipulator(function($dataRow) {
-            $dataRow->addDataItem(new DataItem('random_number', rand(1,1000)));
-         })
+         ->addTransformer(new AddRandomNumberTransformer())
          ->withProgressBar()
          ->migrate();
 ```
 
-This migration will add a random number into a field called `random_number` for each row of data. This will then be migrated to the destination database along with the other fields.
+This migration will add a random number into a field called `random_number` for each row of data. 
+This will then be migrated to the destination database along with the other fields.
 
 #### Removing data items
 
-This example demonstrates how data items can be removed from a data row. You may wish to do this if you want to use its value, but not actually migrate it to the destination.
+This example demonstrates how data items can be removed from a data row. 
+You may wish to do this if you want to use its value, but not actually 
+migrate it to the destination.
 
 ```php
+class EmailToHashTransformer implements TransformerInterface
+{
+    public function transform(DataRow $dataRow): void
+    {
+        $emailDataItem = $dataRow->getDataItemByFieldName('email');
+        $dataRow->addDataItem(new DataItem('email_hash', md5($emailDataItem->value)));
+        $dataRow->removeDataItem($emailDataItem);
+    }
+}
+
 $migrator = new Migrator;
 $migrator->setSource($pdoSource)
          ->setDestination($pdoDestination)
          ->setFieldsToMigrate(['id', 'email', 'name'])
          ->setKeyFields(['id'])
-         ->setDataRowManipulator(function($dataRow) {
-            $emailDataItem = $dataRow->getDataItemByFieldName('email');
-            $dataRow->addDataItem(new DataItem('email_hash', md5($emailDataItem->value)));
-            $dataRow->removeDataItem($emailDataItem);
-         })
+         ->addTransformer(new EmailToHashTransformer())
          ->withProgressBar()
          ->migrate();
 ```
 
-This migration gets the data from the `email` field in the source, creates a new `email_hash` data item which contains an md5 of the email address, and then removes the original `email` data item. This new `email_hash` will then be migrated to the destination database along with the other fields, excluding the removed `email` field.
+This migration gets the data from the `email` field in the source, creates a 
+new `email_hash` data item which contains an md5 of the email address, and then 
+removes the original `email` data item. This new `email_hash` will then be 
+migrated to the destination database along with the other fields, excluding 
+the removed `email` field.

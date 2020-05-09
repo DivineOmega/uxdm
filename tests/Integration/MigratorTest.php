@@ -1,13 +1,14 @@
 <?php
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\Destinations\PDODestination;
 use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
 use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
 use DivineOmega\uxdm\Objects\Migrator;
 use DivineOmega\uxdm\Objects\Sources\PDOSource;
+use DivineOmega\uxdm\TestIntegrationClasses\Md5NameTransformer;
+use DivineOmega\uxdm\TestIntegrationClasses\UppercaseNameTransformer;
 use PHPUnit\Framework\TestCase;
 
 final class MigratorTest extends TestCase
@@ -105,14 +106,8 @@ final class MigratorTest extends TestCase
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function ($dataItem) {
-                     if ($dataItem->fieldName == 'name') {
-                         $dataItem->value = strtoupper($dataItem->value);
-                     }
-                 })
-                 ->setDataRowManipulator(function ($dataRow) {
-                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
-                 })
+                 ->addTransformer(new UppercaseNameTransformer())
+                 ->addTransformer(new Md5NameTransformer())
                  ->setSkipIfTrueCheck(function ($dataRow) {
                      return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
@@ -132,14 +127,8 @@ final class MigratorTest extends TestCase
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function ($dataItem) {
-                     if ($dataItem->fieldName == 'name') {
-                         $dataItem->value = strtoupper($dataItem->value);
-                     }
-                 })
-                 ->setDataRowManipulator(function ($dataRow) {
-                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
-                 })
+                 ->addTransformer(new UppercaseNameTransformer())
+                 ->addTransformer(new Md5NameTransformer())
                  ->setSkipIfTrueCheck(function ($dataRow) {
                      return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
@@ -202,14 +191,8 @@ final class MigratorTest extends TestCase
                  ->setDestination($this->getPDODestination())
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function ($dataItem) {
-                     if ($dataItem->fieldName == 'name') {
-                         $dataItem->value = strtoupper($dataItem->value);
-                     }
-                 })
-                 ->setDataRowManipulator(function ($dataRow) {
-                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
-                 })
+                 ->addTransformer(new UppercaseNameTransformer())
+                 ->addTransformer(new Md5NameTransformer())
                  ->setSkipIfTrueCheck(function ($dataRow) {
                      return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
@@ -228,14 +211,8 @@ final class MigratorTest extends TestCase
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function ($dataItem) {
-                     if ($dataItem->fieldName == 'name') {
-                         $dataItem->value = strtoupper($dataItem->value);
-                     }
-                 })
-                 ->setDataRowManipulator(function ($dataRow) {
-                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
-                 })
+                 ->addTransformer(new UppercaseNameTransformer())
+                 ->addTransformer(new Md5NameTransformer())
                  ->setSkipIfTrueCheck(function ($dataRow) {
                      return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
@@ -257,14 +234,8 @@ final class MigratorTest extends TestCase
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function ($dataItem) {
-                     if ($dataItem->fieldName == 'name') {
-                         $dataItem->value = strtoupper($dataItem->value);
-                     }
-                 })
-                 ->setDataRowManipulator(function ($dataRow) {
-                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
-                 })
+                 ->addTransformer(new UppercaseNameTransformer())
+                 ->addTransformer(new Md5NameTransformer())
                  ->setSkipIfTrueCheck(function ($dataRow) {
                      return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })
@@ -278,14 +249,8 @@ final class MigratorTest extends TestCase
                  ->setFieldsToMigrate(['id', 'name', 'email'])
                  ->setKeyFields(['id'])
                  ->setFieldMap(['email' => 'email_address'])
-                 ->setDataItemManipulator(function ($dataItem) {
-                     if ($dataItem->fieldName == 'name') {
-                         $dataItem->value = strtoupper($dataItem->value);
-                     }
-                 })
-                 ->setDataRowManipulator(function ($dataRow) {
-                     $dataRow->addDataItem(new DataItem('md5_name', md5($dataRow->getDataItemByFieldName('name')->value)));
-                 })
+                 ->addTransformer(new UppercaseNameTransformer())
+                 ->addTransformer(new Md5NameTransformer())
                  ->setSkipIfTrueCheck(function ($dataRow) {
                      return $dataRow->getDataItemByFieldName('name')->value == 'TIM';
                  })

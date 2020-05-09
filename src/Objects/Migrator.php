@@ -5,6 +5,7 @@ namespace DivineOmega\uxdm\Objects;
 use DivineOmega\CliProgressBar\ProgressBar;
 use DivineOmega\uxdm\Interfaces\DestinationInterface;
 use DivineOmega\uxdm\Interfaces\SourceInterface;
+use DivineOmega\uxdm\Interfaces\TransformerInterface;
 use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
 use DivineOmega\uxdm\Objects\Exceptions\NoSourceException;
@@ -20,8 +21,6 @@ class Migrator
     private $fieldsToMigrate = [];
     private $keyFields = [];
     private $fieldMap = [];
-    private $dataRowManipulator = null;
-    private $dataItemManipulator = null;
     private $skipIfTrueCheck = null;
     private $validationRules = [];
     private $sourceCachePool;
@@ -29,7 +28,7 @@ class Migrator
     private $sourceCacheExpiresAfter;
     private $showProgressBar = false;
     private $validateBeforeMigrating = false;
-    private $progressBar = null;
+    private $transformers;
 
     /**
      * Set the source object to migrate data from.
@@ -137,49 +136,18 @@ class Migrator
     }
 
     /**
-     * Set the data item manipulator.
+     * Adds a data row transformer.
      *
-     * The data item manipulator is a function that is ran on every data item of every data row. It can be used to
-     * manipulate the values of data items during the migration process.
+     * A transformer is an class which modifies a data row retrieved from the source, before it is
+     * transferred to the destination.
      *
-     * Example that changes all name fields to be uppercase:
-     *
-     * function(DataItem $dataItem) {
-     *   if ($dataItem->fieldName === 'name') {
-     *     $dataItem->value = strtoupper($dataItem->value);
-     *   }
-     * }
-     *
-     * @param callable $dataItemManipulator
+     * @param TransformerInterface $transformer
      *
      * @return $this
      */
-    public function setDataItemManipulator(callable $dataItemManipulator)
+    public function addTransformer(TransformerInterface $transformer)
     {
-        $this->dataItemManipulator = $dataItemManipulator;
-
-        return $this;
-    }
-
-    /**
-     * Set the data row manipulator.
-     *
-     * The data row manipulator is a function that is ran on every data row. It can be used to manipulate the values of
-     * data items, add data items or remove data items, during the migration process.
-     *
-     * Example that adds a `random_number` data item to each data row:
-     *
-     * function(DataRow $dataRow) {
-     *   $dataRow->addDataItem(new DataItem('random_number', rand(1,100));
-     * }
-     *
-     * @param callable $dataRowManipulator
-     *
-     * @return $this
-     */
-    public function setDataRowManipulator(callable $dataRowManipulator)
-    {
-        $this->dataRowManipulator = $dataRowManipulator;
+        $this->transformers[] = $transformer;
 
         return $this;
     }
@@ -394,7 +362,7 @@ class Migrator
             }
 
             $this->prepareDataRows($dataRows);
-            $this->manipulateDataRows($dataRows);
+            $this->transformDataRows($dataRows);
             $this->unsetDataRowsToSkip($dataRows);
 
             foreach ($this->destinationContainers as $destinationContainer) {
@@ -425,33 +393,26 @@ class Migrator
      */
     private function prepareDataRows(&$dataRows): void
     {
-        $nullDataItemManipulation = function () {
-        };
-
-        $dataItemManipulator = $this->dataItemManipulator;
-
         foreach ($dataRows as $key => $dataRow) {
             $dataRow->prepare(
                 $this->validationRules,
                 $this->keyFields,
-                $this->fieldMap,
-                $dataItemManipulator ? $dataItemManipulator : $nullDataItemManipulation
+                $this->fieldMap
             );
         }
     }
 
     /**
-     * Manipulates an array of data rows, by calling the specified data row manipulator function for each data row.
+     * Transforms an array of data rows, by passing each data row to each previously added transformer.
      *
      * @param array $dataRows
      */
-    private function manipulateDataRows(array &$dataRows): void
+    private function transformDataRows(array &$dataRows): void
     {
-        $dataRowManipulator = $this->dataRowManipulator;
-
-        if (is_callable($dataRowManipulator)) {
-            foreach ($dataRows as $dataRow) {
-                $dataRowManipulator($dataRow);
+        foreach ($dataRows as $dataRow) {
+            foreach ($this->transformers as $transformer) {
+                /** @var TransformerInterface $transformer */
+                $transformer->transform($dataRow);
             }
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace DivineOmega\uxdm\TestClasses\Doctrine;
+namespace DivineOmega\uxdm\TestUnitClasses\Doctrine;
 
 /**
  * @Entity
