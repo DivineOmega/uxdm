@@ -411,7 +411,7 @@ class Migrator
         foreach ($dataRows as $dataRow) {
             foreach ($this->transformers as $transformer) {
                 /** @var TransformerInterface $transformer */
-                $dataRow = $transformer->transform($dataRow);
+                $transformer->transform($dataRow);
             }
         }
     }
