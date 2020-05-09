@@ -142,6 +142,7 @@ class Migrator
      * transferred to the destination.
      *
      * @param TransformerInterface $transformer
+     *
      * @return $this
      */
     public function addTransformer(TransformerInterface $transformer)

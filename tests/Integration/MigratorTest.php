@@ -1,7 +1,6 @@
 <?php
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use DivineOmega\uxdm\Objects\DataItem;
 use DivineOmega\uxdm\Objects\Destinations\PDODestination;
 use DivineOmega\uxdm\Objects\Exceptions\MissingFieldToMigrateException;
 use DivineOmega\uxdm\Objects\Exceptions\NoDestinationException;
