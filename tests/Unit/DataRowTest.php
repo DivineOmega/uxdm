@@ -141,29 +141,6 @@ final class DataRowTest extends TestCase
         $this->assertEquals($dataItemRetrieved->fieldName, $newFieldName);
     }
 
-    public function testDataItemManipulatorPreparation()
-    {
-        $dataItem = $this->createDataItem();
-        $oldValue = $dataItem->value;
-
-        $dataRow = new DataRow();
-        $dataRow->addDataItem($dataItem);
-
-        $keyFields = [];
-        $fieldMap = [];
-        $dataItemManipulator = function ($dataItemToManipulate) use ($dataItem) {
-            if ($dataItemToManipulate->fieldName == $dataItem->fieldName) {
-                $dataItemToManipulate->value = strrev($dataItemToManipulate->value);
-            }
-        };
-
-        $dataRow->prepare([], $keyFields, $fieldMap, $dataItemManipulator);
-
-        $dataItemRetrieved = $dataRow->getDataItemByFieldName($dataItem->fieldName);
-
-        $this->assertEquals(strrev($oldValue), $dataItemRetrieved->value);
-    }
-
     public function testValidationOfEmptyDataRow()
     {
         $this->expectException(NoDataItemsInDataRowException::class);
