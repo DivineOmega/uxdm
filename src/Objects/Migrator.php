@@ -28,7 +28,7 @@ class Migrator
     private $sourceCacheExpiresAfter;
     private $showProgressBar = false;
     private $validateBeforeMigrating = false;
-    private $transformers;
+    private $transformers = [];
 
     /**
      * Set the source object to migrate data from.
