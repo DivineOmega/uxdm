@@ -23,7 +23,7 @@ class ValidationException extends Exception
         $message = 'Validation exception: '.PHP_EOL;
         $message .= print_r($this->validationMessages, true).PHP_EOL;
         $message .= 'Data row: '.PHP_EOL;
-        $message .= print_r($this->dataRow->toArray(), true.PHP_EOL);
+        $message .= print_r($this->dataRow->toArray(), true).PHP_EOL;
 
         return $message;
     }

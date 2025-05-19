@@ -1,13 +1,13 @@
 # HTML Destination
 
-The UXDM HTML destination allows you to migrate data into a HTML table.
+The UXDM HTML destination allows you to migrate data into an HTML table.
 
 ## Creating
 
-To create a new HTML destination, you must provide it with the file path of HTML file you wish to export data to. The 
+To create a new HTML destination, you must provide it with the file path of the HTML file you wish to export data to. The
 first row of the HTML table will contain the field names.
 
-The following example creates a HTML destination object, using a HTML file called `users.html` in the same directory.
+The following example creates an HTML destination object, using an HTML file called `users.html` in the same directory.
 
 ```php
 $htmlFile = __DIR__.'/users.html';

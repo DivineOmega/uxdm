@@ -4,11 +4,11 @@ The UXDM XML destination allows you to migrate data into an XML file.
 
 ## Creating
 
-To create a new XML destination, you must provide it with the file path of XML file you wish to export data to, 
-a `DOMDocument` object, an attached `DOMElement` which will contain your data rows, and (optionally) a name for element 
+To create a new XML destination, you must provide it with the file path of the XML file you wish to export data to,
+a `DOMDocument` object, an attached `DOMElement` which will contain your data rows, and (optionally) a name for the element
 that will be created for each row.
 
-The following example creates a XML destination object, using a XML file called `users.xml` in the same directory.
+The following example creates an XML destination object, using an XML file called `users.xml` in the same directory.
 
 ```php
 $xmlFile = __DIR__.'/users.xml';

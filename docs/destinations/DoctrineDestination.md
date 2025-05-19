@@ -1,6 +1,6 @@
 # Doctrine Destination
 
-The UXDM Doctrine destination allows you to migrate data into an Doctrine entity. This can be handy if you need to migrate data
+The UXDM Doctrine destination allows you to migrate data into a Doctrine entity. This can be handy if you need to migrate data
 into a system using the Doctrine ORM, such as a Symfony project.
 
 ## Creating

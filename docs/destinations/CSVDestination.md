@@ -1,17 +1,17 @@
 # CSV Destination
 
-The UXDM CSV destination allows you to migrate data into a comma seperated file (CSV).
+The UXDM CSV destination allows you to migrate data into a comma separated file (CSV).
 
 ## Creating
 
-To create a new CSV destination, you must provide it with the file path of CSV file you wish to export data to. The 
+To create a new CSV destination, you must provide it with the file path of the CSV file you wish to export data to. The
 first line of the CSV file will contain the field names.
 
 The following example creates a CSV destination object, using a CSV file called `users.csv` in the same directory.
 
 ```php
 $csvFile = __DIR__.'/users.csv';
-$csvDestination = new csvDestination($csvFile);
+$csvDestination = new CSVDestination($csvFile);
 ```
 
 ## Assigning to migrator

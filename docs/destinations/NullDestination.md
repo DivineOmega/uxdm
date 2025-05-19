@@ -1,6 +1,6 @@
 # Null Destination
 
-The UXDM null destination does nothing with the migration data. This can be useful if you do not wish migrate data,
+The UXDM null destination does nothing with the migration data. This can be useful if you do not wish to migrate data,
 but just wish to make use UXDM's data row manipulator and/or data item manipulator callbacks.
 
 ## Creating
