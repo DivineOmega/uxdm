@@ -7,7 +7,7 @@ UXDM helps developers migrate data from one system or format to another.
 </p>
 
 <p align="center">
-    <a href="https://travis-ci.org/DivineOmega/uxdm"><img src="https://travis-ci.org/DivineOmega/uxdm.svg?branch=master"></a>
+    <a href="https://github.com/DivineOmega/uxdm/actions/workflows/phpunit.yml"><img src="https://github.com/DivineOmega/uxdm/actions/workflows/phpunit.yml/badge.svg?branch=master"></a>
     <a href="https://coveralls.io/github/DivineOmega/uxdm?branch=master"><img src="https://coveralls.io/repos/github/DivineOmega/uxdm/badge.svg?branch=master"></a>
     <a href="https://styleci.io/repos/130364449"><img src="https://styleci.io/repos/130364449/shield?branch=master"></a>
     <a href="https://packagist.org/packages/divineomega/uxdm/stats"><img src="https://img.shields.io/packagist/dt/DivineOmega/uxdm.svg"></a>
@@ -63,6 +63,7 @@ The UXDM package works with a variety of source and destination objects, includi
 * Excel Source & Destination
 * Associative Array Source & Destination
 * JSON Files Source & Destination
+* NDJSON Source & Destination
 * XML Source & Destination
 * WordPress Post Source
 * WordPress User Source
