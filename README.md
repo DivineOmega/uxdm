@@ -63,6 +63,7 @@ The UXDM package works with a variety of source and destination objects, includi
 * Excel Source & Destination
 * Associative Array Source & Destination
 * JSON Files Source & Destination
+* NDJSON Source & Destination
 * XML Source & Destination
 * WordPress Post Source
 * WordPress User Source
