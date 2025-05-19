@@ -73,7 +73,7 @@ class WordPressUserSource implements SourceInterface
         return $sql;
     }
 
-    private function getUserMetaSQL($userID, array $fieldsToRetrieve = null)
+    private function getUserMetaSQL($userID, ?array $fieldsToRetrieve = null)
     {
         $sql = 'select meta_key, meta_value from '.$this->prefix.'usermeta where ';
 

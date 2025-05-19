@@ -75,7 +75,7 @@ class WordPressPostSource implements SourceInterface
         return $sql;
     }
 
-    private function getPostMetaSQL($postID, array $fieldsToRetrieve = null)
+    private function getPostMetaSQL($postID, ?array $fieldsToRetrieve = null)
     {
         $sql = 'select meta_key, meta_value from '.$this->prefix.'postmeta where ';
 
