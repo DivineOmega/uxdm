@@ -4,6 +4,7 @@ namespace DivineOmega\uxdm\TestUnitClasses\Doctrine;
 
 /**
  * @Entity
+ *
  * @Table(name="users")
  */
 class User
@@ -12,6 +13,7 @@ class User
      * @var string
      *
      * @Column(name="name", type="string", length=15, nullable=false)
+     *
      * @Id
      */
     protected $name;

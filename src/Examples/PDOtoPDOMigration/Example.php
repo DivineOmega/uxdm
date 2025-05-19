@@ -15,7 +15,7 @@ $pdoSource = new PDOSource(new PDO('mysql:dbname=laravel-test;host=127.0.0.1', '
 $pdoDestination = new PDODestination(new PDO('mysql:dbname=new-test;host=127.0.0.1', 'root', getenv('UXDM_EXAMPLE_PASSWORD')), 'new_users');
 
 if (!class_exists('Cache\Adapter\Filesystem\FilesystemCachePool')) {
-    die('This example requires the `FilesystemCachePool` class. Install it with `composer require cache/filesystem-adapter`.'.PHP_EOL);
+    exit('This example requires the `FilesystemCachePool` class. Install it with `composer require cache/filesystem-adapter`.'.PHP_EOL);
 }
 
 $filesystemAdapter = new Local(__DIR__.'/');
