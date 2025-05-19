@@ -4,7 +4,7 @@ The UXDM Markdown destination allows you to migrate data into a Markdown table.
 
 ## Creating
 
-To create a new Markdown destination, you must provide it with the file path of Markdown file you wish to export data to. The 
+To create a new Markdown destination, you must provide it with the file path of the Markdown file you wish to export data to. The
 first line of the Markdown table will contain the field names.
 
 The following example creates a Markdown destination object, using a Markdown file called `users.md` in the same directory.

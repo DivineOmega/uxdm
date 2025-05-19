@@ -34,7 +34,7 @@ $migrator->addDestination($otherDestination, ['field3', 'field2']);
 
 # Integrity constraint violations
 
-When exporting data using a PDO destination, the database management system may report integrity constrait violations if existing exported
+When exporting data using a PDO destination, the database management system may report integrity constraint violations if existing exported
 records already exist and/or there are index conflicts. By default, an integrity constraint violation would cause the migration to halt. 
 If you wish to ignore integrity constraint violations, you do this easily, as shown below.
 

@@ -138,7 +138,7 @@ class Migrator
     /**
      * Adds a data row transformer.
      *
-     * A transformer is an class which modifies a data row retrieved from the source, before it is
+     * A transformer is a class which modifies a data row retrieved from the source, before it is
      * transferred to the destination.
      *
      * @param TransformerInterface $transformer
@@ -155,7 +155,7 @@ class Migrator
     /**
      * Set the skip if true check.
      *
-     * The skip if true check is a function that is ran on each data row. If it return true, the data row is skipped
+     * The skip if true check is a function that is ran on each data row. If it returns true, the data row is skipped
      * during the migration process, and thus not sent to the destination(s).
      *
      * This can be useful to filter out data rows you do not want to be migrated.
@@ -197,7 +197,7 @@ class Migrator
     /**
      * Sets the (optional) caching of the source data.
      *
-     * This requires a PSR-6 compliant cache item pool object, a cache key, and an cache expiry time in seconds.
+     * This requires a PSR-6 compliant cache item pool object, a cache key, and a cache expiry time in seconds.
      *
      * @param CacheItemPoolInterface $sourceCachePool
      * @param string                 $sourceCacheKey
@@ -267,7 +267,7 @@ class Migrator
     }
 
     /**
-     * Performs a sanity check on the current state of the object, and throws an appropriate explantory exception if a
+     * Performs a sanity check on the current state of the object, and throws an appropriate explanatory exception if a
      * migration can not be performed.
      *
      * @throws MissingFieldToMigrateException

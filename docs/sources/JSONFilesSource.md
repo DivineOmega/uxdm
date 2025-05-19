@@ -4,7 +4,7 @@ The UXDM JSON files source allows you to source data from multiple JSON files - 
 
 ## Creating
 
-To create a new JSON files source, you must provide it with an array of file paths to the JSON files file you wish to use.
+To create a new JSON files source, you must provide it with an array of file paths to the JSON files you wish to use.
 
 Consider the following files.
 

@@ -96,7 +96,7 @@ $migrator->setSource($pdoSource)
          ->migrate();
 ```
 
-This migration will move the `id`, `email` and `name` fields from the the `users` table in the `old-test` database, to the `new_users` table in the `new-test` database, replacing any existing records with the same `id` (the key field).
+This migration will move the `id`, `email` and `name` fields from the `users` table in the `old-test` database to the `new_users` table in the `new-test` database, replacing any existing records with the same `id` (the key field).
 
 ### Source data validation
 
@@ -137,7 +137,7 @@ See its documentation for all available validation rules.
 
 ### Mapping field names from source to destination
 
-This examples shows how UXDM can map field names from source to destination.
+This example shows how UXDM can map field names from source to destination.
 
 ```php
 $migrator = new Migrator;
@@ -184,7 +184,7 @@ $migrator->setSource($pdoSource)
          ->migrate();
 ```
 
-This migration will ensure that all names fields have consistent case.
+This migration will ensure that all name fields have consistent case.
 
 #### Adding data items
 

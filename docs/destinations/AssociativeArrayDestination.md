@@ -6,7 +6,7 @@ The UXDM associative array destination allows you to export data to an associati
 
 To create a new associative array destination, you must provide it with an empty array that data can be exported to.
 
-The following example creates a associative array destination object.
+The following example creates an associative array destination object.
 
 ```php
 $destinationArray = [];
@@ -24,7 +24,7 @@ After migration, the `$destinationArray` will contain the exported data, similar
 ];
 ```
 
-You can then loop through this data and access it, as shown in the example below..
+You can then loop through this data and access it, as shown in the example below.
 
 ```php
 foreach($destinationArray as $row) {
